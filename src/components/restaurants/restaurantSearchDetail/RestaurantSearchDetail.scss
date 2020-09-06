@@ -1,0 +1,157 @@
+.restaurant-search-detail {
+	flex: 0.6;
+	background: #eeeeee;
+	border-radius: 38px;
+	margin-bottom: 110px;
+	padding: 40px 60px;
+	position: relative;
+	transition: opacity 0.1s ease;
+
+	.restaurant-search-detail__title {
+		font-size: 38px;
+		line-height: 45px;
+	}
+
+	.restaurant-search-detail__bio {
+		font-size: 14px;
+		letter-spacing: 0.01em;
+		margin-top: 10px;
+	}
+
+	.restaurant-search-detail__info {
+		display: flex;
+		justify-content: space-between;
+		margin-top: 25px;
+
+		.restaurant-search-detail__filterContainer {
+			display: flex;
+			flex: 0.5;
+
+			.restaurant-search-detail__filterOption {
+				width: 100px;
+				height: 30px;
+				background: #daeef5;
+				border-radius: 3px;
+				margin-right: 8px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+		}
+
+		.restaurant-search-detail__price {
+			flex: 0.5;
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+
+			.restaurant-search-detail__priceIcon {
+				margin-right: 5px;
+			}
+
+			span {
+				&:nth-child(3) {
+					margin: 0 5px;
+				}
+			}
+		}
+	}
+
+	.restaurant-search-detail__description {
+		margin-top: 30px;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+
+		.restaurant-search-detail__descriptionContainer {
+			display: flex;
+			max-width: 270px;
+			width: 100%;
+
+			img {
+				width: 22px;
+				height: 20px;
+				object-fit: contain;
+				margin-right: 15px;
+			}
+		}
+
+		.restaurant-search-detail__descriptionInfo {
+			.restaurant-search-detail__descriptionInfoTitle {
+				font-size: 18px;
+				color: #222222;
+				margin-bottom: 5px;
+			}
+
+			.restaurant-search-detail__descriptionInfoBio {
+				font-size: 16px;
+				color: #717171;
+			}
+		}
+	}
+
+	.restaurant-search-detail__imageContainer {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		margin-top: 40px;
+
+		.restaurant-search-detail__bigImage {
+			width: 300px;
+			height: 280px;
+		}
+
+		.restaurant-search-detail__imageSmaliList {
+			.restaurant-search-detail__imageSmallTitle {
+				width: 320px;
+				height: 170px;
+			}
+
+			.restaurant-search-detail__imageSmallContainer {
+				display: flex;
+
+				.restaurant-search-detail__imageSmall {
+					width: 155px;
+					height: 105px;
+
+					&:first-child {
+						margin-right: 10px;
+					}
+				}
+			}
+		}
+	}
+
+	.restaurant-search-detail__buttonContainer {
+		.restaurant-search-detail__button {
+			position: absolute;
+			bottom: -40px;
+			width: 275px;
+			height: 56px;
+			background: #c4c4c4;
+			border-radius: 28px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			left: 102px;
+
+			.MuiSvgIcon-root {
+				margin-right: 10px;
+			}
+
+			.restaurant-search-detail__buttonTitle {
+				font-size: 16px;
+				line-height: 18px;
+				color: #222222;
+			}
+
+			&:nth-child(2) {
+				left: 392px;
+			}
+		}
+	}
+}
+
+.restaurant-search-detail--active {
+	opacity: 0;
+}

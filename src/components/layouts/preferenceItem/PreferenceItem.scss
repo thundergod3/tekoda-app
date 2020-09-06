@@ -1,0 +1,29 @@
+.preference-item {
+	width: 110px;
+	height: 35px;
+	border: 1px solid #0260fd;
+	box-sizing: border-box;
+	border-radius: 28px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-right: 20px;
+
+	&:hover {
+		cursor: pointer;
+	}
+
+	&.preference-item--active {
+		background: #000;
+
+		P {
+			color: #fff !important;
+		}
+	}
+
+	p {
+		font-family: Roboto;
+		font-size: 11px;
+		color: #4f4f4f;
+	}
+}

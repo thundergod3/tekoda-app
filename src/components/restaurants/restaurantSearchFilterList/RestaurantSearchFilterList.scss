@@ -1,0 +1,29 @@
+.search-restaurant-search-filter-list {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	.search-restaurant-search-filter-list__container {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-evenly;
+		flex: 0.8;
+	}
+
+	.search-restaurant-search__buttonAdd {
+		flex: 0.3;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+
+		span {
+			font-family: Roboto;
+			font-style: normal;
+			font-weight: normal;
+			font-size: 14px;
+			line-height: 18px;
+			color: #0047ff;
+			margin-right: 5px;
+		}
+	}
+}

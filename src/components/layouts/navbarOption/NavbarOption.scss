@@ -1,0 +1,27 @@
+a {
+	text-decoration: none;
+	color: #000;
+
+	.navbar-option {
+		width: 158px;
+		font-family: Roboto;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 15px;
+		line-height: 20px;
+		position: relative;
+		text-align: center;
+
+		&.navbar-option--active {
+			&::before {
+				content: "";
+				position: absolute;
+				background: #000;
+				top: 33.6px;
+				left: 20px;
+				height: 2.4px;
+				width: 120px;
+			}
+		}
+	}
+}

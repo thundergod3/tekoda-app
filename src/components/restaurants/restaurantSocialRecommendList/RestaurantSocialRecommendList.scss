@@ -1,0 +1,29 @@
+.restaurant-social-recommend-list {
+	margin-top: 60px;
+
+	p {
+		font-family: Roboto;
+		font-style: normal;
+
+		&:not(:last-child) {
+			font-weight: bold;
+			font-size: 35px;
+		}
+
+		&.restaurant-social-recommend-list__bio {
+			margin-top: 20px;
+			font-weight: normal;
+			font-size: 16px;
+			line-height: 19px;
+			color: #b0b0b0;
+		}
+	}
+
+	.restaurant-social-recommend-list__container {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		margin-top: 30px;
+	}
+}

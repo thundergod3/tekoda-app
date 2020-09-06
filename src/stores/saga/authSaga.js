@@ -1,0 +1,48 @@
+import { takeEvery, takeLatest, call, put, select } from "redux-saga/effects";
+
+import * as types from "../../constants/types";
+import authAction from "../redux/actions/authAction";
+import utilAction from "../redux/actions/utilAction";
+import errorAction from "../redux/actions/errorAction";
+
+import authService from "../../services/authService";
+
+import cookieLocal from "../../helpers/cookieLocal";
+
+function* getUser({ userData }) {
+	try {
+		if (userData) {
+			yield cookieLocal.saveToCookie("token", userData.accessToken);
+			yield cookieLocal.saveToLocal("user", userData);
+			yield put(authAction.getUserSucceeded(userData));
+			yield call(checkAuthenticated);
+		}
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+function* checkAuthenticated() {
+	const token = yield cookieLocal.getFromCookie("token");
+
+	if (token) {
+		const user = yield cookieLocal.getFromLocal("user");
+		const expiredToken = yield user.data_access_expiration_time;
+		if (expiredToken <= Date.now() / 1000) {
+			yield put(authAction.checkAuthenticatedFailed());
+			yield cookieLocal.removeFromCookie("token");
+			yield cookieLocal.removeFromCookie("user");
+		} else {
+			yield put(authAction.checkAuthenticatedSucceeded());
+		}
+	} else {
+		yield put(authAction.checkAuthenticatedFailed());
+		yield cookieLocal.removeFromCookie("token");
+		yield cookieLocal.removeFromCookie("user");
+	}
+}
+
+export default function* authSaga() {
+	yield takeLatest(types.CHECK_AUTHENTICATED_REQUEST, checkAuthenticated);
+	yield takeLatest(types.GET_USER_REQUEST, getUser);
+}

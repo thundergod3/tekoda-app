@@ -1,0 +1,175 @@
+@import "../../App.scss";
+
+.auth-page {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+
+	.auth-page-left {
+		flex: 0.6;
+		background: $main-color;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		a {
+			.auth-page__leftContainer {
+				display: flex;
+				align-items: center;
+
+				.auth-page__appName {
+					font-size: 16px;
+					line-height: 18px;
+					color: #ffffff;
+					margin-left: 16px;
+					font-family: Roboto;
+					font-style: normal;
+					font-weight: normal;
+				}
+			}
+		}
+
+		.auth-page__info {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			margin-top: 50px;
+
+			.auth-page__infoSlogan {
+				font-size: 25px;
+				color: #fff;
+				font-family: Roboto;
+				font-style: normal;
+				font-weight: normal;
+			}
+
+			.auth-page__infoDescription {
+				font-size: 20px;
+				color: #fff;
+				font-family: Roboto;
+				font-style: normal;
+				font-weight: normal;
+			}
+		}
+	}
+
+	.auth-page-right {
+		flex: 0.4;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		.auth-page-right__titleLine1 {
+			margin-top: 60px !important;
+		}
+
+		.auth-page-right__titleLine2 {
+			margin-top: 0 !important;
+		}
+
+		.auth-page-right__titleLine1,
+		.auth-page-right__titleLine2 {
+			font-size: 36px;
+			text-align: center;
+			font-family: Roboto;
+			font-style: normal;
+			font-weight: normal;
+		}
+
+		.facebook-form {
+			width: 305px;
+			height: 44px;
+			background: #0260fd;
+			border: 1px solid #4e37d3;
+			border-radius: 30px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin-top: 70px;
+
+			p {
+				font-family: Roboto;
+				font-size: 16px;
+				color: #ffffff;
+				margin-left: 5px;
+			}
+		}
+
+		p {
+			font-family: Roboto;
+			font-style: normal;
+			font-weight: normal;
+			font-size: 16px;
+			line-height: 22px;
+			margin: 35px 0;
+		}
+
+		.auth-page__form {
+			width: 305px;
+			height: 44px;
+			border: 1px solid #000000;
+			font-weight: 500;
+			box-sizing: border-box;
+			text-align: left;
+			border-radius: 1.875rem;
+			padding: 0.75rem 2.5rem;
+			font-size: 1rem;
+			line-height: 22px;
+			margin-bottom: 30px;
+
+			.auth-page__field {
+				outline: none;
+				border: none;
+				width: 100%;
+			}
+		}
+
+		.auth-page__login,
+		.auth-page__register {
+			padding: 0 2.5rem;
+			height: 40px;
+			font-size: 1rem;
+			padding-top: 0.7rem;
+			padding-bottom: 0.7rem;
+			margin-top: 15px;
+			background-color: $main-color;
+			border: 0;
+			border-radius: 10px;
+			font-weight: 700;
+			text-align: center;
+			color: #fff;
+		}
+
+		.auth-page__changePageContainer {
+			display: flex;
+			margin-top: 30px;
+
+			.auth-page__changePage {
+				font-family: Roboto;
+				font-size: 16px;
+				text-align: center;
+				color: #3a3847;
+			}
+
+			span {
+				&:nth-child(2) {
+					a {
+						font-family: Roboto;
+						font-size: 16px;
+						color: #4e37d3;
+						margin-left: 5px;
+					}
+				}
+			}
+		}
+
+		.auth-page__privacy {
+			font-family: Roboto;
+			font-size: 14px;
+			text-align: center;
+			color: #3a3847;
+		}
+	}
+}
