@@ -141,11 +141,12 @@ const Navbar = ({
 					<div className="drawer-sidebar-right__form">
 						<label htmlFor="username">Hãy cho chúng mình biết tên của bạn nhé!</label>
 						<input
+							value={searchType}
 							id="username"
 							type="text"
 							placeholder="Tên bạn ..."
 							value={searchType}
-							onChange={(e) => setCurrentDrawer(e.target.value)}
+							onChange={(e) => setSearchType(e.target.value)}
 						/>
 					</div>
 				)}
