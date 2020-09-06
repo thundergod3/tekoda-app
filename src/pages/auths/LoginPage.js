@@ -46,7 +46,7 @@ const LoginPage = () => {
 						<p className="auth-page-right__titleLine1">Trở thành những người sành ăn </p>
 						<p className="auth-page-right__titleLine2">trong nhóm của bạn chỉ sau vài bước</p>
 						<FacebookLogin
-							appId={process.env.REACT_APP_FACEBOOK_ID}
+							appId="370435007655920"
 							autoLoad={false}
 							callback={responseFacebook}
 							render={(renderProps) => (
