@@ -16,6 +16,7 @@ import { Redirect } from "react-router-dom";
 const Homepage = () => {
 	const {
 		restaurantReducer: { statusSurveyForm },
+		authReducer: { authenticated },
 	} = useSelector((state) => state);
 	const dispatch = useDispatch();
 	const { fetchListRestaurantRequest } = restaurantAction;
@@ -24,7 +25,7 @@ const Homepage = () => {
 		dispatch(fetchListRestaurantRequest());
 	}, []);
 
-	if (!statusSurveyForm) {
+	if (!statusSurveyForm && authenticated === true) {
 		return <Redirect to="/survey" />;
 	}
 

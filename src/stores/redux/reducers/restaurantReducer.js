@@ -8,7 +8,9 @@ import home from "../../../assets/icons/home.png";
 const initialState = {
 	restaurantList: [],
 	restaurantSearchDetail: {},
-	statusSurveyForm: localStorage.getItem("statusSurveyForm") ? localStorage.getItem("statusSurveyForm") : false,
+	statusSurveyForm: localStorage.getItem("statusSurveyForm")
+		? JSON.parse(localStorage.getItem("statusSurveyForm"))
+		: false,
 };
 
 const restaurantReducer = (state = initialState, action) => {

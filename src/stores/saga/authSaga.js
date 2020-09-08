@@ -34,9 +34,9 @@ function* checkAuthenticated() {
 			yield put(authAction.checkAuthenticatedFailed());
 			yield cookieLocal.removeFromCookie("token");
 			yield cookieLocal.removeFromCookie("user");
+			yield cookieLocal.removeFromLocal("statusSurveyForm");
 		} else {
 			yield put(authAction.checkAuthenticatedSucceeded());
-			yield cookieLocal.removeFromLocal("statusSurveyForm");
 		}
 	} else {
 		yield put(authAction.checkAuthenticatedFailed());
