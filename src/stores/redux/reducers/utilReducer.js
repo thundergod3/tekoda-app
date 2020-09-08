@@ -8,20 +8,27 @@ const initialState = {
 const utilReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case types.LOADING_UI: {
+			let checkLoadingExist = false;
+			for (let i = 0; i < state.loadingList; i++) {
+				if (state.loadingList[i].name === action.loading.name) checkLoadingExist = true;
+				else checkLoadingExist = false;
+			}
+			console.log("checkLoadingExist", checkLoadingExist);
 			return {
 				...state,
-				loadingList:
-					state.loadingList.length === 0
-						? [...state.loadingList, action.loading]
-						: state.loadingList.map((loading) =>
-								loading.name !== action.loading.name ? action.loading : loading
-						  ),
+				loadingList: checkLoadingExist
+					? state.loadingList.map((loading) =>
+							loading.name === action.loading.name ? action.loading : loading
+					  )
+					: [...state.loadingList, action.loading],
 			};
 		}
 		case types.LOADED_UI: {
 			return {
 				...state,
-				loadingList: state.loadingList.filter((loading) => loading.name !== action.loadedName),
+				loadingList: state.loadingList.map((loading) =>
+					loading.name === action.loadedName ? { ...loading, loading: false } : loading
+				),
 			};
 		}
 

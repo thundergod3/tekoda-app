@@ -13,7 +13,7 @@ const errorReducer = (state = initialState, action) => {
 					state.errorList.length === 0
 						? [...state.errorList, action.error]
 						: state.errorList.map((error) => {
-								return error.name !== action.error.name ? action.error : error;
+								return error.name === action.error.name ? action.error : error;
 						  }),
 			};
 		}

@@ -11,14 +11,14 @@ import Pagination from "@material-ui/lab/Pagination";
 const RestaurantFilterList = () => {
 	const [pageNumber, setPageNumber] = useState(0);
 	const {
-		restaurantReducer: { restaurantFilterList },
+		restaurantReducer: { restaurantList },
 	} = useSelector((state) => state);
 
 	return (
 		<div className="restaurant-filter-list">
 			<div className="restaurant-filter-list__container">
-				{restaurantFilterList.map((restaurant) => (
-					<RestaurantFilterItem key={restaurant.id} restaurant={restaurant} />
+				{restaurantList.map((restaurant) => (
+					<RestaurantFilterItem key={restaurant._id} restaurant={restaurant?._source} id={restaurant._id} />
 				))}
 			</div>
 			<div className="restaurant-filter__pagination">

@@ -5,6 +5,7 @@
 	img {
 		width: 400px;
 		object-fit: contain;
+		border-radius: 27px;
 	}
 
 	.restaurant-recommend-item__info {
@@ -79,4 +80,10 @@
 			}
 		}
 	}
+}
+
+.BrainhubCarousel__custom-arrowLeft,
+.BrainhubCarousel__custom-arrowRight {
+	margin-bottom: 80px;
+	cursor: pointer;
 }

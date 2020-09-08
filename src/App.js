@@ -11,6 +11,7 @@ import Homepage from "./pages/restaurants/Homepage";
 import SearchRestaurantPage from "./pages/restaurants/SearchRestaurantPage";
 import LoginPage from "./pages/auths/LoginPage";
 import RegisterPage from "./pages/auths/Register";
+import SurveyPage from "./pages/restaurants/SurveyPage";
 
 const App = ({
 	history: {
@@ -29,11 +30,12 @@ const App = ({
 
 	return (
 		<>
-			{pathname !== "/login" && pathname !== "/register" ? <Navbar /> : null}
+			{pathname !== "/login" && pathname !== "/register" && pathname !== "/survey" ? <Navbar /> : null}
 			<Switch>
 				{/* TEKODA PAGES */}
 				<Route exact path="/" component={Homepage} />
-				<Route exact path="/today-eat" component={SearchRestaurantPage} />
+				<Route exact path={["/today-eat/:params", "/today-eat"]} component={SearchRestaurantPage} />
+				<Route exact path={"/survey"} component={SurveyPage} />
 
 				{/* AUTH PAGES */}
 				<Route exact path="/login" component={LoginPage} />

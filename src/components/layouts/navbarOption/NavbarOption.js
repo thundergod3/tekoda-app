@@ -9,9 +9,15 @@ const NavbarOption = ({
 		location: { pathname },
 	},
 }) => {
+	console.log(pathname);
 	return (
 		<Link to={url}>
-			<div className={`${pathname === url ? "navbar-option navbar-option--active" : "navbar-option"}`}>
+			<div
+				className={`${
+					pathname === url || pathname.slice(0, 10) === url
+						? "navbar-option navbar-option--active"
+						: "navbar-option"
+				}`}>
 				<p>{title}</p>
 			</div>
 		</Link>

@@ -9,7 +9,7 @@ class cookieLocal {
 
 	saveToLocal = (key, value) => localStorage.setItem(key, JSON.stringify(value));
 
-	removeFromLocal = () => localStorage.removeItem("user");
+	removeFromLocal = (key) => localStorage.removeItem(key);
 
 	getFromCookie = (key) => {
 		if (window !== "undefined") return cookie.get(key);

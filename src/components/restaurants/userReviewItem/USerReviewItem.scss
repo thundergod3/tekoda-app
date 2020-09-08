@@ -1,0 +1,37 @@
+.user-review-item {
+	.user-review-item__info {
+		display: flex;
+
+		.user-review-item__avatar {
+			width: 56px;
+			height: 56px;
+			object-fit: contain;
+		}
+
+		.user-review-item__bio {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			margin-left: 10px;
+
+			.user-review-item__username {
+				font-family: Roboto;
+				font-size: 16px;
+				color: #222222;
+			}
+
+			.user-review-item__time {
+				font-family: Roboto;
+				font-size: 14px;
+				color: #717171;
+			}
+		}
+	}
+
+	.user-review-item__review {
+		font-family: Roboto;
+		font-size: 16px;
+		color: #222222;
+		margin-top: 15px;
+	}
+}

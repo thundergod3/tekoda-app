@@ -1,3 +1,5 @@
+@import "../../App.scss";
+
 .homepage,
 .search-page {
 	margin: 0 auto;
@@ -14,4 +16,184 @@
 	margin-top: 120px;
 	display: flex;
 	flex-direction: row;
+}
+
+.survey-page {
+	display: flex;
+	flex-direction: row;
+
+	.drawer-sidebar-left {
+		flex: 0.3;
+		height: 100vh;
+		padding: 40px 50px;
+		background: $main-color;
+
+		.drawer-sidebar__navbarleft {
+			display: flex;
+			align-items: center;
+			margin-bottom: 128px;
+
+			img {
+				height: 35px;
+				width: 35px;
+				object-fit: contain;
+			}
+
+			p {
+				margin-left: 16px;
+				font-family: Roboto;
+				font-style: normal;
+				font-weight: 500;
+				font-size: 14px;
+				line-height: 18px;
+				color: #ffffff;
+			}
+		}
+
+		.drawer-sidebar__info {
+			color: #fff;
+
+			h4 {
+				font-family: Roboto;
+				font-style: bold;
+				font-size: 44px;
+				line-height: 42px;
+				margin-bottom: 70px;
+			}
+
+			p {
+				font-family: Roboto;
+				font-style: normal;
+				font-size: 26px;
+				line-height: 35px;
+			}
+		}
+	}
+
+	.drawer-sidebar-right {
+		flex: 0.7;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+
+		.drawer-sidebar-right__form,
+		.drawer-sidebar-right__listRestaurant {
+			max-width: 650px;
+			width: 100%;
+			display: flex;
+			flex: 0.9;
+		}
+
+		.drawer-sidebar-right__form {
+			flex-direction: column;
+			justify-content: center;
+
+			label {
+				font-family: Roboto;
+				font-style: normal;
+				font-weight: normal;
+				font-size: 26px;
+				line-height: 35px;
+				color: #222222;
+				margin-bottom: 20px;
+			}
+
+			input {
+				width: 400px;
+				outline: none;
+				border: 3px solid #eeeeee;
+				padding: 12px;
+			}
+		}
+
+		.drawer-sidebar-right__title {
+			align-self: flex-start;
+			margin-top: 50px;
+			margin-left: 62px;
+			font-family: Roboto;
+			font-style: normal;
+			font-weight: normal;
+			font-size: 23px;
+			color: #222222;
+		}
+
+		.drawer-sidebar-right__listRestaurant {
+			flex-wrap: wrap;
+			gap: 20px;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: center;
+			overflow: scroll;
+			overflow-x: hidden;
+
+			.drawer-sidebar-right__itemRestaurant {
+				width: calc(590px / 3);
+				height: 130px;
+				margin-bottom: 30px;
+
+				.drawer-sidebar-right__restaurantBox {
+					background: #c4c4c4;
+					border-radius: 12px;
+					width: calc(590px / 3);
+					height: 130px;
+				}
+
+				p {
+					font-family: Roboto;
+					font-style: normal;
+					font-weight: 500;
+					font-size: 18px;
+					text-align: center;
+					color: #4a4a4a;
+					margin-top: 20px;
+				}
+			}
+		}
+
+		.drawer-sidebar__footer {
+			flex: 0.1;
+			width: 100%;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-around;
+
+			.drawer-sidebar__buttonBack,
+			.drawer-sidebar__buttonNext {
+				width: 150px;
+				height: 40px;
+
+				&:hover {
+					cursor: pointer;
+				}
+			}
+
+			.drawer-sidebar__buttonBack {
+				outline: none;
+				border: none;
+				background: transparent;
+				font-family: Roboto;
+				font-style: normal;
+				font-weight: 500;
+				font-size: 15px;
+				text-transform: capitalize;
+				color: #747474;
+			}
+
+			.drawer-sidebar__buttonNext {
+				background: $main-color;
+				border: none;
+				outline: none;
+				font-family: Roboto;
+				font-style: normal;
+				font-weight: bold;
+				font-size: 15px;
+				text-align: center;
+				text-transform: capitalize;
+				color: #ffffff;
+			}
+		}
+	}
 }

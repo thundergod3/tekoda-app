@@ -1,52 +1,59 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-import restaurant1 from "../../../assets/restaurants/restaurant1.png";
-import restaurant2 from "../../../assets/restaurants/restaurant2.png";
-import restaurant3 from "../../../assets/restaurants/restaurant3.png";
+import { useSelector } from "react-redux";
 
+import Carousel from "@brainhubeu/react-carousel";
+import Icon from "react-fa";
+import "@brainhubeu/react-carousel/lib/style.css";
 import "./RestaurantSocialRecommendList.scss";
 
 import RestaurantRecommendItem from "../restaurantRecommendItem/RestaurantRecommendItem";
-
-const restaurantSocialRecommendList = [
-	{
-		title: "Langmandi -Beca Room, Pretty House in Centre Hanoi",
-		rates: 4.7,
-		comments: 110,
-		location: "T116C5 Nghĩa Tân, Quận Cầu Giấy, Hà Nội",
-		price: 100000,
-		image: restaurant1,
-	},
-	{
-		title: "Langmandi -Beca Room, Pretty House in Centre Hanoi",
-		rates: 4.7,
-		comments: 110,
-		location: "T116C5 Nghĩa Tân, Quận Cầu Giấy, Hà Nội",
-		price: 100000,
-		image: restaurant1,
-	},
-	{
-		title: "Langmandi -Beca Room, Pretty House in Centre Hanoi",
-		rates: 4.7,
-		comments: 110,
-		location: "T116C5 Nghĩa Tân, Quận Cầu Giấy, Hà Nội",
-		price: 100000,
-		image: restaurant1,
-	},
-];
+import Loading from "../../utils/loading/Loading";
 
 const RestaurantSocialRecommendList = () => {
+	const {
+		restaurantReducer: { restaurantList: restaurantSocialRecommendList },
+		utilReducer: { loadingList },
+	} = useSelector((state) => state);
+
+	let loadingFetchFListRestaurant;
+	for (var i = 0; i < loadingList.length; i++) {
+		if (loadingList[i].name === "fetchListRestaurant") loadingFetchFListRestaurant = loadingList[i].loading;
+	}
+
 	return (
-		<div className="restaurant-social-recommend-list">
-			<p className="restaurant-social-recommend-list__title">Top 10 nhà hàng </p>
-			<p className="restaurant-social-recommend-list__title">xu hướng trên mạng xã hội</p>
-			<p className="restaurant-social-recommend-list__bio">Take a fresh view an span our top visited places</p>
-			<div className="restaurant-social-recommend-list__container">
-				{restaurantSocialRecommendList.map((restaurant, index) => (
-					<RestaurantRecommendItem key={index} restaurant={restaurant} />
-				))}
-			</div>
-		</div>
+		<>
+			{loadingFetchFListRestaurant !== true ? (
+				<div className="restaurant-social-recommend-list">
+					<p className="restaurant-social-recommend-list__title">Top 10 nhà hàng </p>
+					<p className="restaurant-social-recommend-list__title">xu hướng trên mạng xã hội</p>
+					<p className="restaurant-social-recommend-list__bio">
+						Take a fresh view an span our top visited places
+					</p>
+
+					<Carousel
+						className="restaurant-social-recommend-list__container"
+						arrowLeft={<Icon className="icon-example" name="arrow-left" />}
+						arrowRight={<Icon className="icon-example" name="arrow-right" />}
+						addArrowClickHandler
+						arrows
+						slidesPerPage={3}
+						slidesPerScroll={3}
+						animationSpeed={500}
+						offset={10}
+						itemWidth={394}>
+						{restaurantSocialRecommendList.map((restaurant, index) => (
+							<Link to={`/today-eat/${restaurant._id}`} key={index}>
+								<RestaurantRecommendItem restaurant={restaurant?._source} id={restaurant._id} />
+							</Link>
+						))}
+					</Carousel>
+				</div>
+			) : (
+				<Loading />
+			)}
+		</>
 	);
 };
 

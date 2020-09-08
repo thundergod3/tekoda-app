@@ -8,6 +8,7 @@ import errorAction from "../redux/actions/errorAction";
 import authService from "../../services/authService";
 
 import cookieLocal from "../../helpers/cookieLocal";
+import history from "../../constants/history";
 
 function* getUser({ userData }) {
 	try {
@@ -16,6 +17,7 @@ function* getUser({ userData }) {
 			yield cookieLocal.saveToLocal("user", userData);
 			yield put(authAction.getUserSucceeded(userData));
 			yield call(checkAuthenticated);
+			yield history.push("/survey");
 		}
 	} catch (error) {
 		console.log(error);
@@ -34,11 +36,13 @@ function* checkAuthenticated() {
 			yield cookieLocal.removeFromCookie("user");
 		} else {
 			yield put(authAction.checkAuthenticatedSucceeded());
+			yield cookieLocal.removeFromLocal("statusSurveyForm");
 		}
 	} else {
 		yield put(authAction.checkAuthenticatedFailed());
 		yield cookieLocal.removeFromCookie("token");
 		yield cookieLocal.removeFromCookie("user");
+		yield cookieLocal.removeFromLocal("statusSurveyForm");
 	}
 }
 
