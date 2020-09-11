@@ -139,6 +139,61 @@ const listSearchPreference = [
 			},
 		],
 	},
+	{
+		title: "Chi phí",
+		type_list: [
+			{
+				id: 24,
+				title: "Giá rẻ",
+			},
+			{
+				id: 25,
+				title: "Hạng trung",
+			},
+			{
+				id: 26,
+				title: "Sang trọng",
+			},
+		],
+	},
+	{
+		title: "Phong cách ẩm thực",
+		type_list: [
+			{
+				id: 27,
+				title: "Món Á",
+			},
+			{
+				id: 28,
+				title: "Món địa phương",
+			},
+			{
+				id: 29,
+				title: "Món Món Âu",
+			},
+		],
+	},
+	{
+		title: "Không gian ",
+		type_list: [
+			{
+				id: 30,
+				title: "Ngoài trời",
+			},
+			{
+				id: 31,
+				title: "Trong nhà",
+			},
+			{
+				id: 32,
+				title: "Ấm cúng",
+			},
+			{
+				id: 33,
+				title: "Không gian thoáng",
+			},
+		],
+	},
 ];
 
 const listSearchLocation = [
@@ -177,14 +232,13 @@ const listSearchTime = [
 
 const SearchBar = () => {
 	const popupDishesEl = useRef(null);
-	const popupPreferenceEl = useRef(null);
-	const popupAlreadyPreferenceEl = useRef(null);
+	const popupPeopleEl = useRef(null);
 	const popupLocationEl = useRef(null);
 	const popupTimeEl = useRef(null);
 	const [showSearchDishes, setShowSearchDishes] = useState(false);
 	const [chooseDishes, setChooseDishes] = useState({});
-	const [showSearchPreference, setShowSearchPreference] = useState(false);
 	const [choosePreference, setChoosePreference] = useState([]);
+	const [peopleSearchText, setPeopleSearchText] = useState("");
 	const [showSearchLocation, setShowSearchLocation] = useState(false);
 	const [chooseLocation, setChooseLocation] = useState({});
 	const [showSearchTime, setShowSearchTime] = useState(false);
@@ -194,7 +248,7 @@ const SearchBar = () => {
 	const addPrefernce = (preference) => {
 		let found = false;
 		for (let i = 0; i < choosePreference.length; i++) {
-			if (preference.id === choosePreference[i].id) {
+			if (preference === choosePreference[i]) {
 				found = true;
 			}
 		}
@@ -203,7 +257,7 @@ const SearchBar = () => {
 			setChoosePreference(choosePreference.filter((item) => item.id !== preference.id));
 		} else {
 			setChoose(preference.id);
-			setChoosePreference([...choosePreference, preference]);
+			setChoosePreference([...choosePreference, preference.title]);
 		}
 	};
 
@@ -211,54 +265,52 @@ const SearchBar = () => {
 		if (
 			(popupDishesEl.current && popupDishesEl.current.contains(e.target)) ||
 			(popupLocationEl.current && popupLocationEl.current.contains(e.target)) ||
-			(popupPreferenceEl.current && popupPreferenceEl.current.contains(e.target)) ||
+			(popupPeopleEl.current && popupPeopleEl.current.contains(e.target)) ||
 			(popupTimeEl.current && popupTimeEl.current.contains(e.target))
 		)
 			return;
 
 		setShowSearchDishes(false);
-		setShowSearchPreference(false);
 		setShowSearchLocation(false);
 		setShowSearchTime(false);
 	};
 
 	const layoutSearchDishes = () => (
-		<div className="layout-search layout-search__dishes" ref={popupDishesEl}>
-			{listSearchDishes.map((dishes, index) => (
-				<div className="layout-search__item" key={index} onClick={() => setChooseDishes(dishes)}>
-					<img src={dishes.icon} alt={dishes.title} />
-					<p className="layout-search__title">{dishes.title}</p>
-				</div>
-			))}
-		</div>
-	);
-
-	const layoutSearchPreference = () => (
-		<div className="layout-search__perference" ref={popupPreferenceEl}>
-			{listSearchPreference.map((preference, index) => (
-				<div className="layout-search__perferenceWrapper" key={index}>
-					<p className="layout-search__perfenceTitle">{preference.title}</p>
-					<div className="layout-search__perfenceList">
-						{preference.type_list.map((typeItem) => (
-							<PreferenceItem
-								key={typeItem.id}
-								typeItem={typeItem}
-								addPrefernce={addPrefernce}
-								idChoose={idChoose}
-								choosePreference={choosePreference}
-							/>
-						))}
+		<div className="layout-search__dishesContainer">
+			<div className="layout-search__dishes" ref={popupDishesEl}>
+				{listSearchDishes.map((dishes, index) => (
+					<div className="layout-search__item" key={index} onClick={() => setChooseDishes(dishes.title)}>
+						<img src={dishes.icon} alt={dishes.title} />
+						<p className="layout-search__title">{dishes.title}</p>
 					</div>
-				</div>
-			))}
-			<button className="layout-search__perferenceSave">Save</button>
+				))}
+			</div>
+			<div className="layout-search__perference" ref={popupPeopleEl}>
+				{listSearchPreference.map((preference, index) => (
+					<div className="layout-search__perferenceWrapper" key={index}>
+						<p className="layout-search__perfenceTitle">{preference.title}</p>
+						<div className="layout-search__perfenceList">
+							{preference.type_list.map((typeItem) => (
+								<PreferenceItem
+									key={typeItem.id}
+									typeItem={typeItem}
+									addPrefernce={addPrefernce}
+									idChoose={idChoose}
+									choosePreference={choosePreference}
+								/>
+							))}
+						</div>
+					</div>
+				))}
+			</div>
+			<button className="layout-search__buttonSave">Save</button>
 		</div>
 	);
 
 	const layoutSearchLocation = () => (
 		<div className="layout-search layout-search__location" ref={popupLocationEl}>
 			{listSearchLocation.map((location, index) => (
-				<div className="layout-search__item" key={index} onClick={() => setChooseLocation(location)}>
+				<div className="layout-search__item" key={index} onClick={() => setChooseLocation(location.title)}>
 					<img src={location.icon} alt={location.title} />
 					<p className="layout-search__title">{location.title}</p>
 				</div>
@@ -269,7 +321,7 @@ const SearchBar = () => {
 	const layoutSearchTime = () => (
 		<div className="layout-search layout-search__time" ref={popupTimeEl}>
 			{listSearchTime.map((time, index) => (
-				<div className="layout-search__item" key={index} onClick={() => setChooseTime(time)}>
+				<div className="layout-search__item" key={index} onClick={() => setChooseTime(time.title)}>
 					<img src={time.icon} alt={time.title} />
 					<p className="layout-search__title">{time.title}</p>
 				</div>
@@ -285,16 +337,25 @@ const SearchBar = () => {
 		};
 	}, []);
 
+	// console.log(chooseDishes, choosePreference, chooseLocation, chooseTime, peopleSearchText)
+
 	return (
 		<div className="search-bar">
 			<div className="search-bar__container search-bar__formSearch" onClick={() => setShowSearchDishes(true)}>
 				<p className="search-bar__containerTitle">Tìm món</p>
 				{showSearchDishes && layoutSearchDishes()}
 			</div>
-			<div className="search-bar__container search-bar__taste" onClick={() => setShowSearchPreference(true)}>
-				<p className="search-bar__containerTitle">Khẩu vị</p>
-				<p className="search-bar__containerBio">Thêm khẩu vị</p>
-				{showSearchPreference && layoutSearchPreference()}
+			<div className="search-bar__container search-bar__people">
+				<label htmlFor="peopleSearch" className="search-bar__containerTitle">
+					Số người
+				</label>
+				<input
+					type="text"
+					className="layout-search__input"
+					onChange={(e) => setPeopleSearchText(e.target.value)}
+					value={peopleSearchText}
+					placeholder="Thêm số người"
+				/>
 			</div>
 			<div className="search-bar__container search-bar__location" onClick={() => setShowSearchLocation(true)}>
 				<p className="search-bar__containerTitle">địa điểm</p>

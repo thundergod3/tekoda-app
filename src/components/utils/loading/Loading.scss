@@ -1,6 +1,13 @@
 .loading {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	object-fit: contain;
+	position: relative;
+	width: 100vw;
+	height: 100vh;
+
+	img {
+		position: absolute;
+		top: 40%;
+		left: 43%;
+		right: 50%;
+		object-fit: contain;
+	}
 }

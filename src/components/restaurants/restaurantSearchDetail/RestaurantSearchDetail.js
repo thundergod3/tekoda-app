@@ -43,21 +43,14 @@ const listRating = [
 const RestaurantSearchDetail = () => {
 	const {
 		restaurantReducer: { restaurantSearchDetail },
-		utilReducer: { loadingList },
+		utilReducer: { active },
 	} = useSelector((state) => state);
-
-	let loadingRestaurantSearchDetail = false;
-	for (var i = 0; i < loadingList.length; i++) {
-		if (loadingList[i].name === "getRestaurantDetail") loadingRestaurantSearchDetail = loadingList[i].loading;
-	}
 
 	return (
 		<>
 			{Object.keys(restaurantSearchDetail).length !== 0 && (
 				<div
-					className={`restaurant-search-detail ${
-						loadingRestaurantSearchDetail === true ? "restaurant-search-detail--active" : ""
-					}`}>
+					className={`restaurant-search-detail ${active === true ? "restaurant-search-detail--active" : ""}`}>
 					<div className="restaurant-search-detail__container">
 						<p className="restaurant-search-detail__title">{restaurantSearchDetail?._source.Name}</p>
 						<p className="restaurant-search-detail__bio">{restaurantSearchDetail?._source.Address}</p>

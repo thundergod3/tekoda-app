@@ -7,7 +7,7 @@ const PreferenceItem = ({ choosePreference, typeItem, addPrefernce, idChoose }) 
 
 	if (choosePreference && choosePreference.length !== 0) {
 		choosePreference.map((el) => {
-			if (typeItem.id === el.id) classNameActive = "preference-item--active";
+			if (typeItem.title === el) classNameActive = "preference-item--active";
 		});
 	}
 

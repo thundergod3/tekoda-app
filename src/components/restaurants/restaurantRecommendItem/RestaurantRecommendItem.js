@@ -2,6 +2,7 @@ import React from "react";
 
 import { useDispatch } from "react-redux";
 import restaurantAction from "../../../stores/redux/actions/restaurantAction";
+import utilAction from "../../../stores/redux/actions/utilAction";
 
 import "./RestaurantRecommendItem.scss";
 import numeral from "numeral";
@@ -11,9 +12,15 @@ import star from "../../../assets/icons/star.png";
 const RestaurantRecommendItem = ({ restaurant: { Name, AvgRatingText, comments, Address, PhotoUrl }, id }) => {
 	const dispatch = useDispatch();
 	const { getRestaurantSearchDetailRequest } = restaurantAction;
+	const { loadingUI } = utilAction;
 
 	return (
-		<div className="restaurant-recommend-item" onClick={() => dispatch(getRestaurantSearchDetailRequest(id))}>
+		<div
+			className="restaurant-recommend-item"
+			onClick={() => {
+				dispatch(loadingUI());
+				dispatch(getRestaurantSearchDetailRequest(id));
+			}}>
 			<img src={PhotoUrl} alt={Name} />
 			<div className="restaurant-recommend-item__info">
 				<div className="restaurant-recommend-item__rating">

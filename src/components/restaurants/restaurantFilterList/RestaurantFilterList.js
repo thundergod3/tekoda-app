@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 
@@ -8,18 +9,24 @@ import RestaurantFilterItem from "../restaurantFilterItem/RestaurantFilterItem";
 
 import Pagination from "@material-ui/lab/Pagination";
 
-const RestaurantFilterList = () => {
+const RestaurantFilterList = ({ match }) => {
 	const [pageNumber, setPageNumber] = useState(0);
 	const {
-		restaurantReducer: { restaurantList },
+		restaurantReducer: { restaurantList, restaurantSearchList },
 	} = useSelector((state) => state);
+
+	const renderLayoutRestaurant = (list) =>
+		list.map((restaurant) => (
+			<RestaurantFilterItem key={restaurant._id} restaurant={restaurant?._source} id={restaurant._id} />
+		));
 
 	return (
 		<div className="restaurant-filter-list">
 			<div className="restaurant-filter-list__container">
-				{restaurantList.map((restaurant) => (
-					<RestaurantFilterItem key={restaurant._id} restaurant={restaurant?._source} id={restaurant._id} />
-				))}
+				{!match.params.params && renderLayoutRestaurant(restaurantList)}
+				{isNaN(parseInt(match.params.params) && match.params.params) &&
+					renderLayoutRestaurant(restaurantSearchList)}
+				{!isNaN(parseInt(match.params.params)) && renderLayoutRestaurant(restaurantList)}
 			</div>
 			<div className="restaurant-filter__pagination">
 				<Pagination
@@ -34,4 +41,4 @@ const RestaurantFilterList = () => {
 	);
 };
 
-export default RestaurantFilterList;
+export default withRouter(RestaurantFilterList);

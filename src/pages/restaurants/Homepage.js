@@ -12,11 +12,13 @@ import RestaurantSocialRecommendList from "../../components/restaurants/restaura
 import RestaurantLocationRecommendList from "../../components/restaurants/restaurantLocationRecommendList/RestaurantLocationRecommendList";
 import WarningCookie from "../../components/utils/warningCookie/WarningCookie";
 import { Redirect } from "react-router-dom";
+import Loading from "../../components/utils/loading/Loading";
 
 const Homepage = () => {
 	const {
 		restaurantReducer: { statusSurveyForm },
 		authReducer: { authenticated },
+		utilReducer: { loading },
 	} = useSelector((state) => state);
 	const dispatch = useDispatch();
 	const { fetchListRestaurantRequest } = restaurantAction;
@@ -30,13 +32,21 @@ const Homepage = () => {
 	}
 
 	return (
-		<div className="homepage">
-			<SearchBar />
-			<FilterList />
-			<RestaurantSocialRecommendList />
-			<RestaurantLocationRecommendList />
-			<WarningCookie />
-		</div>
+		<>
+			{loading === true ? (
+				<Loading />
+			) : (
+				<>
+					<div className="homepage">
+						<SearchBar />
+						<FilterList />
+						<RestaurantSocialRecommendList />
+						<RestaurantLocationRecommendList />
+						<WarningCookie />
+					</div>
+				</>
+			)}
+		</>
 	);
 };
 

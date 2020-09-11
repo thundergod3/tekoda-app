@@ -26,6 +26,13 @@ class restaurantAction {
 		};
 	}
 
+	getRestaurantById(id) {
+		return {
+			type: types.GET_RESTAURANT_BY_ID,
+			id,
+		};
+	}
+
 	sendSurveyFormRequest(surveyForm) {
 		return {
 			type: types.SEND_SURVEY_FORM_REQUEST,
@@ -36,6 +43,19 @@ class restaurantAction {
 		return {
 			type: types.SEND_SURVEY_FORM_SUCCEEDED,
 			surveyForm,
+		};
+	}
+
+	searchRestaurantRequest(listKeyWord) {
+		return {
+			type: types.SEARCH_RESTAURANT_REQUEST,
+			listKeyWord,
+		};
+	}
+	searchRestaurantSucceeded(restaurantSearchList) {
+		return {
+			type: types.SEARCH_RESTAURANT_SUCCEEDED,
+			restaurantSearchList,
 		};
 	}
 }

@@ -7,6 +7,7 @@ import home from "../../../assets/icons/home.png";
 
 const initialState = {
 	restaurantList: [],
+	restaurantSearchList: [],
 	restaurantSearchDetail: {},
 	statusSurveyForm: localStorage.getItem("statusSurveyForm")
 		? JSON.parse(localStorage.getItem("statusSurveyForm"))
@@ -106,6 +107,50 @@ const restaurantReducer = (state = initialState, action) => {
 			return {
 				...state,
 				statusSurveyForm: true,
+			};
+		}
+
+		case types.SEARCH_RESTAURANT_SUCCEEDED: {
+			return {
+				...state,
+				restaurantSearchList: action.restaurantSearchList,
+				restaurantSearchDetail: {
+					...action.restaurantSearchList[0],
+					_source: {
+						...action.restaurantSearchList[0]._source,
+						image: restaurant,
+						optionList: [
+							{
+								title: "Inspiration",
+							},
+							{
+								title: "Pizza",
+							},
+						],
+						descriptionList: [
+							{
+								title: "Món ăn",
+								icon: home,
+								desc: "Kiểu Nhật, Kiểu Mỹ, Tốt cho sức khỏe, Kiểu Hawai, Hải sản, Kiểu Á",
+							},
+							{
+								title: "Món ăn",
+								icon: home,
+								desc: "Kiểu Nhật, Kiểu Mỹ, Tốt cho sức khỏe, Kiểu Hawai, Hải sản, Kiểu Á",
+							},
+							{
+								title: "Món ăn",
+								icon: home,
+								desc: "Kiểu Nhật, Kiểu Mỹ, Tốt cho sức khỏe, Kiểu Hawai, Hải sản, Kiểu Á",
+							},
+							{
+								title: "Món ăn",
+								icon: home,
+								desc: "Kiểu Nhật, Kiểu Mỹ, Tốt cho sức khỏe, Kiểu Hawai, Hải sản, Kiểu Á",
+							},
+						],
+					},
+				},
 			};
 		}
 

@@ -7,11 +7,13 @@ import numeral from "numeral";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
 import restaurantAction from "../../../stores/redux/actions/restaurantAction";
+import utilAction from "../../../stores/redux/actions/utilAction";
 import { useDispatch } from "react-redux";
 
 const RestaurantFilterItem = ({ restaurant: { Name, AvgRatingText, comments, Address, PhotoUrl }, id }) => {
 	const dispatch = useDispatch();
 	const { getRestaurantSearchDetailRequest } = restaurantAction;
+	const { loadingUI } = utilAction;
 
 	return (
 		<div className="restaurant-filter-item" onClick={() => dispatch(getRestaurantSearchDetailRequest(id))}>
@@ -27,7 +29,7 @@ const RestaurantFilterItem = ({ restaurant: { Name, AvgRatingText, comments, Add
 				<div className="restaurant-filter-item__infoFooter">
 					<div className="restaurant-filter-item__rating">
 						<img src={star} alt={star} className="restaurant-filter-item__star" />
-						<span className="restaurant-filter-item__rateStar">5</span>
+						<span className="restaurant-filter-item__rateStar">{AvgRatingText}</span>
 						<span className="restaurant-filter-item__comment">(110 đánh giá)</span>
 					</div>
 					<p className="restaurant-filter-item__price">Giá: vnd 100-400k</p>

@@ -1,6 +1,9 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
 
+import { useDispatch } from "react-redux";
+import utilAction from "../../../stores/redux/actions/utilAction";
+
 import "./NavbarOption.scss";
 
 const NavbarOption = ({
@@ -9,9 +12,11 @@ const NavbarOption = ({
 		location: { pathname },
 	},
 }) => {
-	console.log(pathname);
+	const dispatch = useDispatch();
+	const { loadingUI } = utilAction;
+
 	return (
-		<Link to={url}>
+		<Link to={url} onClick={() => dispatch(loadingUI())}>
 			<div
 				className={`${
 					pathname === url || pathname.slice(0, 10) === url

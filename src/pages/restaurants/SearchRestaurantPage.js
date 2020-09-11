@@ -2,33 +2,43 @@ import React, { useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import restaurantAction from "../../stores/redux/actions/restaurantAction";
+import utilAction from "../../stores/redux/actions/utilAction";
 
 import "./restaurants.scss";
 
 import ResultRestaurantSearch from "../../components/restaurants/resultRestaurantSearch/ResultRestaurantSearch";
 import RestaurantSearchDetail from "../../components/restaurants/restaurantSearchDetail/RestaurantSearchDetail";
+import Loading from "../../components/utils/loading/Loading";
 
 const SearchRestaurantPage = ({ match }) => {
 	const {
-		restaurantReducer: { restaurantSearchDetail },
+		utilReducer: { loading },
 	} = useSelector((state) => state);
 	const dispatch = useDispatch();
-	const { getRestaurantSearchDetailRequest, fetchListRestaurantRequest } = restaurantAction;
+	const { getRestaurantSearchDetailRequest, fetchListRestaurantRequest, searchRestaurantRequest } = restaurantAction;
 
 	useEffect(() => {
-		if (Object.keys(restaurantSearchDetail).length === 0) {
-			dispatch(fetchListRestaurantRequest());
-		}
-		if (match.params.params) {
+		if (match.params.params && isNaN(parseInt(match.params.params))) {
+			dispatch(searchRestaurantRequest([match.params.params]));
+		} else if (!isNaN(parseInt(match.params.params))) {
 			dispatch(getRestaurantSearchDetailRequest(match.params.params));
+			dispatch(fetchListRestaurantRequest());
+		} else {
+			dispatch(fetchListRestaurantRequest());
 		}
 	}, []);
 
 	return (
-		<div className="search-page">
-			<ResultRestaurantSearch />
-			<RestaurantSearchDetail />
-		</div>
+		<>
+			{loading === true ? (
+				<Loading />
+			) : (
+				<div className="search-page">
+					<ResultRestaurantSearch />
+					<RestaurantSearchDetail />
+				</div>
+			)}
+		</>
 	);
 };
 

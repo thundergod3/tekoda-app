@@ -1,4 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
+import { useDispatch } from "react-redux";
+import utilAction from "../../../stores/redux/actions/utilAction";
 
 import NoodleBlackImg from "../../../assets/icons/noodle.png";
 import NoodleWhiteImg from "../../../assets/icons/noodle2.png";
@@ -37,10 +41,15 @@ const filterList = [
 ];
 
 const FilterList = () => {
+	const dispatch = useDispatch();
+	const { loadingUI } = utilAction;
+
 	return (
 		<div className="filter-list">
 			{filterList.map((option, index) => (
-				<FilterOption key={index} option={option} />
+				<Link to={`/today-eat/${option.title}`} key={index} onClick={() => dispatch(loadingUI())}>
+					<FilterOption option={option} />
+				</Link>
 			))}
 		</div>
 	);

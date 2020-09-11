@@ -1,34 +1,35 @@
 import * as types from "../../../constants/types";
 
 const initialState = {
-	loadingList: [],
-	changeUI: false,
+	loading: false,
+	active: false,
 };
 
 const utilReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case types.LOADING_UI: {
-			let checkLoadingExist = false;
-			for (let i = 0; i < state.loadingList; i++) {
-				if (state.loadingList[i].name === action.loading.name) checkLoadingExist = true;
-				else checkLoadingExist = false;
-			}
-			console.log("checkLoadingExist", checkLoadingExist);
 			return {
 				...state,
-				loadingList: checkLoadingExist
-					? state.loadingList.map((loading) =>
-							loading.name === action.loading.name ? action.loading : loading
-					  )
-					: [...state.loadingList, action.loading],
+				loading: true,
 			};
 		}
 		case types.LOADED_UI: {
 			return {
 				...state,
-				loadingList: state.loadingList.map((loading) =>
-					loading.name === action.loadedName ? { ...loading, loading: false } : loading
-				),
+				loading: false,
+			};
+		}
+
+		case types.SHOW_ACTIVE: {
+			return {
+				...state,
+				active: true,
+			};
+		}
+		case types.END_ACTIVE: {
+			return {
+				...state,
+				active: false,
 			};
 		}
 

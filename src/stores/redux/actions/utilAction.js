@@ -1,16 +1,25 @@
 import * as types from "../../../constants/types";
 
 class utilAction {
-	loadingUI(loading) {
+	loadingUI() {
 		return {
 			type: types.LOADING_UI,
-			loading,
 		};
 	}
-	loadedUI(loadedName) {
+	loadedUI() {
 		return {
 			type: types.LOADED_UI,
-			loadedName,
+		};
+	}
+
+	showActive() {
+		return {
+			type: types.SHOW_ACTIVE,
+		};
+	}
+	endActive() {
+		return {
+			type: types.END_ACTIVE,
 		};
 	}
 }

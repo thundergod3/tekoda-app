@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useSelector } from "react-redux";
+
 import "./ResultRestaurantSearch.scss";
 
 import RestaurantSearchFilterList from "../restaurantSearchFilterList/RestaurantSearchFilterList";

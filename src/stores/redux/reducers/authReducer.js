@@ -1,7 +1,9 @@
 import * as types from "../../../constants/types";
 
 const initialState = {
-	userData: {},
+	userData: localStorage.getItem("user")
+		? JSON.parse(localStorage.getItem("user"))
+		: false,
 	authenticated: undefined,
 };
 
