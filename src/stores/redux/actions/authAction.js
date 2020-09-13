@@ -14,6 +14,32 @@ class authdaAction {
 		};
 	}
 
+	loginUserRequest(userForm) {
+		return {
+			type: types.LOGIN_USER_REQUEST,
+			userForm,
+		};
+	}
+	loginUserSucceeded(token) {
+		return {
+			type: types.LOGIN_USER_SUCCEEDED,
+			token,
+		};
+	}
+
+	registerUserRequest(userForm) {
+		return {
+			type: types.REGISTER_USER_REQUEST,
+			userForm,
+		};
+	}
+	registerUserSucceeded(token) {
+		return {
+			type: types.REGISTER_USER_SUCCEEDED,
+			token,
+		};
+	}
+
 	checkAuthenticatedRequest() {
 		return {
 			type: types.CHECK_AUTHENTICATED_REQUEST,

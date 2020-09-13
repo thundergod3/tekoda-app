@@ -13,6 +13,19 @@ class restaurantAction {
 		};
 	}
 
+	fetchListRestaurantPerPageRequest(page) {
+		return {
+			type: types.FETCH_LIST_RESTAURANT_PER_PAGE_REQUEST,
+			page,
+		};
+	}
+	fetchListRestaurantPerPageSucceeded(restaurantListEachPage) {
+		return {
+			type: types.FETCH_LIST_RESTAURANT_PER_PAGE_SUCCEEDED,
+			restaurantListEachPage,
+		};
+	}
+
 	getRestaurantSearchDetailRequest(id) {
 		return {
 			type: types.GET_RESTAURANT_SEARCH_DETAIL_REQUEST,

@@ -13,7 +13,7 @@ import Loading from "../../utils/loading/Loading";
 
 const RestaurantLocationRecommendList = () => {
 	const {
-		restaurantReducer: { restaurantList: restaurantLocationRecommendList },
+		restaurantReducer: { restaurantListEachPage: restaurantLocationRecommendList },
 		utilReducer: { loadingList },
 	} = useSelector((state) => state);
 

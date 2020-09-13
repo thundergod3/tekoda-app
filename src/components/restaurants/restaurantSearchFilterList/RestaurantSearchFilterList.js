@@ -6,7 +6,7 @@ import RingIcon from "../../../assets/icons/ring.png";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 
 import RestaurantSearchFilterOption from "../restaurantSearchFilterOption/RestaurantSearchFilterOption";
-import PreferenceItem from "../../layouts/preferenceItem/PreferenceItem";
+import PreferenceItem from "../../utils/preferenceItem/PreferenceItem";
 
 const listFilter = [
 	{
@@ -162,21 +162,21 @@ const RestaurantSearchFilterList = () => {
 	const addPrefernce = (preference) => {
 		let found = false;
 		for (let i = 0; i < choosePreference.length; i++) {
-			if (preference.id === choosePreference[i].id) {
+			if (preference.title === choosePreference[i]) {
 				found = true;
 			}
 		}
 
 		if (found) {
-			setChoosePreference(choosePreference.filter((item) => item.id !== preference.id));
+			setChoosePreference(choosePreference.filter((item) => item !== preference.title));
 		} else {
 			setChoose(preference.id);
-			setChoosePreference([...choosePreference, preference]);
+			setChoosePreference([...choosePreference, preference.title]);
 		}
 	};
 
 	const layoutSearchPreference = () => (
-		<div className="layout-search__perference layout-search__perferenceAddFilter" ref={popupPreferenceEl}>
+		<div className="layout-search__perferenceAddFilter" ref={popupPreferenceEl}>
 			{listSearchPreference.map((preference, index) => (
 				<div className="layout-search__perferenceWrapper" key={index}>
 					<p className="layout-search__perfenceTitle">{preference.title}</p>
@@ -198,15 +198,18 @@ const RestaurantSearchFilterList = () => {
 	);
 
 	const handleOutSideClick = (e) => {
-		if (popupPreferenceEl.current && popupPreferenceEl.current.contains(e.target) || closePreferenceEl.current && closePreferenceEl.current.contains(e.target)) return;
+		if (
+			(popupPreferenceEl.current && popupPreferenceEl.current.contains(e.target)) ||
+			(closePreferenceEl.current && closePreferenceEl.current.contains(e.target))
+		)
+			return;
 		else setShowSearchPreference(false);
 	};
 
 	const handleShowSearchPerference = (e) => {
-		if (showSearchPreference) setShowSearchPreference(false)
-		else setShowSearchPreference(true)
-	}
-
+		if (showSearchPreference) setShowSearchPreference(false);
+		else setShowSearchPreference(true);
+	};
 
 	useEffect(() => {
 		document.addEventListener("mousedown", handleOutSideClick);
@@ -217,21 +220,23 @@ const RestaurantSearchFilterList = () => {
 	}, []);
 
 	return (
-		<div className="search-restaurant-search-filter-list">
-			<div className="search-restaurant-search-filter-list__container">
-				{listFilter.map((filter, index) => (
-					<RestaurantSearchFilterOption key={index} filter={filter} />
-				))}
+		<>
+			<div className="search-restaurant-search-filter-list">
+				<div className="search-restaurant-search-filter-list__container">
+					{listFilter.map((filter, index) => (
+						<RestaurantSearchFilterOption key={index} filter={filter} />
+					))}
+				</div>
+				<div
+					className="search-restaurant-search__buttonAdd"
+					onClick={() => handleShowSearchPerference()}
+					ref={closePreferenceEl}>
+					<span>Thêm filters</span>
+					<AddBoxIcon />
+				</div>
 			</div>
-			<div
-				className="search-restaurant-search__buttonAdd"
-				onClick={() => handleShowSearchPerference()}
-				ref={closePreferenceEl}>
-				<span>Thêm filters</span>
-				<AddBoxIcon />
-				{showSearchPreference && layoutSearchPreference()}
-			</div>
-		</div>
+			{showSearchPreference && layoutSearchPreference()}
+		</>
 	);
 };
 

@@ -7,11 +7,9 @@ import home from "../../../assets/icons/home.png";
 
 const initialState = {
 	restaurantList: [],
-	restaurantSearchList: [],
+	restaurantListEachPage: [],
 	restaurantSearchDetail: {},
-	statusSurveyForm: localStorage.getItem("statusSurveyForm")
-		? JSON.parse(localStorage.getItem("statusSurveyForm"))
-		: false,
+	statusSurvey: localStorage.getItem("statusSurvey") ? JSON.parse(localStorage.getItem("statusSurvey")) : false,
 };
 
 const restaurantReducer = (state = initialState, action) => {
@@ -20,10 +18,17 @@ const restaurantReducer = (state = initialState, action) => {
 			return {
 				...state,
 				restaurantList: action.restaurantList,
+			};
+		}
+
+		case types.FETCH_LIST_RESTAURANT_PER_PAGE_SUCCEEDED: {
+			return {
+				...state,
+				restaurantListEachPage: action.restaurantListEachPage,
 				restaurantSearchDetail: {
-					...action.restaurantList[0],
+					...action.restaurantListEachPage[0],
 					_source: {
-						...action.restaurantList[0]._source,
+						...action.restaurantListEachPage[0]._source,
 						image: restaurant,
 						optionList: [
 							{
@@ -106,14 +111,14 @@ const restaurantReducer = (state = initialState, action) => {
 		case types.SEND_SURVEY_FORM_SUCCEEDED: {
 			return {
 				...state,
-				statusSurveyForm: true,
+				statusSurvey: true,
 			};
 		}
 
 		case types.SEARCH_RESTAURANT_SUCCEEDED: {
 			return {
 				...state,
-				restaurantSearchList: action.restaurantSearchList,
+				restaurantListEachPage: action.restaurantSearchList,
 				restaurantSearchDetail: {
 					...action.restaurantSearchList[0],
 					_source: {

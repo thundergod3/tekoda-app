@@ -2,6 +2,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	position: relative;
 
 	.search-restaurant-search-filter-list__container {
 		display: flex;
@@ -29,6 +30,51 @@
 }
 
 .layout-search__perferenceAddFilter {
-	top: 220px !important;
-	left: 130px !important;
+	position: absolute;
+	top: 220px;
+	left: 130px;
+	width: 1240px;
+	height: 529px;
+	background: #ffffff;
+	border: 1px solid #b0b0b0;
+	box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+	border-radius: 5px;
+	display: flex;
+	flex-direction: column;
+	z-index: 100;
+	padding: 30px 50px;
+	overflow-y: scroll;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+
+	.layout-search__perferenceWrapper {
+		margin-bottom: 25px;
+
+		.layout-search__perfenceTitle {
+			margin-bottom: 20px;
+			font-family: Roboto;
+			font-weight: bold;
+			font-size: 12px;
+		}
+
+		.layout-search__perfenceList {
+			display: flex;
+		}
+	}
+
+	.layout-search__perferenceSave {
+		position: absolute;
+		width: 167px;
+		height: 56px;
+		left: 1035px;
+		top: 450px;
+		background: #0260fd;
+		border-radius: 23.5px;
+		color: #fff;
+		font-family: Roboto;
+		font-weight: 900;
+		font-size: 20px;
+		text-align: center;
+	}
 }

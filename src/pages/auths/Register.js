@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
+
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
 import logo from "../../assets/icons/logo.png";
 import logoWhite from "../../assets/icons/Vector.png";
@@ -12,20 +15,28 @@ import * as Yup from "yup";
 
 import { useSelector, useDispatch } from "react-redux";
 import authAction from "../../stores/redux/actions/authAction";
+import utilAction from "../../stores/redux/actions/utilAction";
 
 const RegisterPage = () => {
+	const [showPassword, setShowPassword] = useState(false);
 	const {
 		authReducer: { authenticated },
 	} = useSelector((state) => state);
 	const dispatch = useDispatch();
-	const { getUserRequest } = authAction;
+	const { getUserRequest, registerUserRequest } = authAction;
+	const { loadingUI } = utilAction;
 
 	const responseFacebook = (response) => dispatch(getUserRequest(response));
 
 	if (authenticated === true) return <Redirect to="/" />;
 
 	return (
-		<Formik initialValues={{ email: "", password: "", confirmPassword: "" }} onSubmit={(values, action) => {}}>
+		<Formik
+			initialValues={{ name: "", email: "", password: "" }}
+			onSubmit={(values, action) => {
+				dispatch(loadingUI());
+				dispatch(registerUserRequest(values));
+			}}>
 			{(props) => (
 				<>
 					{authenticated !== undefined && (
@@ -63,12 +74,44 @@ const RegisterPage = () => {
 								<p>hoặc</p>
 								<div className="auth-page__form">
 									<input
+										value={props.values.name}
+										onChange={props.handleChange("name")}
+										onBlur={props.handleBlur("name")}
 										type="text"
-										placeholder="Nhập số điện thoại của bạn"
+										placeholder="Nhập username của bạn"
 										className="auth-page__field"
 									/>
 								</div>
-								<button className="auth-page__register">Đăng ký</button>
+								<div className="auth-page__form">
+									<input
+										value={props.values.email}
+										onChange={props.handleChange("email")}
+										onBlur={props.handleBlur("email")}
+										type="text"
+										placeholder="Nhập email của bạn"
+										className="auth-page__field"
+									/>
+								</div>
+								<div
+									className="auth-page__form"
+									style={{ display: "flex", alignItems: "center", color: "grey" }}>
+									<input
+										value={props.values.password}
+										onChange={props.handleChange("password")}
+										onBlur={props.handleBlur("password")}
+										type={showPassword ? "text" : "password"}
+										placeholder="Nhập password"
+										className="auth-page__field"
+									/>
+									{!showPassword ? (
+										<VisibilityIcon onClick={() => setShowPassword(true)} />
+									) : (
+										<VisibilityOffIcon onClick={() => setShowPassword(false)} />
+									)}
+								</div>
+								<button type="submit" onClick={props.handleSubmit} className="auth-page__register">
+									Đăng ký
+								</button>
 								<div className="auth-page__changePageContainer">
 									<span className="auth-page__changePage">Bạn đã có tài khoản Tekoda ?</span>
 									<span>

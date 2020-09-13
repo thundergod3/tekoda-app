@@ -2,17 +2,17 @@ import React from "react";
 
 import "./PreferenceItem.scss";
 
-const PreferenceItem = ({ choosePreference, typeItem, addPrefernce, idChoose }) => {
+const PreferenceItem = ({ choosePreference, typeItem, addPrefernce }) => {
 	let classNameActive = "";
 
 	if (choosePreference && choosePreference.length !== 0) {
-		choosePreference.map((el) => {
+		choosePreference.forEach((el) => {
 			if (typeItem.title === el) classNameActive = "preference-item--active";
 		});
 	}
 
 	return (
-		<div className={`preference-item ${classNameActive}`} onClick={() => addPrefernce(typeItem)}>
+		<div className={`preference-item ${classNameActive}`} onClick={() => addPrefernce(typeItem.title)}>
 			<p>{typeItem.title}</p>
 		</div>
 	);

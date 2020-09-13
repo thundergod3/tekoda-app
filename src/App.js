@@ -34,7 +34,11 @@ const App = ({
 			<Switch>
 				{/* TEKODA PAGES */}
 				<Route exact path="/" component={Homepage} />
-				<Route exact path={["/today-eat/:params", "/today-eat"]} component={SearchRestaurantPage} />
+				<Route
+					exact
+					path={["/today-eat/:params", "/today-eat", "/today-eat/page=:pageNumber"]}
+					component={SearchRestaurantPage}
+				/>
 				<Route exact path={"/survey"} component={SurveyPage} />
 
 				{/* AUTH PAGES */}

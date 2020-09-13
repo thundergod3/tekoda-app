@@ -6,14 +6,27 @@ import utilAction from "../redux/actions/utilAction";
 import errorAction from "../redux/actions/errorAction";
 
 import restaurantService from "../../services/restaurantService";
+
 import cookieLocal from "../../helpers/cookieLocal";
+import history from "../../constants/history";
 
 function* fetchListRestaurant() {
-	yield put(utilAction.loadingUI());
-
 	try {
-		const response = yield restaurantService.fetchAllRestaurant();
+		const response = yield call(restaurantService.fetchAllRestaurant);
 		yield put(restaurantAction.fetchListRestaurantSucceeded(response.data));
+		yield put(utilAction.loadedUI());
+	} catch (error) {
+		console.log(error);
+		yield put(utilAction.loadedUI());
+	}
+}
+
+function* fetchListRestaurantPerPage({ page }) {
+	yield put(utilAction.loadingUI());
+	try {
+		if (!page) page = 1;
+		const response = yield call(restaurantService.fetchRestaurantPerPage, { page });
+		yield put(restaurantAction.fetchListRestaurantPerPageSucceeded(response.data));
 		yield put(utilAction.loadedUI());
 	} catch (error) {
 		console.log(error);
@@ -23,10 +36,10 @@ function* fetchListRestaurant() {
 
 function* getRestaurantDetail({ id }) {
 	const {
-		restaurantReducer: { restaurantList, restaurantSearchList },
+		restaurantReducer: { restaurantList },
 	} = yield select((state) => state);
 
-	if (restaurantList.length !== 0 || restaurantSearchList !== 0) {
+	if (restaurantList.length !== 0) {
 		yield put(utilAction.showActive());
 
 		try {
@@ -53,7 +66,9 @@ function* getRestaurantDetail({ id }) {
 
 function* sendSurveyForm({ surveyForm }) {
 	try {
-		yield cookieLocal.saveToLocal();
+		yield cookieLocal.saveToLocal("statusSurvey", true);
+		console.log(history);
+		yield history.push("/");
 		yield put(restaurantAction.sendSurveyFormSucceeded());
 	} catch (error) {
 		console.log(error);
@@ -61,8 +76,6 @@ function* sendSurveyForm({ surveyForm }) {
 }
 
 function* searchRestaurant({ listKeyWord }) {
-	yield put(utilAction.loadingUI());
-
 	try {
 		const response = yield call(restaurantService.searchRestaurant, { listKeyWord });
 		yield put(restaurantAction.searchRestaurantSucceeded(response.data));
@@ -75,6 +88,7 @@ function* searchRestaurant({ listKeyWord }) {
 
 export default function* restaurantSaga() {
 	yield takeLatest(types.FETCH_LIST_RESTAURANT_REQUEST, fetchListRestaurant);
+	yield takeLatest(types.FETCH_LIST_RESTAURANT_PER_PAGE_REQUEST, fetchListRestaurantPerPage);
 	yield takeLatest(types.GET_RESTAURANT_SEARCH_DETAIL_REQUEST, getRestaurantDetail);
 	yield takeLatest(types.SEND_SURVEY_FORM_REQUEST, sendSurveyForm);
 	yield takeLatest(types.SEARCH_RESTAURANT_REQUEST, searchRestaurant);

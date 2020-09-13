@@ -24,6 +24,32 @@ function* getUser({ userData }) {
 	}
 }
 
+function* loginUser({ userForm }) {
+	try {
+		const response = yield call(authService.loginUser, { userForm });
+		yield put(authAction.loginUserSucceeded(response.data.jwt_token));
+		yield cookieLocal.saveToCookie("token", response.data.jwt_token);
+		yield call(checkAuthenticated);
+		yield put(utilAction.loadedUI());
+	} catch (error) {
+		console.log(error);
+		yield put(utilAction.loadedUI());
+	}
+}
+
+function* registerUser({ userForm }) {
+	try {
+		const response = yield call(authService.registerUser, { userForm });
+		yield put(authAction.registerUserSucceeded(response.data.jwt_token));
+		yield cookieLocal.saveToCookie("token", response.data.jwt_token);
+		yield call(checkAuthenticated);
+		yield put(utilAction.loadedUI());
+	} catch (error) {
+		console.log(error);
+		yield put(utilAction.loadedUI());
+	}
+}
+
 function* checkAuthenticated() {
 	const token = yield cookieLocal.getFromCookie("token");
 
@@ -34,7 +60,7 @@ function* checkAuthenticated() {
 			yield put(authAction.checkAuthenticatedFailed());
 			yield cookieLocal.removeFromCookie("token");
 			yield cookieLocal.removeFromCookie("user");
-			yield cookieLocal.removeFromLocal("statusSurveyForm");
+			yield cookieLocal.removeFromLocal("statusSurvey");
 		} else {
 			yield put(authAction.checkAuthenticatedSucceeded());
 		}
@@ -42,11 +68,13 @@ function* checkAuthenticated() {
 		yield put(authAction.checkAuthenticatedFailed());
 		yield cookieLocal.removeFromCookie("token");
 		yield cookieLocal.removeFromCookie("user");
-		yield cookieLocal.removeFromLocal("statusSurveyForm");
+		yield cookieLocal.removeFromLocal("statusSurvey");
 	}
 }
 
 export default function* authSaga() {
 	yield takeLatest(types.CHECK_AUTHENTICATED_REQUEST, checkAuthenticated);
 	yield takeLatest(types.GET_USER_REQUEST, getUser);
+	yield takeLatest(types.LOGIN_USER_REQUEST, loginUser);
+	yield takeLatest(types.REGISTER_USER_REQUEST, registerUser);
 }

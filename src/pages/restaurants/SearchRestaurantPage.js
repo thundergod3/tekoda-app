@@ -15,16 +15,31 @@ const SearchRestaurantPage = ({ match }) => {
 		utilReducer: { loading },
 	} = useSelector((state) => state);
 	const dispatch = useDispatch();
-	const { getRestaurantSearchDetailRequest, fetchListRestaurantRequest, searchRestaurantRequest } = restaurantAction;
+	const {
+		getRestaurantSearchDetailRequest,
+		fetchListRestaurantRequest,
+		searchRestaurantRequest,
+		fetchListRestaurantPerPageRequest,
+	} = restaurantAction;
 
 	useEffect(() => {
-		if (match.params.params && isNaN(parseInt(match.params.params))) {
+		dispatch(utilAction.loadingUI());
+		if (match.params.params && match.params.params.slice(0, 4) === "page") {
+			dispatch(fetchListRestaurantPerPageRequest(match.params.params.slice(5, match.params.params.length)));
+			dispatch(fetchListRestaurantRequest());
+		} else if (match.params.params && isNaN(parseInt(match.params.params))) {
 			dispatch(searchRestaurantRequest([match.params.params]));
 		} else if (!isNaN(parseInt(match.params.params))) {
-			dispatch(getRestaurantSearchDetailRequest(match.params.params));
-			dispatch(fetchListRestaurantRequest());
+			if (Number.isInteger(match.params.params)) {
+				dispatch(getRestaurantSearchDetailRequest(match.params.params));
+				dispatch(fetchListRestaurantPerPageRequest());
+				dispatch(fetchListRestaurantRequest());
+			} else {
+				dispatch(searchRestaurantRequest([match.params.params]));
+			}
 		} else {
 			dispatch(fetchListRestaurantRequest());
+			dispatch(fetchListRestaurantPerPageRequest());
 		}
 	}, []);
 

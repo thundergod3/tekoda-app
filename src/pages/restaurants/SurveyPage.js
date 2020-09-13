@@ -49,7 +49,7 @@ const listRestaurant = [
 const SurveyPage = () => {
 	const {
 		authReducer: { authenticated },
-		restaurantReducer: { statusSurveyForm },
+		restaurantReducer: { statusSurvey },
 	} = useSelector((state) => state);
 	const dispatch = useDispatch();
 	const { sendSurveyFormRequest } = restaurantAction;
@@ -72,7 +72,7 @@ const SurveyPage = () => {
 
 	if (authenticated === false) return <Redirect to="/login" />;
 
-	if (authenticated === true && statusSurveyForm === true) return <Redirect to="/" />;
+	if (authenticated === true && statusSurvey === true) return <Redirect to="/" />;
 
 	return (
 		<>

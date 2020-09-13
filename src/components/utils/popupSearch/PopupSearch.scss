@@ -1,0 +1,144 @@
+@import "../../../App.scss";
+
+.layout-search {
+	display: flex;
+	flex-direction: column;
+	height: max-content;
+	width: 350px;
+	position: absolute;
+	top: 90px;
+	background: #fff;
+	border: 1px solid #b0b0b0;
+	box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+	border-radius: 14px;
+	padding-top: 40px;
+	padding-left: 40px;
+	z-index: 100;
+
+	&:hover {
+		cursor: pointer !important;
+	}
+
+	.layout-search__item {
+		display: flex;
+		width: max-content;
+		margin-bottom: 30px;
+		&:hover {
+			cursor: pointer !important;
+		}
+
+		.layout-search__title {
+			margin-left: 35px;
+			font-family: Roboto;
+			font-size: 16px;
+			color: #4f4f4f;
+
+			&:hover {
+				cursor: pointer !important;
+			}
+		}
+	}
+
+	&.layout-search__time {
+		top: 100px !important;
+	}
+}
+
+.layout-search__perference {
+	flex: 0.7;
+	max-height: 473px;
+	height: 100%;
+	overflow-y: scroll;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+
+	.layout-search__perferenceWrapper {
+		margin-bottom: 30px;
+
+		.layout-search__perfenceTitle {
+			font-family: Roboto;
+			font-weight: bold;
+			font-size: 12px;
+			color: #000000;
+			margin-bottom: 10px;
+		}
+
+		.layout-search__perfenceList {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
+	}
+}
+
+.layout-search__dishesContainer {
+	display: flex;
+	flex-direction: row;
+	width: 1240px;
+	height: max-content;
+	position: absolute;
+	top: 90px;
+	left: -20px;
+	background: #fff;
+	border: 1px solid #b0b0b0;
+	box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+	border-radius: 14px;
+	padding-top: 40px;
+	padding-left: 25px;
+	z-index: 100;
+
+	.layout-search__dishes {
+		flex: 0.3;
+		padding-top: 5px;
+
+		.layout-search__item {
+			display: flex;
+			flex-direction: row;
+			margin-bottom: 30px;
+
+			&:after {
+				content: "";
+				position: absolute;
+				width: 1px;
+				height: 442px;
+				left: 353px;
+				top: 49px;
+				background: #c4c4c4;
+			}
+
+			img {
+				object-fit: contain;
+			}
+
+			.layout-search__title {
+				margin-left: 40px;
+				font-family: Roboto;
+				font-size: 16px;
+				color: #4f4f4f;
+			}
+		}
+	}
+
+	&.layout-search__people {
+	}
+}
+
+.layout-search__buttonSave {
+	position: absolute;
+	width: 167px;
+	height: 56px;
+	left: 1015px;
+	top: 410px;
+	background: $main-color;
+	border-radius: 23.5px;
+	color: #fff;
+}
+
+.layout-search__input {
+	font-family: Roboto;
+	border: none;
+	outline: none;
+	margin-bottom: -3px;
+}

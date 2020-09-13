@@ -26,7 +26,7 @@ const RestaurantRecommendItem = ({ restaurant: { Name, AvgRatingText, comments, 
 				<div className="restaurant-recommend-item__rating">
 					<img src={star} alt={star} className="restaurant-recommend-item__star" />
 					<span className="restaurant-recommend-item__rateStar">{AvgRatingText}</span>
-					<span className="restaurant-recommend-item__comment">({comments} đánh giá)</span>
+					<span className="restaurant-recommend-item__comment">100 (đánh giá)</span>
 				</div>
 				<p className="restaurant-recommend-item__location">{Name}</p>
 				<p className="restaurant-recommend-item__desc">{Address}</p>

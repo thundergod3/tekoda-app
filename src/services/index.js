@@ -4,11 +4,6 @@ class HTTPMethod {
 	constructor() {
 		this.axios = axios;
 		this.axios.defaults.baseURL = "https://tekoda.ml";
-		this.axios.defaults.headers = {
-			"Access-Control-Allow-Origin": "*",
-			"Access-Control-Allow-Origin": true,
-			"Content-Type": "application/json",
-		};
 	}
 
 	get = (...props) => axios.get(...props);
