@@ -46,6 +46,8 @@ const RestaurantSearchDetail = () => {
 		utilReducer: { active },
 	} = useSelector((state) => state);
 
+	console.log(restaurantSearchDetail);
+
 	return (
 		<>
 			{Object.keys(restaurantSearchDetail).length !== 0 && (
@@ -55,13 +57,6 @@ const RestaurantSearchDetail = () => {
 						<p className="restaurant-search-detail__title">{restaurantSearchDetail?._source.Name}</p>
 						<p className="restaurant-search-detail__bio">{restaurantSearchDetail?._source.Address}</p>
 						<div className="restaurant-search-detail__info">
-							<div className="restaurant-search-detail__filterContainer">
-								{restaurantSearchDetail?._source?.optionList.map((option, index) => (
-									<div key={index} className="restaurant-search-detail__filterOption">
-										<p>{option.title}</p>
-									</div>
-								))}
-							</div>
 							<div className="restaurant-search-detail__price">
 								<img src={MoneyIcon} alt="money" className="restaurant-search-detail__priceIcon" />
 								<span className="restaurant-search-detail__priceMin">

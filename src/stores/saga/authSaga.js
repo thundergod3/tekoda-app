@@ -55,8 +55,8 @@ function* checkAuthenticated() {
 
 	if (token) {
 		const user = yield cookieLocal.getFromLocal("user");
-		const expiredToken = yield user.data_access_expiration_time;
-		if (expiredToken <= Date.now() / 1000) {
+		const expiredToken = yield user?.data_access_expiration_time;
+		if (expiredToken && expiredToken <= Date.now() / 1000) {
 			yield put(authAction.checkAuthenticatedFailed());
 			yield cookieLocal.removeFromCookie("token");
 			yield cookieLocal.removeFromCookie("user");

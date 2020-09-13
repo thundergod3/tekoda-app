@@ -30,14 +30,6 @@ const restaurantReducer = (state = initialState, action) => {
 					_source: {
 						...action.restaurantListEachPage[0]._source,
 						image: restaurant,
-						optionList: [
-							{
-								title: "Inspiration",
-							},
-							{
-								title: "Pizza",
-							},
-						],
 						descriptionList: [
 							{
 								title: "Món ăn",
@@ -73,14 +65,6 @@ const restaurantReducer = (state = initialState, action) => {
 					_source: {
 						...action.restaurantSearchDetail._source,
 						image: restaurant,
-						optionList: [
-							{
-								title: "Inspiration",
-							},
-							{
-								title: "Pizza",
-							},
-						],
 						descriptionList: [
 							{
 								title: "Món ăn",
@@ -124,14 +108,6 @@ const restaurantReducer = (state = initialState, action) => {
 					_source: {
 						...action.restaurantSearchList[0]._source,
 						image: restaurant,
-						optionList: [
-							{
-								title: "Inspiration",
-							},
-							{
-								title: "Pizza",
-							},
-						],
 						descriptionList: [
 							{
 								title: "Món ăn",
