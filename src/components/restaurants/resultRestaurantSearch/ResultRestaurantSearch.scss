@@ -2,9 +2,16 @@
 	flex: 0.4;
 	padding: 0 10px;
 	max-width: 440px;
+	height: 100%;
+	overflow: hidden;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
 
 	.search-restaurant-search__container {
 		margin-right: 10px;
+		margin-top: 10px;
 
 		.search-restaurant-search__title {
 			font-family: Roboto;

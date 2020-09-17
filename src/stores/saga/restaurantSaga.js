@@ -25,8 +25,13 @@ function* fetchListRestaurantPerPage({ page }) {
 	yield put(utilAction.loadingUI());
 	try {
 		if (!page) page = 1;
+		yield put(restaurantAction.removeRestaurantReviewList());
 		const response = yield call(restaurantService.fetchRestaurantPerPage, { page });
 		yield put(restaurantAction.fetchListRestaurantPerPageSucceeded(response.data));
+		const {
+			restaurantReducer: { restaurantSearchDetail },
+		} = yield select((state) => state);
+		yield call(getRestaurantReview, { restaurantId: restaurantSearchDetail._id, count: 1 });
 		yield put(utilAction.loadedUI());
 	} catch (error) {
 		console.log(error);
@@ -41,10 +46,15 @@ function* getRestaurantDetail({ id }) {
 
 	if (restaurantList.length !== 0) {
 		yield put(utilAction.showActive());
+		yield put(restaurantAction.removeRestaurantReviewList());
 
 		try {
 			const response = yield call(restaurantService.fetchDetailRestaurant, { id });
 			yield put(restaurantAction.getRestaurantSearchDetailSucceeded(response?.data[0]));
+			const {
+				restaurantReducer: { restaurantSearchDetail },
+			} = yield select((state) => state);
+			yield call(getRestaurantReview, { restaurantId: restaurantSearchDetail._id, count: 1 });
 			yield delay(100);
 			yield put(utilAction.endActive());
 		} catch (error) {
@@ -57,6 +67,11 @@ function* getRestaurantDetail({ id }) {
 		try {
 			const response = yield call(restaurantService.fetchDetailRestaurant, { id });
 			yield put(restaurantAction.getRestaurantSearchDetailSucceeded(response?.data[0]));
+			yield put(restaurantAction.removeRestaurantReviewList());
+			const {
+				restaurantReducer: { restaurantSearchDetail },
+			} = yield select((state) => state);
+			yield call(getRestaurantReview, { restaurantId: restaurantSearchDetail._id, count: 1 });
 			yield put(utilAction.loadedUI());
 		} catch (error) {
 			console.log(error);
@@ -67,7 +82,6 @@ function* getRestaurantDetail({ id }) {
 function* sendSurveyForm({ surveyForm }) {
 	try {
 		yield cookieLocal.saveToLocal("statusSurvey", true);
-		console.log(history);
 		yield history.push("/");
 		yield put(restaurantAction.sendSurveyFormSucceeded());
 	} catch (error) {
@@ -75,14 +89,39 @@ function* sendSurveyForm({ surveyForm }) {
 	}
 }
 
-function* searchRestaurant({ listKeyWord }) {
+function* searchRestaurant({ listKeyWord, page }) {
+	yield put(restaurantAction.removeRestaurantReviewList());
+	if (!page) page = 1;
 	try {
-		const response = yield call(restaurantService.searchRestaurant, { listKeyWord });
+		const response = yield call(restaurantService.searchRestaurant, { listKeyWord, page });
 		yield put(restaurantAction.searchRestaurantSucceeded(response.data));
+		const {
+			restaurantReducer: { restaurantSearchDetail },
+		} = yield select((state) => state);
+		yield call(getRestaurantReview, { restaurantId: restaurantSearchDetail._id, count: 1 });
 		yield put(utilAction.loadedUI());
 	} catch (error) {
 		console.log(error);
 		yield put(utilAction.loadedUI());
+	}
+}
+
+function* getRestaurantReview({ restaurantId, count }) {
+	try {
+		const {
+			restaurantReducer: { restaurantReviewList },
+		} = yield select((state) => state);
+		const response = yield call(restaurantService.getRestaurantReview, { restaurantId, count });
+		if (response.data.length !== 0) {
+			if (restaurantReviewList.length === 0) {
+				yield put(restaurantAction.getRestaurantReviewListSucceeded(response.data));
+			} else {
+				console.log(restaurantReviewList);
+				yield put(restaurantAction.getRestaurantReviewListSucceeded([...restaurantReviewList, response.data]));
+			}
+		}
+	} catch (error) {
+		console.log(error);
 	}
 }
 
@@ -92,4 +131,5 @@ export default function* restaurantSaga() {
 	yield takeLatest(types.GET_RESTAURANT_SEARCH_DETAIL_REQUEST, getRestaurantDetail);
 	yield takeLatest(types.SEND_SURVEY_FORM_REQUEST, sendSurveyForm);
 	yield takeLatest(types.SEARCH_RESTAURANT_REQUEST, searchRestaurant);
+	yield takeLatest(types.GET_RESTAURANT_REVIEW_LIST_REQUEST, getRestaurantReview);
 }

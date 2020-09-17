@@ -9,6 +9,7 @@ import RingIcon from "../../../assets/icons/ring.png";
 import LocationIcon from "../../../assets/icons/location.png";
 
 import "./SearchBar.scss";
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 import SearchIcon from "@material-ui/icons/Search";
 import PreferenceItem from "../../utils/preferenceItem/PreferenceItem";
@@ -176,8 +177,10 @@ const SearchBar = () => {
 	const [chooseLocation, setChooseLocation] = useState("");
 	const [showSearchTime, setShowSearchTime] = useState(false);
 	const [chooseTime, setChooseTime] = useState("");
+	const [searchAnyDishes, setSearchAnyDishes] = useState("");
+	const [searchAdd, setSearchAdd] = useState("");
 	const dispatch = useDispatch();
-	const { searchRestaurantRequest } = restaurantAction;
+	const { searchRestaurantRequest, storeListKeyword } = restaurantAction;
 	const { loadingUI } = utilAction;
 
 	const addPrefernce = (preference) => {
@@ -270,6 +273,18 @@ const SearchBar = () => {
 		}
 	};
 
+	const handleChange = (address) => {
+		setSearchAdd(address);
+	};
+
+	const handleSelect = (address) => {
+		setSearchAdd(address);
+		geocodeByAddress(address)
+			.then((results) => getLatLng(results[0]))
+			.then((latLng) => console.log("Success", latLng))
+			.catch((error) => console.error("Error", error));
+	};
+
 	useEffect(() => {
 		document.addEventListener("mousedown", handleOutSideClick);
 
@@ -282,7 +297,13 @@ const SearchBar = () => {
 		<div className="search-bar">
 			<div className="search-bar__container search-bar__formSearch" onClick={() => setShowSearchDishes(true)}>
 				<p className="search-bar__containerTitle">Tìm món</p>
-				<p className="search-bar__containerBio">{choosePreference.map((preference) => `${preference}, `)}</p>
+				<input
+					type="text"
+					className="search-bar__containerBio search-bar__containerInput"
+					value={searchAnyDishes}
+					onChange={(e) => setSearchAnyDishes(e.target.value)}
+					style={{ width: "max-content" }}
+				/>
 				{showSearchDishes && layoutSearchDishes()}
 			</div>
 			<div className="search-bar__container search-bar__people">
@@ -298,10 +319,9 @@ const SearchBar = () => {
 					placeholder="Thêm số người"
 				/>
 			</div>
-			<div className="search-bar__container search-bar__location" onClick={() => setShowSearchLocation(true)}>
+			<div className="search-bar__container search-bar__location">
 				<p className="search-bar__containerTitle">địa điểm</p>
-				<p className="search-bar__containerBio">{chooseLocation !== "" ? chooseLocation : "Thêm địa điểm"}</p>
-				{showSearchLocation && (
+				{/* {showSearchLocation && (
 					<PopupSearch
 						classPopup="layout-search__location"
 						popupRef={popupLocationEl}
@@ -309,7 +329,41 @@ const SearchBar = () => {
 						typePopup="popupLocation"
 						popupFunction={popUpSearchFunc}
 					/>
-				)}
+				)} */}
+				<PlacesAutocomplete value={searchAdd} onChange={handleChange} onSelect={handleSelect}>
+					{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+						<div>
+							<input
+								{...getInputProps({
+									className: "search-bar__containerBio",
+									style: { width: "calc(85%)", textTransform: "capitalize" },
+								})}
+							/>
+							{suggestions.length !== 0 && (
+								<div className="layout-search" style={{ width: "400px", paddingTop: "15px" }}>
+									{suggestions.map((suggestion) => {
+										const className = suggestion.active
+											? "suggestion-item--active"
+											: "suggestion-item";
+										// inline style for demonstration purpose
+										const style = suggestion.active
+											? { backgroundColor: "#fafafa", cursor: "pointer" }
+											: { backgroundColor: "#ffffff", cursor: "pointer" };
+										return (
+											<div
+												className="layout-search__location"
+												{...getSuggestionItemProps(suggestion, {
+													style,
+												})}>
+												{suggestion.description}
+											</div>
+										);
+									})}
+								</div>
+							)}
+						</div>
+					)}
+				</PlacesAutocomplete>
 			</div>
 			<div className="search-bar__container search-bar__time" onClick={() => setShowSearchTime(true)}>
 				<div className="search-bar__timeWrapper">
@@ -330,19 +384,30 @@ const SearchBar = () => {
 				<Link
 					to={`/today-eat/${[
 						...choosePreference,
-						`${peopleSearchText} người`,
-						chooseLocation !== "" ? chooseLocation : null,
+						peopleSearchText !== "" ? `${peopleSearchText} người` : null,
 						chooseTime !== "" ? chooseTime : null,
-					].join("+")}`}
+					].join("+")}/page=1`}
 					onClick={() => {
 						dispatch(loadingUI());
 						dispatch(
-							searchRestaurantRequest([
-								...choosePreference,
-								`${peopleSearchText} người`,
-								chooseLocation,
-								chooseTime,
-							])
+							storeListKeyword(
+								[
+									searchAnyDishes,
+									...choosePreference,
+									peopleSearchText !== "" ? `${peopleSearchText} người` : "",
+									chooseTime,
+								].filter((item) => item !== "")
+							)
+						);
+						dispatch(
+							searchRestaurantRequest(
+								[
+									searchAnyDishes,
+									...choosePreference,
+									peopleSearchText !== "" ? `${peopleSearchText} người` : "",
+									chooseTime,
+								].filter((item) => item !== "")
+							)
 						);
 					}}>
 					<div className="search-bar__searchButton">

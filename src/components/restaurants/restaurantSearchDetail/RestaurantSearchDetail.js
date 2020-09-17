@@ -42,11 +42,9 @@ const listRating = [
 
 const RestaurantSearchDetail = () => {
 	const {
-		restaurantReducer: { restaurantSearchDetail },
+		restaurantReducer: { restaurantSearchDetail, restaurantReviewList },
 		utilReducer: { active },
 	} = useSelector((state) => state);
-
-	console.log(restaurantSearchDetail);
 
 	return (
 		<>
@@ -110,7 +108,10 @@ const RestaurantSearchDetail = () => {
 							</div>
 						</div>
 						<div className="restaurant-search-detail__reviewContainer">
-							<p className="restaurant-search-detail__reviewRate">4,18 out of 5 stars from 153 reviews</p>
+							<p className="restaurant-search-detail__reviewRate">
+								{restaurantSearchDetail?._source?.AvgRating} out of 10 stars from{" "}
+								{restaurantReviewList.length} reviews
+							</p>
 							<div className="restaurant-search-detail__reviewListRate">
 								{listRating.map((rating, index) => (
 									<div className="restaurant-search-detail__reviewItemRate" key={index}>

@@ -2,11 +2,15 @@ import React from "react";
 
 import "./RestaurantSearchFilterOption.scss";
 
-const RestaurantSearchFilterOption = ({ filter: { title } }) => {
+const RestaurantSearchFilterOption = ({ title }) => {
 	return (
-		<button className="restaurant-search-filter-option">
-			<p className="restaurant-search-filter-option__title">{title}</p>
-		</button>
+		<>
+			{title !== "" && (
+				<button className="restaurant-search-filter-option">
+					<p className="restaurant-search-filter-option__title">{title}</p>
+				</button>
+			)}
+		</>
 	);
 };
 

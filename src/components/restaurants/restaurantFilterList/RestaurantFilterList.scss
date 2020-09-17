@@ -4,25 +4,25 @@
 	.restaurant-filter-list__container {
 		margin-top: 50px;
 		overflow-y: scroll;
-		height: 555px;
+		height: 70vh;
 
 		&::-webkit-scrollbar {
 			display: none;
 		}
-	}
 
-	.restaurant-filter__pagination {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
+		.restaurant-filter__pagination {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
 
-		.restaurant-filter__length {
-			font-weight: normal;
-			font-size: 14px;
-			line-height: 18px;
-			color: #222222;
-			margin-top: 10px;
-			text-align: center;
+			.restaurant-filter__length {
+				font-weight: normal;
+				font-size: 14px;
+				line-height: 18px;
+				color: #222222;
+				margin-top: 10px;
+				text-align: center;
+			}
 		}
 	}
 

@@ -20,6 +20,7 @@ const SearchRestaurantPage = ({ match }) => {
 		fetchListRestaurantRequest,
 		searchRestaurantRequest,
 		fetchListRestaurantPerPageRequest,
+		storeListKeyword,
 	} = restaurantAction;
 
 	useEffect(() => {
@@ -28,7 +29,9 @@ const SearchRestaurantPage = ({ match }) => {
 			dispatch(fetchListRestaurantPerPageRequest(match.params.params.slice(5, match.params.params.length)));
 			dispatch(fetchListRestaurantRequest());
 		} else if (match.params.params && isNaN(parseInt(match.params.params))) {
+			dispatch(fetchListRestaurantRequest());
 			dispatch(searchRestaurantRequest([match.params.params]));
+			dispatch(storeListKeyword(match.params.params.split("+").filter((item) => item !== "")));
 		} else if (!isNaN(parseInt(match.params.params))) {
 			if (Number.isInteger(match.params.params)) {
 				dispatch(getRestaurantSearchDetailRequest(match.params.params));
@@ -36,6 +39,7 @@ const SearchRestaurantPage = ({ match }) => {
 				dispatch(fetchListRestaurantRequest());
 			} else {
 				dispatch(searchRestaurantRequest([match.params.params]));
+				dispatch(storeListKeyword(match.params.params.split("+").filter((item) => item !== "")));
 			}
 		} else {
 			dispatch(fetchListRestaurantRequest());

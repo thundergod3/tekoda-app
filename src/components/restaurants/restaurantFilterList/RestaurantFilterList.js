@@ -32,26 +32,26 @@ const RestaurantFilterList = ({ match, history }) => {
 	return (
 		<div className="restaurant-filter-list">
 			<div className="restaurant-filter-list__container">
-				{!match.params.params && renderLayoutRestaurant(restaurantListEachPage)}
-				{isNaN(parseInt(match.params.params) && match.params.params) &&
-					renderLayoutRestaurant(restaurantListEachPage)}
-				{!isNaN(parseInt(match.params.params)) && renderLayoutRestaurant(restaurantListEachPage)}
-			</div>
-			<div className="restaurant-filter__pagination">
-				<Pagination
-					defaultPage={pageNumber}
-					count={Math.ceil(restaurantList.length / 10)}
-					shape="rounded"
-					onChange={(object, number) => {
-						dispatch(loadingUI());
-						setPageNumber(number);
-						history.push(`/today-eat/page=${number}`);
-						dispatch(fetchListRestaurantPerPageRequest(number));
-					}}
-					hidePrevButton={pageNumber === 1 ? true : false}
-					hideNextButton={pageNumber === Math.ceil(restaurantList.length / 10) ? true : false}
-				/>
-				<p className="restaurant-filter__length">1 - 20 / Hơn 300 nhà hàng</p>
+				{!match.params.params ||
+					((isNaN(parseInt(match.params.params) && match.params.params) ||
+						!isNaN(parseInt(match.params.params))) &&
+						renderLayoutRestaurant(restaurantListEachPage))}
+				<div className="restaurant-filter__pagination">
+					<Pagination
+						defaultPage={pageNumber}
+						count={Math.ceil(restaurantList.length / 10)}
+						shape="rounded"
+						onChange={(object, number) => {
+							dispatch(loadingUI());
+							setPageNumber(number);
+							history.push(`/today-eat/page=${number}`);
+							dispatch(fetchListRestaurantPerPageRequest(number));
+						}}
+						hidePrevButton={pageNumber === 1 ? true : false}
+						hideNextButton={pageNumber === Math.ceil(restaurantList.length / 10) ? true : false}
+					/>
+					<p className="restaurant-filter__length">1 - 20 / Hơn 300 nhà hàng</p>
+				</div>
 			</div>
 		</div>
 	);

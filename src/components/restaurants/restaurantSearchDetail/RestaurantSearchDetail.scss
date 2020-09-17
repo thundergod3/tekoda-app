@@ -2,11 +2,10 @@
 	flex: 0.6;
 	background: #eeeeee;
 	border-radius: 38px;
-	margin-bottom: 110px;
 	padding: 40px 60px;
 	position: relative;
 	transition: opacity 0.1s ease;
-	height: 680px;
+	height: 100%;
 
 	.restaurant-search-detail__container {
 		overflow-y: scroll;
@@ -194,9 +193,9 @@
 	.restaurant-search-detail__buttonContainer {
 		.restaurant-search-detail__button {
 			position: absolute;
-			bottom: -40px;
+			bottom: -20px;
 			width: 275px;
-			height: 56px;
+			height: 50px;
 			background: #c4c4c4;
 			border-radius: 28px;
 			display: flex;

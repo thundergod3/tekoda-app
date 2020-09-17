@@ -4,7 +4,7 @@
 .search-page {
 	margin: 0 auto;
 	width: 100%;
-	height: 100%;
+	height: 80vh;
 	max-width: 1241px;
 }
 
@@ -107,6 +107,63 @@
 			}
 		}
 
+		.drawer-sidebar-right__formAgeTitle {
+			font-family: Roboto;
+			font-size: 26px;
+			color: #222222;
+			margin-top: 60px;
+		}
+
+		.drawer-sidebar-right__formAge {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			margin-top: 25px;
+
+			.drawer-sidebar-right__formAgeItem {
+				margin-right: 30px;
+				width: 98px;
+				height: 41px;
+				background: #0260fd;
+				border-radius: 10px;
+				font-family: Roboto;
+				font-size: 20px;
+				color: #ffffff;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+		}
+
+		.drawer-sidebar-right__formGenderTitle {
+			margin-top: 50px;
+			font-family: Roboto;
+			font-size: 26px;
+			color: #222222;
+		}
+
+		.drawer-sidebar-right__formGender {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			margin-top: 25px;
+
+			.drawer-sidebar-right__formGenderItem {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 169px;
+				height: 41px;
+				background: #0260fd;
+				padding: 9px 63px;
+				border-radius: 10px;
+				margin-right: 35px;
+				font-family: Roboto;
+				font-size: 20px;
+				color: #ffffff;
+			}
+		}
+
 		.drawer-sidebar-right__title {
 			align-self: flex-start;
 			margin-top: 50px;
@@ -187,7 +244,6 @@
 				border: none;
 				outline: none;
 				font-family: Roboto;
-				font-style: normal;
 				font-weight: bold;
 				font-size: 15px;
 				text-align: center;
@@ -196,4 +252,14 @@
 			}
 		}
 	}
+}
+.survey-page_suggestion {
+	font-family: Roboto;
+	width: 400px;
+	height: 60px;
+	background: #fff;
+	border-bottom: dotted 1px #000;
+	display: flex;
+	align-items: center;
+	font-size: 1rem;
 }

@@ -47,7 +47,7 @@ const FilterList = () => {
 	return (
 		<div className="filter-list">
 			{filterList.map((option, index) => (
-				<Link to={`/today-eat/${option.title}`} key={index} onClick={() => dispatch(loadingUI())}>
+				<Link to={`/today-eat/${option.title}/page=1`} key={index} onClick={() => dispatch(loadingUI())}>
 					<FilterOption option={option} />
 				</Link>
 			))}

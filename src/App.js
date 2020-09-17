@@ -36,7 +36,7 @@ const App = ({
 				<Route exact path="/" component={Homepage} />
 				<Route
 					exact
-					path={["/today-eat/:params", "/today-eat", "/today-eat/page=:pageNumber"]}
+					path={["/today-eat/:params/page=:pageNumber", "/today-eat", "/today-eat/page=:pageNumber"]}
 					component={SearchRestaurantPage}
 				/>
 				<Route exact path={"/survey"} component={SurveyPage} />

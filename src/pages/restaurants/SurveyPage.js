@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 
+import RoomIcon from "@material-ui/icons/Room";
+
 import { useSelector, useDispatch } from "react-redux";
 import restaurantAction from "../../stores/redux/actions/restaurantAction";
 
 import logoWhite from "../../assets/icons/Vector.png";
 import "./restaurants.scss";
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 const listRestaurant = [
 	{
@@ -46,6 +49,44 @@ const listRestaurant = [
 	},
 ];
 
+const surveyAgeList = [
+	{
+		id: 1,
+		age: "0 - 13",
+	},
+	{
+		id: 2,
+		age: "13 - 18",
+	},
+	{
+		id: 3,
+		age: "19 - 29",
+	},
+	{
+		id: 4,
+		age: "30 - 39",
+	},
+	{
+		id: 5,
+		age: "40+",
+	},
+];
+
+const surveyGenderList = [
+	{
+		id: 1,
+		gender: "Name",
+	},
+	{
+		id: 2,
+		gender: "Nữ",
+	},
+	{
+		id: 3,
+		gender: "Khác",
+	},
+];
+
 const SurveyPage = () => {
 	const {
 		authReducer: { authenticated },
@@ -54,17 +95,18 @@ const SurveyPage = () => {
 	const dispatch = useDispatch();
 	const { sendSurveyFormRequest } = restaurantAction;
 	const [searchType, setSearchType] = useState("");
-	const [currentDrawer, setCurrentDrawer] = useState(0);
+	const [searchAdd, setSearchAdd] = useState("");
+	const [currentDrawer, setCurrentDrawer] = useState(1);
 
 	const nextDrawer = () => {
-		if (currentDrawer >= 1) {
+		if (currentDrawer >= 3) {
 			return;
 		}
 		setCurrentDrawer(currentDrawer + 1);
 	};
 
 	const preDrawer = () => {
-		if (currentDrawer <= 0) {
+		if (currentDrawer <= 1) {
 			return;
 		}
 		setCurrentDrawer(currentDrawer - 1);
@@ -73,6 +115,24 @@ const SurveyPage = () => {
 	if (authenticated === false) return <Redirect to="/login" />;
 
 	if (authenticated === true && statusSurvey === true) return <Redirect to="/" />;
+
+	// if (currentDrawer === 2) {
+	// 	navigator.geolocation.getCurrentPosition(function (position) {
+	// 		console.log(position);
+	// 	});
+	// }
+
+	const handleChange = (address) => {
+		setSearchAdd(address);
+	};
+
+	const handleSelect = (address) => {
+		setSearchAdd(address);
+		geocodeByAddress(address)
+			.then((results) => getLatLng(results[0]))
+			.then((latLng) => console.log("Success", latLng))
+			.catch((error) => console.error("Error", error));
+	};
 
 	return (
 		<>
@@ -84,7 +144,7 @@ const SurveyPage = () => {
 							<p>TekodaApp </p>
 						</div>
 						<div className="drawer-sidebar__info">
-							{currentDrawer === 0 && (
+							{(currentDrawer === 1 || currentDrawer === 2) && (
 								<>
 									<h4>Chỉ một vài bước để tới trải nghiệm cá nhân hóa của bạn</h4>
 									<p>
@@ -93,7 +153,7 @@ const SurveyPage = () => {
 									</p>
 								</>
 							)}
-							{currentDrawer === 1 && (
+							{currentDrawer === 3 && (
 								<>
 									<h4>Chọn quán ăn theo sở thích của bạn</h4>
 									<p>
@@ -105,7 +165,7 @@ const SurveyPage = () => {
 						</div>
 					</div>
 					<div className="drawer-sidebar-right">
-						{currentDrawer === 0 && (
+						{currentDrawer === 1 && (
 							<div className="drawer-sidebar-right__form">
 								<label htmlFor="username">Hãy cho chúng mình biết tên của bạn nhé!</label>
 								<input
@@ -116,9 +176,66 @@ const SurveyPage = () => {
 									value={searchType}
 									onChange={(e) => setSearchType(e.target.value)}
 								/>
+								<div className="drawer-sidebar-right__formAgeTitle">Bạn trong nhóm tuổi nào</div>
+								<div className="drawer-sidebar-right__formAge">
+									{surveyAgeList.map((age) => (
+										<div className="drawer-sidebar-right__formAgeItem" key={age.id}>
+											{age.age}
+										</div>
+									))}
+								</div>
+								<div className="drawer-sidebar-right__formGenderTitle">Giới tính</div>
+								<div className="drawer-sidebar-right__formGender">
+									{surveyGenderList.map((gender) => (
+										<div className="drawer-sidebar-right__formGenderItem" key={gender.id}>
+											{gender.gender}
+										</div>
+									))}
+								</div>
 							</div>
 						)}
-						{currentDrawer === 1 && (
+						{currentDrawer === 2 && (
+							<div className="drawer-sidebar-right__form">
+								<label htmlFor="address">
+									Hãy cho chúng mình biết địa điểm của bạn để hiển thị kết quả chính xác hơn với bạn
+								</label>
+								<PlacesAutocomplete value={searchAdd} onChange={handleChange} onSelect={handleSelect}>
+									{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+										<div>
+											<input
+												{...getInputProps({
+													placeholder: "Nhập địa điểm ...",
+													className: "location-search-input",
+												})}
+											/>
+											<div className="autocomplete-dropdown-container">
+												{loading && <div>Loading...</div>}
+												{suggestions.map((suggestion) => {
+													const className = suggestion.active
+														? "suggestion-item--active"
+														: "suggestion-item";
+													// inline style for demonstration purpose
+													const style = suggestion.active
+														? { backgroundColor: "#fafafa", cursor: "pointer" }
+														: { backgroundColor: "#ffffff", cursor: "pointer" };
+													return (
+														<div
+															className="survey-page_suggestion"
+															{...getSuggestionItemProps(suggestion, {
+																style,
+															})}>
+															<RoomIcon />
+															<span>{suggestion.description}</span>
+														</div>
+													);
+												})}
+											</div>
+										</div>
+									)}
+								</PlacesAutocomplete>
+							</div>
+						)}
+						{currentDrawer === 3 && (
 							<>
 								<p className="drawer-sidebar-right__title">
 									Hãy chọn tối thiểu 5 nhóm nhà hàng bạn thích
@@ -137,7 +254,7 @@ const SurveyPage = () => {
 							<button className="drawer-sidebar__buttonBack" onClick={preDrawer}>
 								Trở lại
 							</button>
-							{currentDrawer === 1 ? (
+							{currentDrawer === 3 ? (
 								<button
 									className="drawer-sidebar__buttonNext"
 									onClick={() => dispatch(sendSurveyFormRequest())}>

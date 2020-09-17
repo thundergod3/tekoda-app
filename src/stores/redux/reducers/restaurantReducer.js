@@ -10,6 +10,8 @@ const initialState = {
 	restaurantListEachPage: [],
 	restaurantSearchDetail: {},
 	statusSurvey: localStorage.getItem("statusSurvey") ? JSON.parse(localStorage.getItem("statusSurvey")) : false,
+	restaurantReviewList: [],
+	listKeyWord: [],
 };
 
 const restaurantReducer = (state = initialState, action) => {
@@ -132,6 +134,41 @@ const restaurantReducer = (state = initialState, action) => {
 						],
 					},
 				},
+			};
+		}
+
+		case types.GET_RESTAURANT_REVIEW_LIST_SUCCEEDED: {
+			return {
+				...state,
+				restaurantReviewList: action.restaurantReviewList,
+			};
+		}
+
+		case types.REMOVE_RESTAURANT_REVIEW_LIST: {
+			return {
+				...state,
+				restaurantReviewList: [],
+			};
+		}
+
+		case types.STORE_LIST_KEYWORD: {
+			return {
+				...state,
+				listKeyWord: action.listKeyWord,
+			};
+		}
+
+		case types.ADD_STORE_LIST_KEYWORD: {
+			return {
+				...state,
+				listKeyWord: [...state.listKeyWord, action.keyword],
+			};
+		}
+
+		case types.DELETE_ITEM_STORE_LIST_KEYWORD: {
+			return {
+				...state,
+				listKeyWord: state.listKeyWord.filter((item) => item !== action.keyword),
 			};
 		}
 

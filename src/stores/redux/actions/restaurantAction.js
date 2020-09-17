@@ -59,16 +59,58 @@ class restaurantAction {
 		};
 	}
 
-	searchRestaurantRequest(listKeyWord) {
+	searchRestaurantRequest(listKeyWord, page) {
 		return {
 			type: types.SEARCH_RESTAURANT_REQUEST,
 			listKeyWord,
+			page,
 		};
 	}
 	searchRestaurantSucceeded(restaurantSearchList) {
 		return {
 			type: types.SEARCH_RESTAURANT_SUCCEEDED,
 			restaurantSearchList,
+		};
+	}
+
+	getRestaurantReviewListRequest(restaurantId, count) {
+		return {
+			type: types.GET_RESTAURANT_REVIEW_LIST_REQUEST,
+			restaurantId,
+			count,
+		};
+	}
+	getRestaurantReviewListSucceeded(restaurantReviewList) {
+		return {
+			type: types.GET_RESTAURANT_REVIEW_LIST_SUCCEEDED,
+			restaurantReviewList,
+		};
+	}
+
+	removeRestaurantReviewList() {
+		return {
+			type: types.REMOVE_RESTAURANT_REVIEW_LIST,
+		};
+	}
+
+	storeListKeyword(listKeyWord) {
+		return {
+			type: types.STORE_LIST_KEYWORD,
+			listKeyWord,
+		};
+	}
+
+	addstoreListKeyword(keyword) {
+		return {
+			type: types.ADD_STORE_LIST_KEYWORD,
+			keyword,
+		};
+	}
+
+	deleleItemStoreListKeyword(keyword) {
+		return {
+			type: types.DELETE_ITEM_STORE_LIST_KEYWORD,
+			keyword,
 		};
 	}
 }

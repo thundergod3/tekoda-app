@@ -35,7 +35,7 @@ const RestaurantLocationRecommendList = () => {
 					offset={10}
 					itemWidth={394}>
 					{restaurantLocationRecommendList.map((restaurant, index) => (
-						<Link to={`/today-eat/${restaurant._id}`} key={index}>
+						<Link to={`/today-eat/${restaurant._id}/page=1`} key={index}>
 							<RestaurantRecommendItem restaurant={restaurant?._source} id={restaurant._id} />
 						</Link>
 					))}

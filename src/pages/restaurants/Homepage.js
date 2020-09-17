@@ -30,12 +30,6 @@ const Homepage = () => {
 		dispatch(fetchListRestaurantPerPageRequest());
 	}, []);
 
-	useEffect(() => {
-		navigator.geolocation.getCurrentPosition(function (position) {
-			console.log(position);
-		});
-	}, []);
-
 	if (!statusSurvey && authenticated === true) {
 		return <Redirect to="/survey" />;
 	}
