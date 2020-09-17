@@ -8,6 +8,9 @@ import store from "./stores/configureStore";
 import { Provider } from "react-redux";
 
 import App from "./App";
+import ReactGA from "react-ga";
+
+ReactGA.initialize("UA-178258009-1");
 
 ReactDOM.render(
 	<>

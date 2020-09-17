@@ -9,10 +9,11 @@ import user1 from "../../../assets/users/user1.png";
 const UserReviewItem = ({
 	userReview: {
 		_source: { CreatedDate, Description },
+		_id,
 	},
 }) => {
 	return (
-		<div className="user-review-item">
+		<div className="user-review-item" key={_id}>
 			<div className="user-review-item__info">
 				<img src={user1} alt="Cong" className="user-review-item__avatar" />
 				<div className="user-review-item__bio">

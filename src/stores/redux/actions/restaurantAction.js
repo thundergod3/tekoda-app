@@ -113,6 +113,45 @@ class restaurantAction {
 			keyword,
 		};
 	}
+
+	trackingUserScrollReviewListRequest(restaurantId) {
+		return {
+			type: types.TRACKING_USER_SCROLL_REVIEW_LIST_REQUEST,
+			restaurantId,
+		};
+	}
+	trackingUserScrollReviewListSucceeded(enjoy) {
+		return {
+			type: types.TRACKING_USER_SCROLL_REVIEW_LIST_SUCCEEDED,
+			enjoy,
+		};
+	}
+
+	saveRestaurantRequest(restaurantId) {
+		return {
+			type: types.SAVE_RESTAURANT_REQUEST,
+			restaurantId,
+		};
+	}
+	saveRestaurantSucceeded(restaurant) {
+		return {
+			type: types.SAVE_RESTAURANT_SUCCEEDED,
+			restaurant,
+		};
+	}
+
+	getSaveRestaurantListRequest(restaurantId) {
+		return {
+			type: types.GET_SAVE_RESTAURANT_LIST_REQUEST,
+			restaurantId,
+		};
+	}
+	getSaveRestaurantListSucceeded(restaurantSaveList) {
+		return {
+			type: types.GET_SAVE_RESTAURANT_LIST_SUCCEEDED,
+			restaurantSaveList,
+		};
+	}
 }
 
 export default new restaurantAction();

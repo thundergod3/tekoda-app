@@ -16,6 +16,11 @@ import authAction from "../../stores/redux/actions/authAction";
 import utilAction from "../../stores/redux/actions/utilAction";
 import Loading from "../../components/utils/loading/Loading";
 
+const YupSchema = Yup.object({
+	email: Yup.string().email("Invalid email").required("Your email must be required"),
+	password: Yup.string().required("Your password must be required"),
+});
+
 const LoginPage = () => {
 	const {
 		authReducer: { authenticated },
@@ -35,6 +40,7 @@ const LoginPage = () => {
 				email: "",
 				password: "",
 			}}
+			validationSchema={YupSchema}
 			onSubmit={(values, actions) => {
 				dispatch(loadingUI());
 				dispatch(loginUserRequest(values));
@@ -82,13 +88,14 @@ const LoginPage = () => {
 										<p>hoặc</p>
 										<div className="auth-page__form">
 											<input
-												type="text"
+												type="email"
 												placeholder="Nhập username của bạn"
 												className="auth-page__field"
 												onChange={props.handleChange("email")}
 												onBlur={props.handleBlur("email")}
 												value={props.values.email}
 											/>
+											{props.touched.email && <p className="text-error">{props.errors.email}</p>}
 										</div>
 										<div className="auth-page__form">
 											<input
@@ -99,6 +106,9 @@ const LoginPage = () => {
 												onBlur={props.handleBlur("password")}
 												value={props.values.password}
 											/>
+											{props.touched.password && (
+												<p className="text-error">{props.errors.password}</p>
+											)}
 										</div>
 										<button type="submit" className="auth-page__login" onClick={props.handleSubmit}>
 											Đăng nhập

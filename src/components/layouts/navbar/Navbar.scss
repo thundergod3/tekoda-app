@@ -105,3 +105,33 @@
 		}
 	}
 }
+
+.search-bar__compactWrapper {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+
+	.search-bar__compact {
+		width: 467px;
+		height: 42px;
+		background: #eeeeee;
+		border-radius: 21px;
+		padding: 12px 15px;
+		display: flex;
+		align-items: center;
+
+		.MuiSvgIcon-root {
+			flex: 0.1;
+		}
+
+		.search-bar__compactInput {
+			flex: 0.9;
+			border: none;
+			outline: none;
+			background: transparent;
+			font-family: Roboto;
+			font-size: 14px;
+			color: #aeaeae;
+		}
+	}
+}

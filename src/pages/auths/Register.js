@@ -19,6 +19,14 @@ import utilAction from "../../stores/redux/actions/utilAction";
 
 import Loading from "../../components/utils/loading/Loading";
 
+const YupSchema = Yup.object({
+	name: Yup.string().required("Your username must be required"),
+	email: Yup.string().email("Invalid email").required("Your email must be required"),
+	password: Yup.string()
+		.min(6, "Password must have at least 6 characters")
+		.required("Your password must be required"),
+});
+
 const RegisterPage = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const {
@@ -36,6 +44,7 @@ const RegisterPage = () => {
 	return (
 		<Formik
 			initialValues={{ name: "", email: "", password: "" }}
+			validationSchema={YupSchema}
 			onSubmit={(values, action) => {
 				dispatch(loadingUI());
 				dispatch(registerUserRequest(values));
@@ -90,6 +99,7 @@ const RegisterPage = () => {
 												placeholder="Nhập username của bạn"
 												className="auth-page__field"
 											/>
+											{props.touched.name && <p className="text-error">{props.errors.name}</p>}
 										</div>
 										<div className="auth-page__form">
 											<input
@@ -100,22 +110,26 @@ const RegisterPage = () => {
 												placeholder="Nhập email của bạn"
 												className="auth-page__field"
 											/>
+											{props.touched.email && <p className="text-error">{props.errors.email}</p>}
 										</div>
-										<div
-											className="auth-page__form"
-											style={{ display: "flex", alignItems: "center", color: "grey" }}>
-											<input
-												value={props.values.password}
-												onChange={props.handleChange("password")}
-												onBlur={props.handleBlur("password")}
-												type={showPassword ? "text" : "password"}
-												placeholder="Nhập password"
-												className="auth-page__field"
-											/>
-											{!showPassword ? (
-												<VisibilityIcon onClick={() => setShowPassword(true)} />
-											) : (
-												<VisibilityOffIcon onClick={() => setShowPassword(false)} />
+										<div className="auth-page__form">
+											<div style={{ display: "flex", alignItems: "center", color: "grey" }}>
+												<input
+													value={props.values.password}
+													onChange={props.handleChange("password")}
+													onBlur={props.handleBlur("password")}
+													type={showPassword ? "text" : "password"}
+													placeholder="Nhập password"
+													className="auth-page__field"
+												/>
+												{!showPassword ? (
+													<VisibilityIcon onClick={() => setShowPassword(true)} />
+												) : (
+													<VisibilityOffIcon onClick={() => setShowPassword(false)} />
+												)}
+											</div>
+											{props.touched.password && (
+												<p className="text-error">{props.errors.password}</p>
 											)}
 										</div>
 										<button

@@ -32,10 +32,10 @@ const RestaurantFilterList = ({ match, history }) => {
 	return (
 		<div className="restaurant-filter-list">
 			<div className="restaurant-filter-list__container">
-				{!match.params.params ||
-					((isNaN(parseInt(match.params.params) && match.params.params) ||
-						!isNaN(parseInt(match.params.params))) &&
-						renderLayoutRestaurant(restaurantListEachPage))}
+				{(!match.params.params ||
+					isNaN(parseInt(match.params.params) && match.params.params) ||
+					!isNaN(parseInt(match.params.params))) &&
+					renderLayoutRestaurant(restaurantListEachPage)}
 				<div className="restaurant-filter__pagination">
 					<Pagination
 						defaultPage={pageNumber}

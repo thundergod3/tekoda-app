@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
 
 import "./App.scss";
+import ttiPolyfill from "tti-polyfill";
+import ReactGA from "react-ga";
 
 import { useSelector, useDispatch } from "react-redux";
 import authAction from "./stores/redux/actions/authAction";
@@ -12,6 +14,7 @@ import SearchRestaurantPage from "./pages/restaurants/SearchRestaurantPage";
 import LoginPage from "./pages/auths/LoginPage";
 import RegisterPage from "./pages/auths/Register";
 import SurveyPage from "./pages/restaurants/SurveyPage";
+import SaveRestaurantPage from "./pages/restaurants/SaveRestaurantPage";
 
 const App = ({
 	history: {
@@ -28,6 +31,17 @@ const App = ({
 		dispatch(checkAuthenticatedRequest());
 	}, []);
 
+	// useEffect(() => {
+	// 	ttiPolyfill.getFirstConsistentlyInteractive().then((tti) => {
+	// 		console.log(tti);
+	// 		ReactGA.timing({
+	// 			category: "Load Performace",
+	// 			variable: "Time to Interactive",
+	// 			value: tti,
+	// 		});
+	// 	});
+	// }, []);
+
 	return (
 		<>
 			{pathname !== "/login" && pathname !== "/register" && pathname !== "/survey" ? <Navbar /> : null}
@@ -40,6 +54,7 @@ const App = ({
 					component={SearchRestaurantPage}
 				/>
 				<Route exact path={"/survey"} component={SurveyPage} />
+				<Route exact path="/save-restaurant" component={SaveRestaurantPage} />
 
 				{/* AUTH PAGES */}
 				<Route exact path="/login" component={LoginPage} />

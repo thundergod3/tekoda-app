@@ -12,6 +12,12 @@ class restaurantService {
 
 	getRestaurantReview = ({ restaurantId, count }) =>
 		HTTPMethod.get(`/api/v1/review?resId=${restaurantId}&count=${count}`);
+
+	trackingUserScrollReviewList = ({ restaurantId }) =>
+		HTTPMethod.post("/api/v1/user_behavior/create", { restaurant_id: restaurantId });
+
+	saveRestaurant = ({ restaurantId }) =>
+		HTTPMethod.post("/api/v1/user_behavior/enjoy", { restaurant_id: restaurantId });
 }
 
 export default new restaurantService();

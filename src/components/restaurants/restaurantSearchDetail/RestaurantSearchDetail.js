@@ -4,7 +4,8 @@ import "./RestaurantSearchDetail.scss";
 import MoneyIcon from "../../../assets/icons/money.png";
 import numeral from "numeral";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import restaurantAction from "../../../stores/redux/actions/restaurantAction";
 
 import SearchIcon from "@material-ui/icons/Search";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
@@ -45,6 +46,8 @@ const RestaurantSearchDetail = () => {
 		restaurantReducer: { restaurantSearchDetail, restaurantReviewList },
 		utilReducer: { active },
 	} = useSelector((state) => state);
+	const dispatch = useDispatch();
+	const { saveRestaurantRequest } = restaurantAction;
 
 	return (
 		<>
@@ -138,7 +141,9 @@ const RestaurantSearchDetail = () => {
 							<SearchIcon />
 							<p className="restaurant-search-detail__buttonTitle">Tìm nhà hàng tương tự</p>
 						</div>
-						<div className="restaurant-search-detail__button">
+						<div
+							className="restaurant-search-detail__button"
+							onClick={() => dispatch(saveRestaurantRequest(restaurantSearchDetail?._id))}>
 							<BookmarkBorderIcon />
 							<p className="restaurant-search-detail__buttonTitle">Lưu vào danh sách</p>
 						</div>

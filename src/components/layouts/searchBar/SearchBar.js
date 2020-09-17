@@ -164,17 +164,14 @@ const listSearchTime = [
 	},
 ];
 
-const SearchBar = () => {
+const SearchBar = ({ style }) => {
 	const popupDishesEl = useRef(null);
 	const inputPeopleRef = useRef(null);
-	const popupLocationEl = useRef(null);
 	const popupTimeEl = useRef(null);
 	const buttonSaveEl = useRef(null);
 	const [showSearchDishes, setShowSearchDishes] = useState(false);
 	const [choosePreference, setChoosePreference] = useState([]);
 	const [peopleSearchText, setPeopleSearchText] = useState("");
-	const [showSearchLocation, setShowSearchLocation] = useState(false);
-	const [chooseLocation, setChooseLocation] = useState("");
 	const [showSearchTime, setShowSearchTime] = useState(false);
 	const [chooseTime, setChooseTime] = useState("");
 	const [searchAnyDishes, setSearchAnyDishes] = useState("");
@@ -231,7 +228,13 @@ const SearchBar = () => {
 				onClick={(e) => {
 					e.stopPropagation();
 					setShowSearchDishes(false);
-					setChoosePreference([peopleSearchText, chooseLocation, chooseTime, ...choosePreference]);
+					setChoosePreference([
+						searchAnyDishes,
+						peopleSearchText,
+						searchAdd,
+						chooseTime,
+						...choosePreference,
+					]);
 					inputPeopleRef.current.focus();
 				}}>
 				Save
@@ -242,33 +245,19 @@ const SearchBar = () => {
 	// Function
 	const popUpSearchFunc = (e, itemTitle, typePopup) => {
 		e.stopPropagation();
-		switch (typePopup) {
-			case "popupLocation": {
-				setChooseLocation(itemTitle);
-				setShowSearchLocation(false);
-				setShowSearchTime(true);
-				break;
-			}
-
-			case "popupTime": {
-				setChooseTime(itemTitle);
-				setShowSearchTime(false);
-				break;
-			}
-		}
+		setChooseTime(itemTitle);
+		setShowSearchTime(false);
 	};
 
 	const handleOutSideClick = (e) => {
 		if (
 			(popupDishesEl.current && popupDishesEl.current.contains(e.target)) ||
-			(popupLocationEl.current && popupLocationEl.current.contains(e.target)) ||
 			(popupTimeEl.current && popupTimeEl.current.contains(e.target)) ||
 			(buttonSaveEl.current && buttonSaveEl.current.contains(e.target))
 		)
 			return;
 		else {
 			setShowSearchDishes(false);
-			setShowSearchLocation(false);
 			setShowSearchTime(false);
 		}
 	};
@@ -294,7 +283,7 @@ const SearchBar = () => {
 	}, []);
 
 	return (
-		<div className="search-bar">
+		<div className="search-bar" style={style}>
 			<div className="search-bar__container search-bar__formSearch" onClick={() => setShowSearchDishes(true)}>
 				<p className="search-bar__containerTitle">Tìm món</p>
 				<input
