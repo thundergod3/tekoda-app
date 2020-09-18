@@ -158,7 +158,7 @@ const SurveyPage = () => {
 						<div className="drawer-sidebar__info">
 							{(currentDrawer === 1 || currentDrawer === 2) && (
 								<>
-									<h4>Chỉ một vài bước để tới trải nghiệm cá nhân hóa của bạn</h4>
+									<h4>Bước vào thế giới ẩm thực được cá nhân hóa theo sở thích của bạn!</h4>
 									<p>
 										Lựa chọn những quán ăn theo sở thích của bạn để chúng tôi gợi ý cho bạn những
 										nhà hàng phù hợp nhất

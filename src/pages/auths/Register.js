@@ -66,11 +66,8 @@ const RegisterPage = () => {
 										</Link>
 										<div className="auth-page__info">
 											<p className="auth-page__infoSlogan">
-												Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolores,
+												Khám phá những địa chỉ ẩm thực tuyệt vời
 											</p>
-											<div className="auth-page__infoDescription">
-												Lorem ipsum dolor sit amet consectetur adipisicing elit.
-											</div>
 										</div>
 									</div>
 									<div className="auth-page-right">
