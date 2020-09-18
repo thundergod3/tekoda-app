@@ -97,6 +97,8 @@ const SurveyPage = () => {
 	const [searchType, setSearchType] = useState("");
 	const [searchAdd, setSearchAdd] = useState("");
 	const [currentDrawer, setCurrentDrawer] = useState(1);
+	const [chooseAge, setChooseAge] = useState("");
+	const [chooseGender, setChooseGender] = useState("");
 
 	const nextDrawer = () => {
 		if (currentDrawer >= 3) {
@@ -133,6 +135,16 @@ const SurveyPage = () => {
 			.then((latLng) => console.log("Success", latLng))
 			.catch((error) => console.error("Error", error));
 	};
+
+	let chooseAgeActive = "";
+	for (let i = 0; i < surveyAgeList.length; i++) {
+		if (chooseAge.age === surveyAgeList[i].age) chooseAgeActive = "choose--active";
+	}
+
+	let chooseGenderActive = "";
+	for (let j = 0; j < surveyGenderList.length; j++) {
+		if (chooseGender.gender === surveyGenderList[j].gender) chooseGenderActive = "choose--active";
+	}
 
 	return (
 		<>
@@ -179,7 +191,12 @@ const SurveyPage = () => {
 								<div className="drawer-sidebar-right__formAgeTitle">Bạn trong nhóm tuổi nào</div>
 								<div className="drawer-sidebar-right__formAge">
 									{surveyAgeList.map((age) => (
-										<div className="drawer-sidebar-right__formAgeItem" key={age.id}>
+										<div
+											className={`drawer-sidebar-right__formAgeItem ${
+												chooseAge.age === age.age ? "choose--active" : ""
+											}`}
+											key={age.id}
+											onClick={() => setChooseAge(age)}>
 											{age.age}
 										</div>
 									))}
@@ -187,7 +204,12 @@ const SurveyPage = () => {
 								<div className="drawer-sidebar-right__formGenderTitle">Giới tính</div>
 								<div className="drawer-sidebar-right__formGender">
 									{surveyGenderList.map((gender) => (
-										<div className="drawer-sidebar-right__formGenderItem" key={gender.id}>
+										<div
+											className={`drawer-sidebar-right__formGenderItem ${
+												chooseGender.gender === gender.gender ? "choose--active" : ""
+											}`}
+											key={gender.id}
+											onClick={() => setChooseGender(gender)}>
 											{gender.gender}
 										</div>
 									))}

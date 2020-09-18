@@ -129,14 +129,15 @@
 				margin-right: 30px;
 				width: 98px;
 				height: 41px;
-				background: #0260fd;
+				background: rgb(226, 226, 226);
 				border-radius: 10px;
 				font-family: Roboto;
 				font-size: 20px;
-				color: #ffffff;
+				color: #000;
 				display: flex;
 				justify-content: center;
 				align-items: center;
+				cursor: pointer !important;
 			}
 		}
 
@@ -159,13 +160,14 @@
 				align-items: center;
 				width: 169px;
 				height: 41px;
-				background: #0260fd;
+				background: rgb(226, 226, 226);
 				padding: 9px 63px;
 				border-radius: 10px;
 				margin-right: 35px;
 				font-family: Roboto;
 				font-size: 20px;
-				color: #ffffff;
+				color: #000;
+				cursor: pointer !important;
 			}
 		}
 
@@ -283,4 +285,9 @@
 		color: #000000;
 		margin-top: 35px;
 	}
+}
+
+.choose--active {
+	background: $main-color !important;
+	color: #fff !important;
 }
