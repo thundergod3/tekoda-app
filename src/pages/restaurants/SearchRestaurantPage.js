@@ -49,7 +49,7 @@ const SearchRestaurantPage = ({ match }) => {
 		}
 	}, []);
 
-	// if (authenticated === false) return <Redirect to="/login" />;
+	if (authenticated === false) return <Redirect to="/login" />;
 
 	return (
 		<>
