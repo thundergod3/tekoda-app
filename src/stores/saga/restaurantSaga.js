@@ -115,6 +115,18 @@ function* searchRestaurant({ listKeyWord, page }) {
 	}
 }
 
+function* getSearchRestaurantPerPage({ listKeyWord, page }) {
+	try {
+		const response = yield call(restaurantService.getSearchRestaurantPePage, { listKeyWord, page });
+		console.log(response);
+		yield put(restaurantAction.getSearchRestaurantPerPageSucceeded(response.data));
+		yield put(utilAction.loadedUI());
+	} catch (error) {
+		console.log(error);
+		yield put(utilAction.loadedUI());
+	}
+}
+
 function* getRestaurantReview({ restaurantId, count }) {
 	try {
 		const {
@@ -168,6 +180,7 @@ export default function* restaurantSaga() {
 	yield takeLatest(types.SEND_SURVEY_FORM_REQUEST, sendSurveyForm);
 	yield takeLatest(types.GET_ALL_SEARCH_RESTAURANT_REQUEST, getAllSearchRestaurant);
 	yield takeLatest(types.SEARCH_RESTAURANT_REQUEST, searchRestaurant);
+	yield takeLatest(types.GET_SEARCH_RESTAURANT_PER_PAGE_REQUEST, getSearchRestaurantPerPage);
 	yield takeLatest(types.TRACKING_USER_SCROLL_REVIEW_LIST_REQUEST, trackingUserIntersection);
 	yield takeLatest(types.GET_RESTAURANT_REVIEW_LIST_REQUEST, getRestaurantReview);
 	yield takeLatest(types.SAVE_RESTAURANT_REQUEST, saveRestaurant);

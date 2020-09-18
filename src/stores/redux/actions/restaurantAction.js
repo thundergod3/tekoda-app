@@ -86,6 +86,20 @@ class restaurantAction {
 		};
 	}
 
+	getSearchRestaurantPerPageRequest(listKeyWord, page) {
+		return {
+			type: types.GET_SEARCH_RESTAURANT_PER_PAGE_REQUEST,
+			listKeyWord,
+			page,
+		};
+	}
+	getSearchRestaurantPerPageSucceeded(searchRestaurantPerPage) {
+		return {
+			type: types.GET_SEARCH_RESTAURANT_PER_PAGE_SUCCEEDED,
+			searchRestaurantPerPage,
+		};
+	}
+
 	getRestaurantReviewListRequest(restaurantId, count) {
 		return {
 			type: types.GET_RESTAURANT_REVIEW_LIST_REQUEST,

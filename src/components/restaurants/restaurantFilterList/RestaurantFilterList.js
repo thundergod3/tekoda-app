@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -12,16 +12,12 @@ import RestaurantFilterItem from "../restaurantFilterItem/RestaurantFilterItem";
 import Pagination from "@material-ui/lab/Pagination";
 
 const RestaurantFilterList = ({ match, history, scrollTopRestaurantDetail }) => {
-	const [pageNumber, setPageNumber] = useState(
-		match.params.params && match.params.params.slice(0, 4) === "page"
-			? parseInt(match.params.params.slice(5, match.params.params.length))
-			: 1
-	);
+	const [pageNumber, setPageNumber] = useState(1);
 	const {
-		restaurantReducer: { restaurantList, restaurantListEachPage },
+		restaurantReducer: { restaurantList, restaurantListEachPage, listKeyWord },
 	} = useSelector((state) => state);
 	const dispatch = useDispatch();
-	const { fetchListRestaurantPerPageRequest } = restaurantAction;
+	const { fetchListRestaurantPerPageRequest, getSearchRestaurantPerPageRequest } = restaurantAction;
 	const { loadingUI } = utilAction;
 
 	const renderLayoutRestaurant = (list) =>
@@ -35,6 +31,16 @@ const RestaurantFilterList = ({ match, history, scrollTopRestaurantDetail }) => 
 			/>
 		));
 
+	useEffect(() => {
+		if (match.params.params) {
+			if (match.params.params.slice(0, 4) === "page")
+				setPageNumber(parseInt(match.params.params.slice(5, match.params.params.length)));
+			else if (match.params.pageNumber) setPageNumber(parseInt(match.params.pageNumber));
+		}
+	}, []);
+
+	console.log(pageNumber);
+
 	return (
 		<div className="restaurant-filter-list">
 			<div className="restaurant-filter-list__container">
@@ -44,14 +50,20 @@ const RestaurantFilterList = ({ match, history, scrollTopRestaurantDetail }) => 
 					renderLayoutRestaurant(restaurantListEachPage)}
 				<div className="restaurant-filter__pagination">
 					<Pagination
-						defaultPage={pageNumber}
+						page={pageNumber}
 						count={Math.ceil(restaurantList.length / 10)}
 						shape="rounded"
 						onChange={(object, number) => {
 							dispatch(loadingUI());
 							setPageNumber(number);
-							history.push(`/today-eat/page=${number}`);
-							dispatch(fetchListRestaurantPerPageRequest(number));
+
+							if (listKeyWord.length !== 0) {
+								dispatch(getSearchRestaurantPerPageRequest(listKeyWord, number));
+								history.push(`/today-eat/${listKeyWord.join("+")}/page=${number}`);
+							} else {
+								history.push(`/today-eat/page=${number}`);
+								dispatch(fetchListRestaurantPerPageRequest(number));
+							}
 						}}
 						hidePrevButton={pageNumber === 1 ? true : false}
 						hideNextButton={pageNumber === Math.ceil(restaurantList.length / 10) ? true : false}

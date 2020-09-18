@@ -23,6 +23,7 @@ const restaurantReducer = (state = initialState, action) => {
 			return {
 				...state,
 				restaurantList: action.restaurantList,
+				listKeyWord: [],
 			};
 		}
 
@@ -59,6 +60,7 @@ const restaurantReducer = (state = initialState, action) => {
 						],
 					},
 				},
+				listKeyWord: [],
 			};
 		}
 
@@ -93,6 +95,7 @@ const restaurantReducer = (state = initialState, action) => {
 							},
 						],
 					},
+					listKeyWord: [],
 				},
 			};
 		}
@@ -144,6 +147,14 @@ const restaurantReducer = (state = initialState, action) => {
 						],
 					},
 				},
+			};
+		}
+
+		case types.GET_SEARCH_RESTAURANT_PER_PAGE_SUCCEEDED: {
+			console.log(action);
+			return {
+				...state,
+				restaurantListEachPage: action.searchRestaurantPerPage,
 			};
 		}
 

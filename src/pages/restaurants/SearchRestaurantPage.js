@@ -25,6 +25,7 @@ const SearchRestaurantPage = ({ match }) => {
 		fetchListRestaurantPerPageRequest,
 		storeListKeyword,
 		getAllSearchRestaurantRequest,
+		getSearchRestaurantPerPageRequest,
 	} = restaurantAction;
 
 	const scrollTopRestaurantDetail = () => {
@@ -38,17 +39,19 @@ const SearchRestaurantPage = ({ match }) => {
 			dispatch(fetchListRestaurantRequest());
 		} else if (match.params.params && isNaN(parseInt(match.params.params))) {
 			dispatch(getAllSearchRestaurantRequest([match.params.params]));
+			dispatch(getSearchRestaurantPerPageRequest([match.params.params], match.params.pageNumber));
 			dispatch(searchRestaurantRequest([match.params.params]));
 			dispatch(storeListKeyword(match.params.params.split("+").filter((item) => item !== "")));
 		} else if (match.params.params && !isNaN(parseInt(match.params.params))) {
 			if (Number.isInteger(parseInt(match.params.params))) {
 				dispatch(getRestaurantSearchDetailRequest(match.params.params));
 				dispatch(fetchListRestaurantPerPageRequest());
-				dispatch(getAllSearchRestaurantRequest([match.params.params]));
+				dispatch(fetchListRestaurantRequest());
 			} else {
 				dispatch(getAllSearchRestaurantRequest([match.params.params]));
 				dispatch(searchRestaurantRequest([match.params.params]));
 				dispatch(storeListKeyword(match.params.params.split("+").filter((item) => item !== "")));
+				dispatch(getSearchRestaurantPerPageRequest([match.params.params], match.params.pageNumber));
 			}
 		} else {
 			dispatch(fetchListRestaurantRequest());

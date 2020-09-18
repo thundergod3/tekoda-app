@@ -13,6 +13,9 @@ class restaurantService {
 	searchRestaurant = ({ listKeyWord, page }) =>
 		HTTPMethod.post(`/api/v1/search?q=${listKeyWord.join("+")}&limit=10&page=${page}`);
 
+	getSearchRestaurantPePage = ({ listKeyWord, page }) =>
+		HTTPMethod.post(`/api/v1/search?q=${listKeyWord.join("+")}&limit=10&page=${page}`);
+
 	getRestaurantReview = ({ restaurantId, count }) =>
 		HTTPMethod.get(`/api/v1/review?resId=${restaurantId}&count=${count}`);
 
