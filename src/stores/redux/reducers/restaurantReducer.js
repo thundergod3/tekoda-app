@@ -117,7 +117,6 @@ const restaurantReducer = (state = initialState, action) => {
 		case types.SEARCH_RESTAURANT_SUCCEEDED: {
 			return {
 				...state,
-				restaurantListEachPage: action.restaurantSearchList,
 				restaurantSearchDetail: {
 					...action.restaurantSearchList[0],
 					_source: {
@@ -151,7 +150,6 @@ const restaurantReducer = (state = initialState, action) => {
 		}
 
 		case types.GET_SEARCH_RESTAURANT_PER_PAGE_SUCCEEDED: {
-			console.log(action);
 			return {
 				...state,
 				restaurantListEachPage: action.searchRestaurantPerPage,

@@ -39,8 +39,6 @@ const RestaurantFilterList = ({ match, history, scrollTopRestaurantDetail }) => 
 		}
 	}, []);
 
-	console.log(pageNumber);
-
 	return (
 		<div className="restaurant-filter-list">
 			<div className="restaurant-filter-list__container">
