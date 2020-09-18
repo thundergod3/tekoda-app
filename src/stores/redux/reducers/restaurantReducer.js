@@ -9,6 +9,9 @@ const initialState = {
 	restaurantList: [],
 	restaurantListEachPage: [],
 	restaurantSearchDetail: {},
+	saveRestaurantList: localStorage.getItem("saveRestaurant")
+		? JSON.parse(localStorage.getItem("saveRestaurant"))
+		: [],
 	statusSurvey: localStorage.getItem("statusSurvey") ? JSON.parse(localStorage.getItem("statusSurvey")) : false,
 	restaurantReviewList: [],
 	listKeyWord: [],
@@ -176,6 +179,22 @@ const restaurantReducer = (state = initialState, action) => {
 			return {
 				...state,
 				listKeyWord: state.listKeyWord.filter((item) => item !== action.keyword),
+			};
+		}
+
+		case types.SAVE_RESTAURANT_SUCCEEDED: {
+			return {
+				...state,
+				saveRestaurantList: [...state.saveRestaurantList, action.restaurant],
+			};
+		}
+
+		case types.REMOVE_SAVE_RESTAURANT: {
+			return {
+				...state,
+				saveRestaurantList: state.saveRestaurantList.filter(
+					(restaurant) => restaurant._id !== action.restaurant._id
+				),
 			};
 		}
 

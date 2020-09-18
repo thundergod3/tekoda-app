@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 
 import "./RestaurantSearchDetail.scss";
 import MoneyIcon from "../../../assets/icons/money.png";
+import CheckIcon from "../../../assets/icons/check.png";
 import numeral from "numeral";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -14,6 +15,7 @@ import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import { withStyles } from "@material-ui/core/styles";
 
 import UserReviewList from "../userReviewList/UserReviewList";
+import { Link } from "react-router-dom";
 
 const listRating = [
 	{
@@ -44,12 +46,20 @@ const listRating = [
 
 const RestaurantSearchDetail = ({ searchPageRef }) => {
 	const {
-		restaurantReducer: { restaurantSearchDetail, restaurantReviewList },
+		restaurantReducer: { restaurantSearchDetail, restaurantReviewList, saveRestaurantList },
 		utilReducer: { active },
 	} = useSelector((state) => state);
+	const [save, setSave] = useState(false);
 	const dispatch = useDispatch();
 	const { saveRestaurantRequest, searchRestaurantRequest, getAllSearchRestaurantRequest } = restaurantAction;
 	const { loadingUI } = utilAction;
+
+	let checkSave = false;
+	for (let i = 0; i < saveRestaurantList.length; i++) {
+		console.log(restaurantSearchDetail._id);
+		console.log(saveRestaurantList[i]._id);
+		if (restaurantSearchDetail._id === saveRestaurantList[i]._id) checkSave = true;
+	}
 
 	return (
 		<>
@@ -114,7 +124,7 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 						</div>
 						<div className="restaurant-search-detail__reviewContainer">
 							<p className="restaurant-search-detail__reviewRate">
-								{restaurantSearchDetail?._source?.AvgRating} out of 10 stars from{" "}
+								{restaurantSearchDetail?._source?.AvgRatingText} out of 10 stars from{" "}
 								{restaurantReviewList.length} reviews
 							</p>
 							<div className="restaurant-search-detail__reviewListRate">
@@ -151,9 +161,44 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 						</div>
 						<div
 							className="restaurant-search-detail__button"
-							onClick={() => dispatch(saveRestaurantRequest(restaurantSearchDetail?._id))}>
-							<BookmarkBorderIcon />
-							<p className="restaurant-search-detail__buttonTitle">Lưu vào danh sách</p>
+							onClick={() => {
+								setSave(!save);
+								dispatch(saveRestaurantRequest(restaurantSearchDetail));
+							}}>
+							{!checkSave ? (
+								<>
+									{!save ? (
+										<>
+											<BookmarkBorderIcon />
+											<p className="restaurant-search-detail__buttonTitle">Lưu vào danh sách</p>
+										</>
+									) : (
+										<>
+											<img src={CheckIcon} alt="check" />
+											<p
+												className="restaurant-search-detail__buttonTitle"
+												style={{ width: "204px", height: "36px" }}>
+												Đã lưu thành công, xem{" "}
+												<Link to="/save-restaurant" onClick={(e) => e.stopPropagation()}>
+													danh sách
+												</Link>
+											</p>
+										</>
+									)}
+								</>
+							) : (
+								<>
+									<img src={CheckIcon} alt="check" style={{ marginRight: "5px" }} />
+									<p
+										className="restaurant-search-detail__buttonTitle"
+										style={{ width: "204px", height: "36px" }}>
+										Đã lưu thành công, xem{" "}
+										<Link to="/save-restaurant" onClick={(e) => e.stopPropagation()}>
+											danh sách
+										</Link>
+									</p>
+								</>
+							)}
 						</div>
 					</div>
 				</div>

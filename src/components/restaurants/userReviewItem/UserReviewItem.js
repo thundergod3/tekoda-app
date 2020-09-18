@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./USerReviewItem.scss";
+import "./UserReviewItem.scss";
 import moment from "moment";
 import "moment/locale/vi";
 

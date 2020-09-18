@@ -140,10 +140,10 @@ class restaurantAction {
 		};
 	}
 
-	saveRestaurantRequest(restaurantId) {
+	saveRestaurantRequest(restaurant) {
 		return {
 			type: types.SAVE_RESTAURANT_REQUEST,
-			restaurantId,
+			restaurant,
 		};
 	}
 	saveRestaurantSucceeded(restaurant) {
@@ -151,6 +151,10 @@ class restaurantAction {
 			type: types.SAVE_RESTAURANT_SUCCEEDED,
 			restaurant,
 		};
+	}
+
+	removeSaveRestaurant(restaurant) {
+		return { type: types.REMOVE_SAVE_RESTAURANT, restaurant };
 	}
 
 	getSaveRestaurantListRequest(restaurantId) {

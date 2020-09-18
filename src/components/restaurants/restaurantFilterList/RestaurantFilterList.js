@@ -27,10 +27,11 @@ const RestaurantFilterList = ({ match, history, scrollTopRestaurantDetail }) => 
 	const renderLayoutRestaurant = (list) =>
 		list.map((restaurant) => (
 			<RestaurantFilterItem
-				key={restaurant._id}
-				restaurant={restaurant?._source}
-				id={restaurant._id}
+				key={restaurant?._id}
+				restaurant={restaurant}
+				id={restaurant?._id}
 				scrollTopRestaurantDetail={scrollTopRestaurantDetail}
+				rating={restaurant?._score}
 			/>
 		));
 

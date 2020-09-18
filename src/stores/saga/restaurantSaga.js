@@ -41,10 +41,10 @@ function* fetchListRestaurantPerPage({ page }) {
 
 function* getRestaurantDetail({ id }) {
 	const {
-		restaurantReducer: { restaurantList },
+		restaurantReducer: { restaurantList, saveRestaurantList },
 	} = yield select((state) => state);
 
-	if (restaurantList.length !== 0) {
+	if (restaurantList.length !== 0 || saveRestaurantList.length !== 0) {
 		yield put(utilAction.showActive());
 		yield put(restaurantAction.removeRestaurantReviewList());
 
@@ -142,10 +142,20 @@ function* trackingUserIntersection({ restaurantId }) {
 	}
 }
 
-function* saveRestaurant({ restaurantId }) {
+function* saveRestaurant({ restaurant }) {
 	try {
-		const response = yield call(restaurantService.saveRestaurant, { restaurantId });
+		const response = yield call(restaurantService.saveRestaurant, { restaurantId: restaurant?._id });
+		console.log(restaurant);
 		console.log(response);
+		if (response.data && response.data.enjoy === 1) {
+			yield put(restaurantAction.saveRestaurantSucceeded(restaurant));
+		} else {
+			yield put(restaurantAction.removeSaveRestaurant(restaurant));
+		}
+		const {
+			restaurantReducer: { saveRestaurantList },
+		} = yield select((state) => state);
+		yield cookieLocal.saveToLocal("saveRestaurant", saveRestaurantList);
 	} catch (error) {
 		console.log(error);
 	}

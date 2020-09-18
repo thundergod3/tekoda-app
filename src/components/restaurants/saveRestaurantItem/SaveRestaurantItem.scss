@@ -1,0 +1,69 @@
+.save-restaurant-item {
+	width: 504px;
+	height: 134px;
+	display: flex;
+	align-items: center;
+	margin-bottom: 30px;
+
+	.save-restaurant-item__image {
+		width: 182.5px;
+		height: 134px;
+		object-fit: cover;
+	}
+
+	.save-restaurant-item__rightContainer {
+		height: 100%;
+		margin-left: 25px;
+		display: flex;
+		justify-content: space-between;
+		flex-direction: column;
+
+		.save-restaurant-item__rightBio {
+			display: flex;
+
+			.save-restaurant-item__rightBioContainer {
+				p {
+					font-family: Roboto;
+
+					&.save-restaurant-item__rightTitle {
+						font-weight: bold;
+						font-size: 15px;
+						color: #222222;
+					}
+
+					&.save-restaurant-item__rightAdd {
+						font-size: 13px;
+						color: #717171;
+					}
+				}
+			}
+		}
+
+		.save-restaurant-item__rating {
+			display: flex;
+			align-items: center;
+
+			.save-restaurant-item__ratingImage {
+				margin-right: 5px;
+				width: 14.18px;
+				height: 11.04px;
+			}
+
+			span {
+				font-family: Roboto;
+				font-style: normal;
+
+				&.save-restaurant-item__ratingStart {
+					font-size: 13px;
+					color: #222222;
+					margin-right: 3px;
+				}
+
+				&.save-restaurant-item__ratingComment {
+					font-size: 10px;
+					color: #484848;
+				}
+			}
+		}
+	}
+}

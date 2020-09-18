@@ -28,7 +28,7 @@ const SearchRestaurantPage = ({ match }) => {
 	} = restaurantAction;
 
 	const scrollTopRestaurantDetail = () => {
-		searchPageRef.current.scrollTop = 0;
+		if (searchPageRef.current) searchPageRef.current.scrollTop = 0;
 	};
 
 	useEffect(() => {
