@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Redirect } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -16,6 +16,7 @@ const SearchRestaurantPage = ({ match }) => {
 		utilReducer: { loading },
 		authReducer: { authenticated },
 	} = useSelector((state) => state);
+	const searchPageRef = useRef(null);
 	const dispatch = useDispatch();
 	const {
 		getRestaurantSearchDetailRequest,
@@ -23,7 +24,12 @@ const SearchRestaurantPage = ({ match }) => {
 		searchRestaurantRequest,
 		fetchListRestaurantPerPageRequest,
 		storeListKeyword,
+		getAllSearchRestaurantRequest,
 	} = restaurantAction;
+
+	const scrollTopRestaurantDetail = () => {
+		searchPageRef.current.scrollTop = 0;
+	};
 
 	useEffect(() => {
 		dispatch(utilAction.loadingUI());
@@ -31,15 +37,16 @@ const SearchRestaurantPage = ({ match }) => {
 			dispatch(fetchListRestaurantPerPageRequest(match.params.params.slice(5, match.params.params.length)));
 			dispatch(fetchListRestaurantRequest());
 		} else if (match.params.params && isNaN(parseInt(match.params.params))) {
-			dispatch(fetchListRestaurantRequest());
+			dispatch(getAllSearchRestaurantRequest([match.params.params]));
 			dispatch(searchRestaurantRequest([match.params.params]));
 			dispatch(storeListKeyword(match.params.params.split("+").filter((item) => item !== "")));
 		} else if (match.params.params && !isNaN(parseInt(match.params.params))) {
 			if (Number.isInteger(parseInt(match.params.params))) {
 				dispatch(getRestaurantSearchDetailRequest(match.params.params));
 				dispatch(fetchListRestaurantPerPageRequest());
-				dispatch(fetchListRestaurantRequest());
+				dispatch(getAllSearchRestaurantRequest([match.params.params]));
 			} else {
+				dispatch(getAllSearchRestaurantRequest([match.params.params]));
 				dispatch(searchRestaurantRequest([match.params.params]));
 				dispatch(storeListKeyword(match.params.params.split("+").filter((item) => item !== "")));
 			}
@@ -59,8 +66,8 @@ const SearchRestaurantPage = ({ match }) => {
 						<Loading />
 					) : (
 						<div className="search-page">
-							<ResultRestaurantSearch />
-							<RestaurantSearchDetail />
+							<ResultRestaurantSearch scrollTopRestaurantDetail={scrollTopRestaurantDetail} />
+							<RestaurantSearchDetail searchPageRef={searchPageRef} />
 						</div>
 					)}
 				</>

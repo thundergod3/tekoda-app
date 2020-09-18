@@ -89,14 +89,16 @@ function* sendSurveyForm({ surveyForm }) {
 	}
 }
 
-function* searchRestaurant({ listKeyWord, page }) {
-	const {
-		authReducer: { authenticated },
-	} = yield select((state) => state);
+function* getAllSearchRestaurant({ listKeyword }) {
+	try {
+		const response = yield call(restaurantService.getAllSearchRestaurant, { listKeyword });
+		yield put(restaurantAction.getAllSearchRestaurantSucceeded(response.data));
+	} catch (error) {
+		console.log(error);
+	}
+}
 
-	// if (authenticated === false) yield history.push("/login");
-	// else {
-	// }
+function* searchRestaurant({ listKeyWord, page }) {
 	yield put(restaurantAction.removeRestaurantReviewList());
 	if (!page) page = 1;
 	try {
@@ -134,8 +136,7 @@ function* getRestaurantReview({ restaurantId, count }) {
 
 function* trackingUserIntersection({ restaurantId }) {
 	try {
-		const response = yield call(restaurantService.trackingUserScrollReviewList, { restaurantId });
-		console.log(response);
+		yield call(restaurantService.trackingUserScrollReviewList, { restaurantId });
 	} catch (error) {
 		console.log(error);
 	}
@@ -155,6 +156,7 @@ export default function* restaurantSaga() {
 	yield takeLatest(types.FETCH_LIST_RESTAURANT_PER_PAGE_REQUEST, fetchListRestaurantPerPage);
 	yield takeLatest(types.GET_RESTAURANT_SEARCH_DETAIL_REQUEST, getRestaurantDetail);
 	yield takeLatest(types.SEND_SURVEY_FORM_REQUEST, sendSurveyForm);
+	yield takeLatest(types.GET_ALL_SEARCH_RESTAURANT_REQUEST, getAllSearchRestaurant);
 	yield takeLatest(types.SEARCH_RESTAURANT_REQUEST, searchRestaurant);
 	yield takeLatest(types.TRACKING_USER_SCROLL_REVIEW_LIST_REQUEST, trackingUserIntersection);
 	yield takeLatest(types.GET_RESTAURANT_REVIEW_LIST_REQUEST, getRestaurantReview);

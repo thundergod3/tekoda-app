@@ -6,6 +6,7 @@ import numeral from "numeral";
 
 import { useSelector, useDispatch } from "react-redux";
 import restaurantAction from "../../../stores/redux/actions/restaurantAction";
+import utilAction from "../../../stores/redux/actions/utilAction";
 
 import SearchIcon from "@material-ui/icons/Search";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
@@ -41,20 +42,21 @@ const listRating = [
 	},
 ];
 
-const RestaurantSearchDetail = () => {
+const RestaurantSearchDetail = ({ searchPageRef }) => {
 	const {
 		restaurantReducer: { restaurantSearchDetail, restaurantReviewList },
 		utilReducer: { active },
 	} = useSelector((state) => state);
 	const dispatch = useDispatch();
-	const { saveRestaurantRequest } = restaurantAction;
+	const { saveRestaurantRequest, searchRestaurantRequest, getAllSearchRestaurantRequest } = restaurantAction;
+	const { loadingUI } = utilAction;
 
 	return (
 		<>
 			{Object.keys(restaurantSearchDetail).length !== 0 && (
 				<div
 					className={`restaurant-search-detail ${active === true ? "restaurant-search-detail--active" : ""}`}>
-					<div className="restaurant-search-detail__container">
+					<div className="restaurant-search-detail__container" ref={searchPageRef}>
 						<p className="restaurant-search-detail__title">{restaurantSearchDetail?._source.Name}</p>
 						<p className="restaurant-search-detail__bio">{restaurantSearchDetail?._source.Address}</p>
 						<div className="restaurant-search-detail__info">
@@ -87,24 +89,24 @@ const RestaurantSearchDetail = () => {
 						<div className="restaurant-search-detail__imageContainer">
 							<img
 								src={restaurantSearchDetail?._source.image}
-								alt={restaurantSearchDetail?._source.title}
+								alt={restaurantSearchDetail?._source.Name}
 								className="restaurant-search-detail__bigImage"
 							/>
 							<div className="restaurant-search-detail__imageSmaliList">
 								<img
 									src={restaurantSearchDetail?._source.image}
-									alt={restaurantSearchDetail?._source.title}
+									alt={restaurantSearchDetail?._source.Name}
 									className="restaurant-search-detail__imageSmallTitle"
 								/>
 								<div className="restaurant-search-detail__imageSmallContainer">
 									<img
 										src={restaurantSearchDetail?._source.image}
-										alt={restaurantSearchDetail?._source.title}
+										alt={restaurantSearchDetail?._source.Name}
 										className="restaurant-search-detail__imageSmall"
 									/>
 									<img
 										src={restaurantSearchDetail?._source.image}
-										alt={restaurantSearchDetail?._source.title}
+										alt={restaurantSearchDetail?._source.Name}
 										className="restaurant-search-detail__imageSmall"
 									/>
 								</div>
@@ -137,7 +139,13 @@ const RestaurantSearchDetail = () => {
 						<UserReviewList />
 					</div>
 					<div className="restaurant-search-detail__buttonContainer">
-						<div className="restaurant-search-detail__button">
+						<div
+							className="restaurant-search-detail__button"
+							onClick={() => {
+								dispatch(loadingUI());
+								dispatch(searchRestaurantRequest([restaurantSearchDetail?._source.Name]));
+								dispatch(getAllSearchRestaurantRequest([restaurantSearchDetail?._source.Name]));
+							}}>
 							<SearchIcon />
 							<p className="restaurant-search-detail__buttonTitle">Tìm nhà hàng tương tự</p>
 						</div>

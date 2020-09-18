@@ -101,6 +101,13 @@ const restaurantReducer = (state = initialState, action) => {
 			};
 		}
 
+		case types.GET_ALL_SEARCH_RESTAURANT_SUCCEEDED: {
+			return {
+				...state,
+				restaurantList: action.allSearchRestaurant,
+			};
+		}
+
 		case types.SEARCH_RESTAURANT_SUCCEEDED: {
 			return {
 				...state,

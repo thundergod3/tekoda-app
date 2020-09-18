@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 
 import "./RestaurantFilterItem.scss";
 import star from "../../../assets/icons/star.png";
@@ -7,16 +7,25 @@ import numeral from "numeral";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
 import restaurantAction from "../../../stores/redux/actions/restaurantAction";
-import utilAction from "../../../stores/redux/actions/utilAction";
 import { useDispatch } from "react-redux";
 
-const RestaurantFilterItem = ({ restaurant: { Name, AvgRatingText, comments, Address, PhotoUrl }, id }) => {
+const RestaurantFilterItem = ({
+	restaurant: { Name, AvgRatingText, comments, Address, PhotoUrl },
+	id,
+	scrollTopRestaurantDetail,
+}) => {
 	const dispatch = useDispatch();
 	const { getRestaurantSearchDetailRequest } = restaurantAction;
-	const { loadingUI } = utilAction;
 
 	return (
-		<div className="restaurant-filter-item" onClick={() => dispatch(getRestaurantSearchDetailRequest(id))}>
+		<div
+			className="restaurant-filter-item"
+			onClick={() => {
+				dispatch(getRestaurantSearchDetailRequest(id));
+				setTimeout(() => {
+					scrollTopRestaurantDetail();
+				}, 200);
+			}}>
 			<img src={PhotoUrl} alt={Name} className="restaurant-filter-item__image" />
 			<div className="restaurant-filter-item__info">
 				<div className="restaurant-filter-item__infoNavbar">

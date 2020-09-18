@@ -11,7 +11,7 @@ import RestaurantFilterItem from "../restaurantFilterItem/RestaurantFilterItem";
 
 import Pagination from "@material-ui/lab/Pagination";
 
-const RestaurantFilterList = ({ match, history }) => {
+const RestaurantFilterList = ({ match, history, scrollTopRestaurantDetail }) => {
 	const [pageNumber, setPageNumber] = useState(
 		match.params.params && match.params.params.slice(0, 4) === "page"
 			? parseInt(match.params.params.slice(5, match.params.params.length))
@@ -26,7 +26,12 @@ const RestaurantFilterList = ({ match, history }) => {
 
 	const renderLayoutRestaurant = (list) =>
 		list.map((restaurant) => (
-			<RestaurantFilterItem key={restaurant._id} restaurant={restaurant?._source} id={restaurant._id} />
+			<RestaurantFilterItem
+				key={restaurant._id}
+				restaurant={restaurant?._source}
+				id={restaurant._id}
+				scrollTopRestaurantDetail={scrollTopRestaurantDetail}
+			/>
 		));
 
 	return (

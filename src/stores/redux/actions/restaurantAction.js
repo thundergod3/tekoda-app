@@ -59,6 +59,19 @@ class restaurantAction {
 		};
 	}
 
+	getAllSearchRestaurantRequest(listKeyword) {
+		return {
+			type: types.GET_ALL_SEARCH_RESTAURANT_REQUEST,
+			listKeyword,
+		};
+	}
+	getAllSearchRestaurantSucceeded(allSearchRestaurant) {
+		return {
+			type: types.GET_ALL_SEARCH_RESTAURANT_SUCCEEDED,
+			allSearchRestaurant,
+		};
+	}
+
 	searchRestaurantRequest(listKeyWord, page) {
 		return {
 			type: types.SEARCH_RESTAURANT_REQUEST,

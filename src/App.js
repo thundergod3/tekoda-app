@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
 
 import "./App.scss";
@@ -24,23 +24,27 @@ const App = ({
 	const {
 		authReducer: { authenticated },
 	} = useSelector((state) => state);
+	const [screenOrientation, setScreenOrientation] = useState("portrait");
 	const dispatch = useDispatch();
 	const { checkAuthenticatedRequest } = authAction;
+
+	const changeScreenOrientation = () => {
+		if (window.matchMedia("(orientation: portrait)").matches) {
+			setScreenOrientation("portrait");
+		}
+
+		if (window.matchMedia("(orientation: landscape)").matches) {
+			setScreenOrientation("landscape");
+		}
+	};
+
+	useEffect(() => {
+		window.addEventListener("orientationchange", setScreenOrientation);
+	}, []);
 
 	useEffect(() => {
 		dispatch(checkAuthenticatedRequest());
 	}, []);
-
-	// useEffect(() => {
-	// 	ttiPolyfill.getFirstConsistentlyInteractive().then((tti) => {
-	// 		console.log(tti);
-	// 		ReactGA.timing({
-	// 			category: "Load Performace",
-	// 			variable: "Time to Interactive",
-	// 			value: tti,
-	// 		});
-	// 	});
-	// }, []);
 
 	return (
 		<>

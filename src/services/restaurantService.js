@@ -7,6 +7,9 @@ class restaurantService {
 
 	fetchDetailRestaurant = ({ id }) => HTTPMethod.get(`/api/v1/restaurant/get?id=${id}`);
 
+	getAllSearchRestaurant = ({ listKeyword }) =>
+		HTTPMethod.post(`/api/v1/search?q=${listKeyword.join("+")}&limit=1000&page=1`);
+
 	searchRestaurant = ({ listKeyWord, page }) =>
 		HTTPMethod.post(`/api/v1/search?q=${listKeyWord.join("+")}&limit=10&page=${page}`);
 
