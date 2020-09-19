@@ -22,11 +22,17 @@ const Homepage = () => {
 		utilReducer: { loading },
 	} = useSelector((state) => state);
 	const dispatch = useDispatch();
-	const { fetchListRestaurantRequest, fetchListRestaurantPerPageRequest } = restaurantAction;
+	const {
+		fetchListRestaurantRequest,
+		fetchListRestaurantPerPageRequest,
+		fetchRecommendRestaurantRequest,
+	} = restaurantAction;
+	const { loadingUI } = utilAction;
 
 	useEffect(() => {
-		dispatch(utilAction.loadingUI());
+		dispatch(loadingUI());
 		dispatch(fetchListRestaurantRequest());
+		// dispatch(fetchRecommendRestaurantRequest());
 		dispatch(fetchListRestaurantPerPageRequest());
 	}, []);
 

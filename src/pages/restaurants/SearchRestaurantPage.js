@@ -26,6 +26,7 @@ const SearchRestaurantPage = ({ match }) => {
 		storeListKeyword,
 		getAllSearchRestaurantRequest,
 		getSearchRestaurantPerPageRequest,
+		fetchSaveRestaurantRequest,
 	} = restaurantAction;
 
 	const scrollTopRestaurantDetail = () => {
@@ -34,6 +35,7 @@ const SearchRestaurantPage = ({ match }) => {
 
 	useEffect(() => {
 		dispatch(utilAction.loadingUI());
+		dispatch(fetchSaveRestaurantRequest());
 		if (match.params.params && match.params.params.slice(0, 4) === "page") {
 			dispatch(fetchListRestaurantPerPageRequest(match.params.params.slice(5, match.params.params.length)));
 			dispatch(fetchListRestaurantRequest());

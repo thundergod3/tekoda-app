@@ -65,7 +65,7 @@ const SaveRestaurantItem = ({ restaurant }) => {
 				</div>
 				<div className="save-restaurant-item__rating">
 					<img src={StartIcon} alt={AvgRatingText} className="save-restaurant-item__ratingImage" />
-					<span className="save-restaurant-item__ratingStart">{AvgRatingText}</span>
+					<span className="save-restaurant-item__ratingStart">{7}</span>
 					<span className="save-restaurant-item__ratingComment">(110 đánh giá)</span>
 				</div>
 			</div>

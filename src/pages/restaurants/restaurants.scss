@@ -202,16 +202,19 @@
 					border-radius: 12px;
 					width: calc(590px / 3);
 					height: 130px;
-				}
-
-				p {
-					font-family: Roboto;
-					font-style: normal;
-					font-weight: 500;
-					font-size: 18px;
-					text-align: center;
-					color: #4a4a4a;
-					margin-top: 20px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					p {
+						font-family: Roboto;
+						font-style: normal;
+						font-weight: 500;
+						font-size: 18px;
+						text-align: center;
+						color: #4a4a4a;
+						margin-top: 20px;
+						text-transform: uppercase;
+					}
 				}
 			}
 		}

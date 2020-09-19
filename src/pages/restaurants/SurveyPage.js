@@ -12,39 +12,39 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-au
 
 const listRestaurant = [
 	{
-		title: "nhà hàng bistro",
+		title: "món âu",
 		img: "",
 	},
 	{
-		title: "nhà hàng bistro",
+		title: "hải sản",
 		img: "",
 	},
 	{
-		title: "nhà hàng bistro",
+		title: "lẩu nướng",
 		img: "",
 	},
 	{
-		title: "nhà hàng bistro",
+		title: "đồ chay",
 		img: "",
 	},
 	{
-		title: "nhà hàng bistro",
+		title: "nhậu/ bia hơi",
 		img: "",
 	},
 	{
-		title: "nhà hàng bistro",
+		title: "bình dân",
 		img: "",
 	},
 	{
-		title: "nhà hàng bistro",
+		title: "ăn vặt",
 		img: "",
 	},
 	{
-		title: "nhà hàng bistro",
+		title: "trendy",
 		img: "",
 	},
 	{
-		title: "nhà hàng bistro",
+		title: "mới nổi",
 		img: "",
 	},
 ];
@@ -94,7 +94,7 @@ const SurveyPage = () => {
 	} = useSelector((state) => state);
 	const dispatch = useDispatch();
 	const { sendSurveyFormRequest } = restaurantAction;
-	const [searchType, setSearchType] = useState("");
+	const [username, setUsername] = useState("");
 	const [searchAdd, setSearchAdd] = useState("");
 	const [currentDrawer, setCurrentDrawer] = useState(1);
 	const [chooseAge, setChooseAge] = useState("");
@@ -181,12 +181,11 @@ const SurveyPage = () => {
 							<div className="drawer-sidebar-right__form">
 								<label htmlFor="username">Hãy cho chúng mình biết tên của bạn nhé!</label>
 								<input
-									value={searchType}
 									id="username"
 									type="text"
 									placeholder="Tên bạn ..."
-									value={searchType}
-									onChange={(e) => setSearchType(e.target.value)}
+									value={username}
+									onChange={(e) => setUsername(e.target.value)}
 								/>
 								<div className="drawer-sidebar-right__formAgeTitle">Bạn trong nhóm tuổi nào</div>
 								<div className="drawer-sidebar-right__formAge">
@@ -265,8 +264,9 @@ const SurveyPage = () => {
 								<div className="drawer-sidebar-right__listRestaurant">
 									{listRestaurant.map((restaurant, index) => (
 										<div key={index} className="drawer-sidebar-right__itemRestaurant">
-											<div className="drawer-sidebar-right__restaurantBox"></div>
-											<p>{restaurant.title}</p>
+											<div className="drawer-sidebar-right__restaurantBox">
+												<p>{restaurant.title}</p>
+											</div>
 										</div>
 									))}
 								</div>
@@ -279,7 +279,16 @@ const SurveyPage = () => {
 							{currentDrawer === 3 ? (
 								<button
 									className="drawer-sidebar__buttonNext"
-									onClick={() => dispatch(sendSurveyFormRequest())}>
+									onClick={() =>
+										dispatch(
+											sendSurveyFormRequest({
+												username,
+												address: searchAdd,
+												age: chooseAge,
+												gender: chooseGender,
+											})
+										)
+									}>
 									Hoàn thành
 								</button>
 							) : (

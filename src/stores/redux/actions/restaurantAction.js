@@ -26,6 +26,30 @@ class restaurantAction {
 		};
 	}
 
+	fetchRecommendRestaurantRequest() {
+		return {
+			type: types.FETCH_RECOMMEND_TRENDING_RESTAURANT_REQUEST,
+		};
+	}
+	fetchRecommendRestaurantSucceeded(trendingRestaurantList) {
+		return {
+			type: types.FETCH_RECOMMEND_TRENDING_RESTAURANT_SUCCEEDED,
+			trendingRestaurantList,
+		};
+	}
+
+	fetchSaveRestaurantRequest() {
+		return {
+			type: types.FETCH_SAVE_LIST_RESTAURANT_REQUEST,
+		};
+	}
+	fetchSaveRestaurantSucceeded(saveRestaurantList) {
+		return {
+			type: types.FETCH_SAVE_LIST_RESTAURANT_SUCCEEDED,
+			saveRestaurantList,
+		};
+	}
+
 	getRestaurantSearchDetailRequest(id) {
 		return {
 			type: types.GET_RESTAURANT_SEARCH_DETAIL_REQUEST,

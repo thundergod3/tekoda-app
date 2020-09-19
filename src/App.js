@@ -39,7 +39,7 @@ const App = ({
 	};
 
 	useEffect(() => {
-		window.addEventListener("orientationchange", setScreenOrientation);
+		window.addEventListener("orientationchange", changeScreenOrientation);
 	}, []);
 
 	useEffect(() => {

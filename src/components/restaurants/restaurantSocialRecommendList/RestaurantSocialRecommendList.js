@@ -13,7 +13,7 @@ import Loading from "../../utils/loading/Loading";
 
 const RestaurantSocialRecommendList = () => {
 	const {
-		restaurantReducer: { restaurantListEachPage: restaurantSocialRecommendList },
+		restaurantReducer: { trendingRestaurantList },
 		utilReducer: { loadingList },
 	} = useSelector((state) => state);
 
@@ -34,7 +34,7 @@ const RestaurantSocialRecommendList = () => {
 				animationSpeed={500}
 				offset={10}
 				itemWidth={394}>
-				{restaurantSocialRecommendList.map((restaurant, index) => (
+				{trendingRestaurantList.map((restaurant, index) => (
 					<Link to={`/today-eat/${restaurant._id}/page=1`} key={index}>
 						<RestaurantRecommendItem restaurant={restaurant?._source} id={restaurant._id} />
 					</Link>

@@ -5,10 +5,10 @@ class HTTPMethod {
 	constructor() {
 		this.axios = axios;
 		this.axios.defaults.baseURL = "https://tekoda.ml";
-		this.axios.defaults.headers = {
-			Authorization: `${cookieLocal.getFromCookie("token")}`,
-			// "Access-Control-Allow-Origin": "*",
-		};
+		// this.axios.defaults.headers = {
+		// 	Authorization: `Bearer ${cookieLocal.getFromCookie("token")}`,
+		// 	// "Access-Control-Allow-Origin": "*",
+		// };
 	}
 
 	get = (...props) => axios.get(...props);

@@ -9,9 +9,8 @@ const initialState = {
 	restaurantList: [],
 	restaurantListEachPage: [],
 	restaurantSearchDetail: {},
-	saveRestaurantList: localStorage.getItem("saveRestaurant")
-		? JSON.parse(localStorage.getItem("saveRestaurant"))
-		: [],
+	saveRestaurantList: [],
+	trendingRestaurantList: [],
 	statusSurvey: localStorage.getItem("statusSurvey") ? JSON.parse(localStorage.getItem("statusSurvey")) : false,
 	restaurantReviewList: [],
 	listKeyWord: [],
@@ -27,40 +26,25 @@ const restaurantReducer = (state = initialState, action) => {
 			};
 		}
 
+		case types.FETCH_RECOMMEND_TRENDING_RESTAURANT_SUCCEEDED: {
+			return {
+				...state,
+				trendingRestaurantList: action.trendingRestaurantList,
+			};
+		}
+
 		case types.FETCH_LIST_RESTAURANT_PER_PAGE_SUCCEEDED: {
 			return {
 				...state,
 				restaurantListEachPage: action.restaurantListEachPage,
-				restaurantSearchDetail: {
-					...action.restaurantListEachPage[0],
-					_source: {
-						...action.restaurantListEachPage[0]._source,
-						image: restaurant,
-						descriptionList: [
-							{
-								title: "Món ăn",
-								icon: home,
-								desc: "Kiểu Nhật, Kiểu Mỹ, Tốt cho sức khỏe, Kiểu Hawai, Hải sản, Kiểu Á",
-							},
-							{
-								title: "Món ăn",
-								icon: home,
-								desc: "Kiểu Nhật, Kiểu Mỹ, Tốt cho sức khỏe, Kiểu Hawai, Hải sản, Kiểu Á",
-							},
-							{
-								title: "Món ăn",
-								icon: home,
-								desc: "Kiểu Nhật, Kiểu Mỹ, Tốt cho sức khỏe, Kiểu Hawai, Hải sản, Kiểu Á",
-							},
-							{
-								title: "Món ăn",
-								icon: home,
-								desc: "Kiểu Nhật, Kiểu Mỹ, Tốt cho sức khỏe, Kiểu Hawai, Hải sản, Kiểu Á",
-							},
-						],
-					},
-				},
 				listKeyWord: [],
+			};
+		}
+
+		case types.FETCH_SAVE_LIST_RESTAURANT_SUCCEEDED: {
+			return {
+				...state,
+				saveRestaurantList: action.saveRestaurantList,
 			};
 		}
 
@@ -192,6 +176,7 @@ const restaurantReducer = (state = initialState, action) => {
 		}
 
 		case types.SAVE_RESTAURANT_SUCCEEDED: {
+			console.log(action);
 			return {
 				...state,
 				saveRestaurantList: [...state.saveRestaurantList, action.restaurant],

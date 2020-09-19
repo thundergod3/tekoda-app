@@ -39,6 +39,30 @@ function* fetchListRestaurantPerPage({ page }) {
 	}
 }
 
+function* fetchTrendinRestaurant() {
+	try {
+		const response = yield call(restaurantService.fetchTrendingRestaurant);
+		console.log(response);
+		yield put(restaurantAction.fetchRecommendRestaurantSucceeded(response.data));
+		yield put(utilAction.loadedUI());
+	} catch (error) {
+		console.log(error);
+		yield put(utilAction.loadedUI());
+	}
+}
+
+function* fetchSaveRestaurant() {
+	try {
+		const response = yield call(restaurantService.fetchSaveRestaurant);
+		console.log(response);
+		yield put(restaurantAction.fetchSaveRestaurantSucceeded(response.data));
+		yield put(utilAction.loadedUI());
+	} catch (error) {
+		console.log(error);
+		yield put(utilAction.loadedUI());
+	}
+}
+
 function* getRestaurantDetail({ id }) {
 	const {
 		restaurantReducer: { restaurantList, saveRestaurantList },
@@ -82,6 +106,7 @@ function* getRestaurantDetail({ id }) {
 function* sendSurveyForm({ surveyForm }) {
 	try {
 		yield cookieLocal.saveToLocal("statusSurvey", true);
+		yield cookieLocal.saveToLocal("surveyForm", surveyForm);
 		yield history.push("/");
 		yield put(restaurantAction.sendSurveyFormSucceeded());
 	} catch (error) {
@@ -156,18 +181,17 @@ function* trackingUserIntersection({ restaurantId }) {
 
 function* saveRestaurant({ restaurant }) {
 	try {
-		const response = yield call(restaurantService.saveRestaurant, { restaurantId: restaurant?._id });
+		const response = yield call(restaurantService.likeRestaurant, { restaurantId: restaurant?._id });
 		console.log(restaurant);
 		console.log(response);
 		if (response.data && response.data.enjoy === 1) {
 			yield put(restaurantAction.saveRestaurantSucceeded(restaurant));
+			yield call(restaurantService.saveRestaurant, { restaurantId: restaurant?._id });
+			yield;
 		} else {
 			yield put(restaurantAction.removeSaveRestaurant(restaurant));
+			yield call(restaurantService.saveRestaurant, { restaurantId: restaurant?._id });
 		}
-		const {
-			restaurantReducer: { saveRestaurantList },
-		} = yield select((state) => state);
-		yield cookieLocal.saveToLocal("saveRestaurant", saveRestaurantList);
 	} catch (error) {
 		console.log(error);
 	}
@@ -175,6 +199,8 @@ function* saveRestaurant({ restaurant }) {
 
 export default function* restaurantSaga() {
 	yield takeLatest(types.FETCH_LIST_RESTAURANT_REQUEST, fetchListRestaurant);
+	yield takeLatest(types.FETCH_LIST_RESTAURANT_REQUEST, fetchTrendinRestaurant);
+	yield takeLatest(types.FETCH_SAVE_LIST_RESTAURANT_REQUEST, fetchSaveRestaurant);
 	yield takeLatest(types.FETCH_LIST_RESTAURANT_PER_PAGE_REQUEST, fetchListRestaurantPerPage);
 	yield takeLatest(types.GET_RESTAURANT_SEARCH_DETAIL_REQUEST, getRestaurantDetail);
 	yield takeLatest(types.SEND_SURVEY_FORM_REQUEST, sendSurveyForm);
