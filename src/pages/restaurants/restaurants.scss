@@ -83,13 +83,14 @@
 		justify-content: center;
 		align-items: center;
 		flex-direction: column;
+		position: relative;
 
 		.drawer-sidebar-right__form,
 		.drawer-sidebar-right__listRestaurant {
 			max-width: 650px;
 			width: 100%;
 			display: flex;
-			flex: 0.9;
+			// flex: 0.9;
 		}
 
 		.drawer-sidebar-right__form {
@@ -175,13 +176,14 @@
 
 		.drawer-sidebar-right__title {
 			align-self: flex-start;
-			margin-top: 50px;
-			margin-left: 62px;
 			font-family: Roboto;
 			font-style: normal;
 			font-weight: normal;
 			font-size: 23px;
 			color: #222222;
+			position: absolute;
+			top: 5%;
+			left: 5%;
 		}
 
 		.drawer-sidebar-right__listRestaurant {
@@ -235,6 +237,8 @@
 			flex-direction: row;
 			align-items: center;
 			justify-content: space-around;
+			position: absolute;
+			bottom: 5%;
 
 			.drawer-sidebar__buttonBack,
 			.drawer-sidebar__buttonNext {
@@ -307,4 +311,10 @@
 	p {
 		color: #fff !important;
 	}
+}
+
+.button--disable {
+	background: rgb(170, 170, 170) !important;
+	color: rgba(16, 16, 16, 0.3) !important;
+	pointer-events: none !important;
 }

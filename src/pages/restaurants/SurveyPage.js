@@ -112,10 +112,12 @@ const SurveyPage = () => {
 				(position) => {
 					Geocode.fromLatLng(position.coords.latitude, position.coords.longitude).then(
 						(response) => {
-							const address = response.results[0].formatted_address;
-							const streetName = response.results[0].address_components[3].short_name;
-							setSearchAdd(address);
-							cookieLocal.saveToLocal("street", streetName);
+							if (response.status === "OK") {
+								const address = response.results[0].formatted_address;
+								const streetName = response.results[0].address_components[2].short_name;
+								setSearchAdd(address);
+								cookieLocal.saveToLocal("street", streetName);
+							}
 						},
 						(error) => {
 							console.error(error);
@@ -155,7 +157,18 @@ const SurveyPage = () => {
 		setSearchAdd(address);
 		geocodeByAddress(address)
 			.then((results) => getLatLng(results[0]))
-			.then((latLng) => console.log("Success", latLng))
+			.then((latLng) => {
+				Geocode.fromLatLng(latLng.lat, latLng.lng).then(
+					(response) => {
+						const address = response?.results[0]?.formatted_address;
+						const streetName = response?.results[0]?.address_components[2]?.short_name;
+						cookieLocal.saveToLocal("street", streetName);
+					},
+					(error) => {
+						console.error(error);
+					}
+				);
+			})
 			.catch((error) => console.error("Error", error));
 	};
 
@@ -263,7 +276,6 @@ const SurveyPage = () => {
 												})}
 											/>
 											<div className="autocomplete-dropdown-container">
-												{loading && <div>Loading...</div>}
 												{suggestions.map((suggestion) => {
 													const style = suggestion.active
 														? { backgroundColor: "#fafafa", cursor: "pointer" }
@@ -331,7 +343,12 @@ const SurveyPage = () => {
 									Hoàn thành
 								</button>
 							) : (
-								<button className="drawer-sidebar__buttonNext" onClick={nextDrawer}>
+								<button
+									className={`drawer-sidebar__buttonNext ${
+										currentDrawer === 2 && searchAdd === "" ? "button--disable" : ""
+									}`}
+									onClick={nextDrawer}
+									disabled={currentDrawer === 2 && searchAdd === "" ? true : false}>
 									Tiếp theo
 								</button>
 							)}

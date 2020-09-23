@@ -5,9 +5,3 @@ $main-color: #0260fd;
 	padding: 0;
 	box-sizing: border-box;
 }
-
-@media screen and (max-height: 580px), screen and (max-width: 1536px) {
-	.restaurant-filter-list__container {
-		height: 60vh !important;
-	}
-}

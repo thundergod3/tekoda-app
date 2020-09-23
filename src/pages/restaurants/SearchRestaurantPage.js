@@ -57,6 +57,7 @@ const SearchRestaurantPage = ({ match }) => {
 				dispatch(getSearchRestaurantPerPageRequest([match.params.params], match.params.pageNumber));
 			}
 		} else {
+			console.log("haha");
 			dispatch(fetchListRestaurantRequest());
 			dispatch(fetchListRestaurantPerPageRequest());
 		}

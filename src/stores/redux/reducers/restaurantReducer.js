@@ -149,7 +149,7 @@ const restaurantReducer = (state = initialState, action) =>
 			}
 
 			case types.DELETE_ITEM_STORE_LIST_KEYWORD: {
-				const index = draft.listKeyWord.findIndex((item) => item === action.action.keyword);
+				const index = draft.listKeyWord.findIndex((item) => item === action.keyword);
 				draft.listKeyWord.splice(index, 1);
 				break;
 			}

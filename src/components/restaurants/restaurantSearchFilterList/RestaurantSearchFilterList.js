@@ -165,7 +165,12 @@ const RestaurantSearchFilterList = () => {
 	const popupPreferenceEl = useRef(null);
 	const closePreferenceEl = useRef(null);
 	const dispatch = useDispatch();
-	const { addstoreListKeyword, deleleItemStoreListKeyword, searchRestaurantRequest } = restaurantAction;
+	const {
+		addstoreListKeyword,
+		deleleItemStoreListKeyword,
+		searchRestaurantRequest,
+		getAllSearchRestaurantRequest,
+	} = restaurantAction;
 	const { loadingUI } = utilAction;
 
 	const addPrefernce = (preference) => {
@@ -207,6 +212,7 @@ const RestaurantSearchFilterList = () => {
 				onClick={() => {
 					dispatch(loadingUI());
 					dispatch(searchRestaurantRequest(listKeyWord));
+					dispatch(getAllSearchRestaurantRequest(listKeyWord));
 				}}>
 				Save
 			</button>

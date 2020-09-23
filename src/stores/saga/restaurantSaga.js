@@ -53,7 +53,6 @@ function* fetchTrendingRestaurant() {
 function* fetchSaveRestaurant() {
 	try {
 		const response = yield call(restaurantService.fetchSaveRestaurant);
-		console.log(response);
 		yield put(restaurantAction.fetchSaveRestaurantSucceeded(response.data));
 		yield put(utilAction.loadedUI());
 	} catch (error) {
@@ -127,6 +126,7 @@ function* searchRestaurant({ listKeyWord, page }) {
 	if (!page) page = 1;
 	try {
 		const response = yield call(restaurantService.searchRestaurant, { listKeyWord, page });
+		console.log(response);
 		yield put(restaurantAction.searchRestaurantSucceeded(response.data));
 		const {
 			restaurantReducer: { restaurantSearchDetail },
