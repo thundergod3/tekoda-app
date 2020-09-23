@@ -3,6 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 
 import { Formik } from "formik";
 import * as Yup from "yup";
+import FB from "fb";
 
 import logo from "../../assets/icons/logo.png";
 import logoWhite from "../../assets/icons/Vector.png";
@@ -30,7 +31,13 @@ const LoginPage = () => {
 	const { getUserRequest, loginUserRequest } = authAction;
 	const { loadingUI } = utilAction;
 
-	const responseFacebook = (response) => dispatch(getUserRequest(response));
+	const responseFacebook = (response) => {
+		FB.setAccessToken(response.accessToken);
+		FB.api("/me", "GET", { fields: "id,birthday,age_range,email,gender,location,name,short_name" }, (response) => {
+			console.log(response);
+			dispatch(getUserRequest(response));
+		});
+	};
 
 	if (authenticated === true) return <Redirect to="/" />;
 

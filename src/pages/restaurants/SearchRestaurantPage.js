@@ -15,6 +15,7 @@ const SearchRestaurantPage = ({ match }) => {
 	const {
 		utilReducer: { loading },
 		authReducer: { authenticated },
+		restaurantReducer: { statusSurvey },
 	} = useSelector((state) => state);
 	const searchPageRef = useRef(null);
 	const dispatch = useDispatch();
@@ -62,6 +63,10 @@ const SearchRestaurantPage = ({ match }) => {
 	}, []);
 
 	if (authenticated === false) return <Redirect to="/login" />;
+
+	if (!statusSurvey && authenticated === true) {
+		return <Redirect to="/survey" />;
+	}
 
 	return (
 		<>

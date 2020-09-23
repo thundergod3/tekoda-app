@@ -18,7 +18,7 @@ const UserReviewList = () => {
 	} = useSelector((state) => state);
 	const intersectTarget = useRef(null);
 	const dispatch = useDispatch();
-	const { trackingUserScrollReviewListRequest } = restaurantAction;
+	const { trackingUserScrollReviewList } = restaurantAction;
 
 	useEffect(() => {
 		const opts = {
@@ -34,7 +34,7 @@ const UserReviewList = () => {
 						action: "Scrolled to review",
 						value: entry.intersectionRatio,
 					});
-					dispatch(trackingUserScrollReviewListRequest(_id));
+					dispatch(trackingUserScrollReviewList(_id));
 				}
 			});
 		};

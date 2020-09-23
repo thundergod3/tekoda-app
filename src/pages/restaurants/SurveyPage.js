@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 
 import RoomIcon from "@material-ui/icons/Room";
@@ -9,6 +9,11 @@ import restaurantAction from "../../stores/redux/actions/restaurantAction";
 import logoWhite from "../../assets/icons/Vector.png";
 import "./restaurants.scss";
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+import Geocode from "react-geocode";
+import cookieLocal from "../../helpers/cookieLocal";
+
+Geocode.setApiKey("AIzaSyAHF5sU-uXkvCZ6L1ieDNBwOhERg3moCkg");
+Geocode.enableDebug();
 
 const listRestaurant = [
 	{
@@ -99,6 +104,30 @@ const SurveyPage = () => {
 	const [currentDrawer, setCurrentDrawer] = useState(1);
 	const [chooseAge, setChooseAge] = useState("");
 	const [chooseGender, setChooseGender] = useState("");
+	const [chooseRestaurant, setChooseRestaurant] = useState([]);
+
+	useEffect(() => {
+		if (currentDrawer === 2) {
+			navigator.geolocation.getCurrentPosition(
+				(position) => {
+					Geocode.fromLatLng(position.coords.latitude, position.coords.longitude).then(
+						(response) => {
+							const address = response.results[0].formatted_address;
+							const streetName = response.results[0].address_components[3].short_name;
+							setSearchAdd(address);
+							cookieLocal.saveToLocal("street", streetName);
+						},
+						(error) => {
+							console.error(error);
+						}
+					);
+				},
+				(err) => {
+					console.log(err);
+				}
+			);
+		}
+	}, [currentDrawer]);
 
 	const nextDrawer = () => {
 		if (currentDrawer >= 3) {
@@ -118,12 +147,6 @@ const SurveyPage = () => {
 
 	if (authenticated === true && statusSurvey === true) return <Redirect to="/" />;
 
-	// if (currentDrawer === 2) {
-	// 	navigator.geolocation.getCurrentPosition(function (position) {
-	// 		console.log(position);
-	// 	});
-	// }
-
 	const handleChange = (address) => {
 		setSearchAdd(address);
 	};
@@ -136,15 +159,25 @@ const SurveyPage = () => {
 			.catch((error) => console.error("Error", error));
 	};
 
-	let chooseAgeActive = "";
-	for (let i = 0; i < surveyAgeList.length; i++) {
-		if (chooseAge.age === surveyAgeList[i].age) chooseAgeActive = "choose--active";
-	}
+	const handleChooseRestaurant = (restaurant) => {
+		let found = false;
+		for (let k = 0; k < chooseRestaurant.length; k++) {
+			if (restaurant.title === chooseRestaurant[k]?.title) {
+				found = true;
+			}
+		}
 
-	let chooseGenderActive = "";
-	for (let j = 0; j < surveyGenderList.length; j++) {
-		if (chooseGender.gender === surveyGenderList[j].gender) chooseGenderActive = "choose--active";
-	}
+		if (chooseRestaurant.length < 5) {
+			if (found) {
+				setChooseRestaurant(chooseRestaurant.filter((item) => item.title !== restaurant.title));
+			} else {
+				setChooseRestaurant([...chooseRestaurant, restaurant]);
+			}
+		} else {
+			setChooseRestaurant(chooseRestaurant.filter((item) => item.title !== restaurant.title));
+			return;
+		}
+	};
 
 	return (
 		<>
@@ -232,10 +265,6 @@ const SurveyPage = () => {
 											<div className="autocomplete-dropdown-container">
 												{loading && <div>Loading...</div>}
 												{suggestions.map((suggestion) => {
-													const className = suggestion.active
-														? "suggestion-item--active"
-														: "suggestion-item";
-													// inline style for demonstration purpose
 													const style = suggestion.active
 														? { backgroundColor: "#fafafa", cursor: "pointer" }
 														: { backgroundColor: "#ffffff", cursor: "pointer" };
@@ -262,13 +291,23 @@ const SurveyPage = () => {
 									Hãy chọn tối thiểu 5 nhóm nhà hàng bạn thích
 								</p>
 								<div className="drawer-sidebar-right__listRestaurant">
-									{listRestaurant.map((restaurant, index) => (
-										<div key={index} className="drawer-sidebar-right__itemRestaurant">
-											<div className="drawer-sidebar-right__restaurantBox">
+									{listRestaurant.map((restaurant, index) => {
+										let chooseRestaurantActive = "";
+
+										for (let i = 0; i < chooseRestaurant.length; i++) {
+											if (chooseRestaurant[i].title === restaurant.title)
+												chooseRestaurantActive = "choose--active";
+										}
+
+										return (
+											<div
+												key={index}
+												className={`drawer-sidebar-right__itemRestaurant ${chooseRestaurantActive}`}
+												onClick={() => handleChooseRestaurant(restaurant)}>
 												<p>{restaurant.title}</p>
 											</div>
-										</div>
-									))}
+										);
+									})}
 								</div>
 							</>
 						)}

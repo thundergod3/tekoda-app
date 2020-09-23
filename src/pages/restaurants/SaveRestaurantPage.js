@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Redirect } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import restaurantAction from "../../stores/redux/actions/restaurantAction";
@@ -14,8 +15,9 @@ import Loading from "../../components/utils/loading/Loading";
 
 const SaveRestaurantPage = () => {
 	const {
-		restaurantReducer: { saveRestaurantList },
+		restaurantReducer: { saveRestaurantList, statusSurvey },
 		utilReducer: { loading },
+		authReducer: { authenticated },
 	} = useSelector((state) => state);
 	const { fetchSaveRestaurantRequest } = restaurantAction;
 	const { loadingUI } = utilAction;
@@ -26,7 +28,11 @@ const SaveRestaurantPage = () => {
 		dispatch(fetchSaveRestaurantRequest());
 	}, []);
 
-	console.log(saveRestaurantList);
+	if (authenticated === false) return <Redirect to="/login" />;
+
+	if (!statusSurvey && authenticated === true) {
+		return <Redirect to="/survey" />;
+	}
 
 	return (
 		<>

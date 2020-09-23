@@ -22,7 +22,6 @@ function* fetchListRestaurant() {
 }
 
 function* fetchListRestaurantPerPage({ page }) {
-	yield put(utilAction.loadingUI());
 	try {
 		if (!page) page = 1;
 		yield put(restaurantAction.removeRestaurantReviewList());
@@ -31,7 +30,9 @@ function* fetchListRestaurantPerPage({ page }) {
 		const {
 			restaurantReducer: { restaurantSearchDetail },
 		} = yield select((state) => state);
-		yield call(getRestaurantReview, { restaurantId: restaurantSearchDetail._id, count: 1 });
+		if (Object.keys(restaurantSearchDetail).length === 0) {
+			yield call(getRestaurantDetail, { id: response.data[0]._id });
+		}
 		yield put(utilAction.loadedUI());
 	} catch (error) {
 		console.log(error);
@@ -39,15 +40,13 @@ function* fetchListRestaurantPerPage({ page }) {
 	}
 }
 
-function* fetchTrendinRestaurant() {
+function* fetchTrendingRestaurant() {
 	try {
 		const response = yield call(restaurantService.fetchTrendingRestaurant);
 		console.log(response);
 		yield put(restaurantAction.fetchRecommendRestaurantSucceeded(response.data));
-		yield put(utilAction.loadedUI());
 	} catch (error) {
 		console.log(error);
-		yield put(utilAction.loadedUI());
 	}
 }
 
@@ -143,12 +142,9 @@ function* searchRestaurant({ listKeyWord, page }) {
 function* getSearchRestaurantPerPage({ listKeyWord, page }) {
 	try {
 		const response = yield call(restaurantService.getSearchRestaurantPePage, { listKeyWord, page });
-		console.log(response);
 		yield put(restaurantAction.getSearchRestaurantPerPageSucceeded(response.data));
-		yield put(utilAction.loadedUI());
 	} catch (error) {
 		console.log(error);
-		yield put(utilAction.loadedUI());
 	}
 }
 
@@ -199,7 +195,7 @@ function* saveRestaurant({ restaurant }) {
 
 export default function* restaurantSaga() {
 	yield takeLatest(types.FETCH_LIST_RESTAURANT_REQUEST, fetchListRestaurant);
-	yield takeLatest(types.FETCH_LIST_RESTAURANT_REQUEST, fetchTrendinRestaurant);
+	yield takeLatest(types.FETCH_RECOMMEND_TRENDING_RESTAURANT_REQUEST, fetchTrendingRestaurant);
 	yield takeLatest(types.FETCH_SAVE_LIST_RESTAURANT_REQUEST, fetchSaveRestaurant);
 	yield takeLatest(types.FETCH_LIST_RESTAURANT_PER_PAGE_REQUEST, fetchListRestaurantPerPage);
 	yield takeLatest(types.GET_RESTAURANT_SEARCH_DETAIL_REQUEST, getRestaurantDetail);
@@ -207,7 +203,7 @@ export default function* restaurantSaga() {
 	yield takeLatest(types.GET_ALL_SEARCH_RESTAURANT_REQUEST, getAllSearchRestaurant);
 	yield takeLatest(types.SEARCH_RESTAURANT_REQUEST, searchRestaurant);
 	yield takeLatest(types.GET_SEARCH_RESTAURANT_PER_PAGE_REQUEST, getSearchRestaurantPerPage);
-	yield takeLatest(types.TRACKING_USER_SCROLL_REVIEW_LIST_REQUEST, trackingUserIntersection);
+	yield takeLatest(types.TRACKING_USER_SCROLL_REVIEW_LIST, trackingUserIntersection);
 	yield takeLatest(types.GET_RESTAURANT_REVIEW_LIST_REQUEST, getRestaurantReview);
 	yield takeLatest(types.SAVE_RESTAURANT_REQUEST, saveRestaurant);
 }

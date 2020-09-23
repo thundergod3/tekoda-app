@@ -1,26 +1,28 @@
 @import "../../App.scss";
 
 .homepage,
-.search-page,
-.save-restaurant-page {
+.save-restaurant-page,
+.search-page {
 	margin: 0 auto;
 	width: 100%;
-	height: 80vh;
 	max-width: 1241px;
 }
 
 .homepage {
+	height: 100%;
 	margin-top: 150px;
 }
 
+.save-restaurant-page {
+	height: calc(100vh - 96px - 60px);
+	margin-top: 120px;
+}
+
 .search-page {
+	height: calc(100vh - 96px - 60px);
 	margin-top: 120px;
 	display: flex;
 	flex-direction: row;
-}
-
-.save-restaurant-page {
-	margin-top: 120px;
 }
 
 .survey-page {
@@ -192,29 +194,36 @@
 			overflow: scroll;
 			overflow-x: hidden;
 
+			&::-webkit-scrollbar {
+				display: none;
+			}
+
 			.drawer-sidebar-right__itemRestaurant {
 				width: calc(590px / 3);
 				height: 130px;
 				margin-bottom: 30px;
 
-				.drawer-sidebar-right__restaurantBox {
-					background: #c4c4c4;
-					border-radius: 12px;
-					width: calc(590px / 3);
-					height: 130px;
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					p {
-						font-family: Roboto;
-						font-style: normal;
-						font-weight: 500;
-						font-size: 18px;
-						text-align: center;
-						color: #4a4a4a;
-						margin-top: 20px;
-						text-transform: uppercase;
-					}
+				background: #c4c4c4;
+				border-radius: 12px;
+				width: calc(590px / 3);
+				height: 130px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
+				&:hover {
+					cursor: pointer;
+				}
+
+				p {
+					font-family: Roboto;
+					font-style: normal;
+					font-weight: 500;
+					font-size: 18px;
+					text-align: center;
+					color: #4a4a4a;
+					margin-top: 20px;
+					text-transform: uppercase;
 				}
 			}
 		}
@@ -294,4 +303,8 @@
 .choose--active {
 	background: $main-color !important;
 	color: #fff !important;
+
+	p {
+		color: #fff !important;
+	}
 }

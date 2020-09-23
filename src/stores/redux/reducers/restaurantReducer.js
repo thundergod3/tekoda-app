@@ -1,4 +1,5 @@
 import * as types from "../../../constants/types";
+import produce from "immer";
 
 import restaurant from "../../../assets/restaurants/restaurant1.png";
 import restaurant2 from "../../../assets/restaurants/restaurant2.png";
@@ -16,42 +17,37 @@ const initialState = {
 	listKeyWord: [],
 };
 
-const restaurantReducer = (state = initialState, action) => {
-	switch (action.type) {
-		case types.FETCH_LIST_RESTAURANT_SUCCEEDED: {
-			return {
-				...state,
-				restaurantList: action.restaurantList,
-				listKeyWord: [],
-			};
-		}
+const restaurantReducer = (state = initialState, action) =>
+	produce(state, (draft) => {
+		switch (action.type) {
+			case types.FETCH_LIST_RESTAURANT_SUCCEEDED: {
+				draft.restaurantList = action.restaurantList;
+				draft.listKeyWord = [];
+				break;
+			}
 
-		case types.FETCH_RECOMMEND_TRENDING_RESTAURANT_SUCCEEDED: {
-			return {
-				...state,
-				trendingRestaurantList: action.trendingRestaurantList,
-			};
-		}
+			case types.FETCH_RECOMMEND_TRENDING_RESTAURANT_SUCCEEDED: {
+				draft.trendingRestaurantList = action.trendingRestaurantList;
+				break;
+			}
 
-		case types.FETCH_LIST_RESTAURANT_PER_PAGE_SUCCEEDED: {
-			return {
-				...state,
-				restaurantListEachPage: action.restaurantListEachPage,
-				listKeyWord: [],
-			};
-		}
+			case types.FETCH_LIST_RESTAURANT_PER_PAGE_SUCCEEDED: {
+				draft.restaurantListEachPage = action.restaurantListEachPage;
+				break;
+			}
 
-		case types.FETCH_SAVE_LIST_RESTAURANT_SUCCEEDED: {
-			return {
-				...state,
-				saveRestaurantList: action.saveRestaurantList,
-			};
-		}
+			case types.REMOVE_LIST_RESTAURANT_PER_PAGE: {
+				draft.restaurantListEachPage = [];
+				break;
+			}
 
-		case types.GET_RESTAURANT_SEARCH_DETAIL_SUCCEEDED: {
-			return {
-				...state,
-				restaurantSearchDetail: {
+			case types.FETCH_SAVE_LIST_RESTAURANT_SUCCEEDED: {
+				draft.saveRestaurantList = action.saveRestaurantList;
+				break;
+			}
+
+			case types.GET_RESTAURANT_SEARCH_DETAIL_SUCCEEDED: {
+				draft.restaurantSearchDetail = {
 					...action.restaurantSearchDetail,
 					_source: {
 						...action.restaurantSearchDetail._source,
@@ -79,29 +75,23 @@ const restaurantReducer = (state = initialState, action) => {
 							},
 						],
 					},
-					listKeyWord: [],
-				},
-			};
-		}
+				};
+				draft.listKeyWord = [];
+				break;
+			}
 
-		case types.SEND_SURVEY_FORM_SUCCEEDED: {
-			return {
-				...state,
-				statusSurvey: true,
-			};
-		}
+			case types.SEND_SURVEY_FORM_SUCCEEDED: {
+				draft.statusSurvey = true;
+				break;
+			}
 
-		case types.GET_ALL_SEARCH_RESTAURANT_SUCCEEDED: {
-			return {
-				...state,
-				restaurantList: action.allSearchRestaurant,
-			};
-		}
+			case types.GET_ALL_SEARCH_RESTAURANT_SUCCEEDED: {
+				draft.restaurantList = action.allSearchRestaurant;
+				break;
+			}
 
-		case types.SEARCH_RESTAURANT_SUCCEEDED: {
-			return {
-				...state,
-				restaurantSearchDetail: {
+			case types.SEARCH_RESTAURANT_SUCCEEDED: {
+				draft.restaurantSearchDetail = {
 					...action.restaurantSearchList[0],
 					_source: {
 						...action.restaurantSearchList[0]._source,
@@ -129,73 +119,57 @@ const restaurantReducer = (state = initialState, action) => {
 							},
 						],
 					},
-				},
-			};
-		}
+				};
+				break;
+			}
 
-		case types.GET_SEARCH_RESTAURANT_PER_PAGE_SUCCEEDED: {
-			return {
-				...state,
-				restaurantListEachPage: action.searchRestaurantPerPage,
-			};
-		}
+			case types.GET_SEARCH_RESTAURANT_PER_PAGE_SUCCEEDED: {
+				draft.restaurantListEachPage = action.searchRestaurantPerPage;
+				break;
+			}
 
-		case types.GET_RESTAURANT_REVIEW_LIST_SUCCEEDED: {
-			return {
-				...state,
-				restaurantReviewList: action.restaurantReviewList,
-			};
-		}
+			case types.GET_RESTAURANT_REVIEW_LIST_SUCCEEDED: {
+				draft.restaurantReviewList = action.restaurantReviewList;
+				break;
+			}
 
-		case types.REMOVE_RESTAURANT_REVIEW_LIST: {
-			return {
-				...state,
-				restaurantReviewList: [],
-			};
-		}
+			case types.REMOVE_RESTAURANT_REVIEW_LIST: {
+				draft.restaurantReviewList = [];
+				break;
+			}
 
-		case types.STORE_LIST_KEYWORD: {
-			return {
-				...state,
-				listKeyWord: action.listKeyWord,
-			};
-		}
+			case types.STORE_LIST_KEYWORD: {
+				draft.listKeyWord = action.listKeyWord;
+				break;
+			}
 
-		case types.ADD_STORE_LIST_KEYWORD: {
-			return {
-				...state,
-				listKeyWord: [...state.listKeyWord, action.keyword],
-			};
-		}
+			case types.ADD_STORE_LIST_KEYWORD: {
+				draft.listKeyWord.push(action.keyword);
+				break;
+			}
 
-		case types.DELETE_ITEM_STORE_LIST_KEYWORD: {
-			return {
-				...state,
-				listKeyWord: state.listKeyWord.filter((item) => item !== action.keyword),
-			};
-		}
+			case types.DELETE_ITEM_STORE_LIST_KEYWORD: {
+				const index = draft.listKeyWord.findIndex((item) => item === action.action.keyword);
+				draft.listKeyWord.splice(index, 1);
+				break;
+			}
 
-		case types.SAVE_RESTAURANT_SUCCEEDED: {
-			console.log(action);
-			return {
-				...state,
-				saveRestaurantList: [...state.saveRestaurantList, action.restaurant],
-			};
-		}
+			case types.SAVE_RESTAURANT_SUCCEEDED: {
+				draft.saveRestaurantList.push(action.restaurant);
+				break;
+			}
 
-		case types.REMOVE_SAVE_RESTAURANT: {
-			return {
-				...state,
-				saveRestaurantList: state.saveRestaurantList.filter(
-					(restaurant) => restaurant._id !== action.restaurant._id
-				),
-			};
-		}
+			case types.REMOVE_SAVE_RESTAURANT: {
+				const index = draft.saveRestaurantList.findIndex(
+					(restaurant) => restaurant._id === action.restaurant._id
+				);
+				draft.saveRestaurantList.splice(index, 1);
+				break;
+			}
 
-		default: {
-			return state;
+			default:
+				break;
 		}
-	}
-};
+	});
 
 export default restaurantReducer;

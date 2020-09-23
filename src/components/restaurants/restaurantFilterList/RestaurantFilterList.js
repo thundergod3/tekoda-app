@@ -11,7 +11,7 @@ import RestaurantFilterItem from "../restaurantFilterItem/RestaurantFilterItem";
 
 import Pagination from "@material-ui/lab/Pagination";
 
-const RestaurantFilterList = ({ match, history, scrollTopRestaurantDetail }) => {
+const RestaurantFilterList = ({ match: { params }, history, scrollTopRestaurantDetail }) => {
 	const [pageNumber, setPageNumber] = useState(1);
 	const {
 		restaurantReducer: { restaurantList, restaurantListEachPage, listKeyWord },
@@ -32,19 +32,19 @@ const RestaurantFilterList = ({ match, history, scrollTopRestaurantDetail }) => 
 		));
 
 	useEffect(() => {
-		if (match.params.params) {
-			if (match.params.params.slice(0, 4) === "page")
-				setPageNumber(parseInt(match.params.params.slice(5, match.params.params.length)));
-			else if (match.params.pageNumber) setPageNumber(parseInt(match.params.pageNumber));
+		if (Object.keys(params).length !== 0) {
+			if (params.params && params.params.slice(0, 4) === "page")
+				setPageNumber(parseInt(params.params.slice(5, params.params.length)));
+			else if (params.pageNumber) setPageNumber(parseInt(params.pageNumber));
 		}
 	}, []);
 
 	return (
 		<div className="restaurant-filter-list">
 			<div className="restaurant-filter-list__container">
-				{(!match.params.params ||
-					isNaN(parseInt(match.params.params) && match.params.params) ||
-					!isNaN(parseInt(match.params.params))) &&
+				{(!params.params ||
+					isNaN(parseInt(params.params) && params.params) ||
+					!isNaN(parseInt(params.params))) &&
 					renderLayoutRestaurant(restaurantListEachPage)}
 				<div className="restaurant-filter__pagination">
 					<Pagination

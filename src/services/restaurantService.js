@@ -1,21 +1,9 @@
 import HTTPMethod from "./index";
-import cookieLocal from "../helpers/cookieLocal";
 
 class restaurantService {
-	fetchAllRestaurant = () =>
-		HTTPMethod.get("/api/v1/restaurant/list", {
-			headers: {
-				Authorization: `Bearer ${cookieLocal.getFromCookie("token")}`,
-			},
-		});
+	fetchAllRestaurant = () => HTTPMethod.get("/api/v1/restaurant/list");
 
-	fetchTrendingRestaurant = () =>
-		HTTPMethod.get("/api/v1/restaurant/recommend", {
-			headers: {
-				Authorization:
-					"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MDA1NTk5NTEsImlhdCI6MTYwMDQ3MzU1MSwic3ViIjoxNH0.fw-O4lBwzQuyzwCxnISY4wUlMOu4E6h46G2AS2qb03Y",
-			},
-		});
+	fetchTrendingRestaurant = () => HTTPMethod.get("/api/v1/restaurant/recommend");
 
 	fetchRestaurantPerPage = ({ page }) => HTTPMethod.post(`/api/v1/restaurant/paging?page=${page}&limit=10`);
 
@@ -28,49 +16,21 @@ class restaurantService {
 		HTTPMethod.post(`/api/v1/search?q=${listKeyWord.join("+")}&limit=10&page=${page}`);
 
 	getSearchRestaurantPePage = ({ listKeyWord, page }) =>
-		HTTPMethod.post(`/api/v1/search?q=${listKeyWord.join("+")}&limit=10&page=${page}`, {
-			headers: {
-				Authorization: `Bearer ${cookieLocal.getFromCookie("token")}`,
-			},
-		});
+		HTTPMethod.post(`/api/v1/search?q=${listKeyWord.join("+")}&limit=10&page=${page}`);
 
 	getRestaurantReview = ({ restaurantId, count }) =>
-		HTTPMethod.get(`/api/v1/review?resId=${restaurantId}&count=${count}`, {
-			headers: {
-				Authorization: `Bearer ${cookieLocal.getFromCookie("token")}`,
-			},
-		});
+		HTTPMethod.get(`/api/v1/review?resId=${restaurantId}&count=${count}`);
 
 	trackingUserScrollReviewList = ({ restaurantId }) =>
-		HTTPMethod.post("/api/v1/user_behavior/create", {
-			headers: {
-				Authorization: `Bearer ${cookieLocal.getFromCookie("token")}`,
-			},
-			restaurant_id: restaurantId,
-		});
+		HTTPMethod.post("/api/v1/user_behavior/create", { restaurant_id: restaurantId });
 
 	likeRestaurant = ({ restaurantId }) =>
-		HTTPMethod.post("/api/v1/user_behavior/enjoy", {
-			headers: {
-				Authorization: `Bearer ${cookieLocal.getFromCookie("token")}`,
-			},
-			restaurant_id: restaurantId,
-		});
+		HTTPMethod.post("/api/v1/user_behavior/enjoy", { restaurant_id: restaurantId });
 
 	saveRestaurant = ({ restaurantId }) =>
-		HTTPMethod.post("/api/v1/user_behavior/save", {
-			headers: {
-				Authorization: `Bearer ${cookieLocal.getFromCookie("token")}`,
-			},
-			restaurant_id: restaurantId,
-		});
+		HTTPMethod.post("/api/v1/user_behavior/save", { restaurant_id: restaurantId });
 
-	fetchSaveRestaurant = () =>
-		HTTPMethod.get("/api/v1/user_behavior/get_save", {
-			headers: {
-				Authorization: `Bearer ${cookieLocal.getFromCookie("token")}`,
-			},
-		});
+	fetchSaveRestaurant = () => HTTPMethod.get("/api/v1/user_behavior/get_save");
 }
 
 export default new restaurantService();

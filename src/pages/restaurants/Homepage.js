@@ -24,7 +24,7 @@ const Homepage = () => {
 	const dispatch = useDispatch();
 	const {
 		fetchListRestaurantRequest,
-		fetchListRestaurantPerPageRequest,
+		removeListRestaurantPerPage,
 		fetchRecommendRestaurantRequest,
 	} = restaurantAction;
 	const { loadingUI } = utilAction;
@@ -32,8 +32,8 @@ const Homepage = () => {
 	useEffect(() => {
 		dispatch(loadingUI());
 		dispatch(fetchListRestaurantRequest());
+		dispatch(removeListRestaurantPerPage());
 		// dispatch(fetchRecommendRestaurantRequest());
-		dispatch(fetchListRestaurantPerPageRequest());
 	}, []);
 
 	if (!statusSurvey && authenticated === true) {

@@ -144,6 +144,12 @@ class restaurantAction {
 		};
 	}
 
+	removeListRestaurantPerPage() {
+		return {
+			type: types.REMOVE_LIST_RESTAURANT_PER_PAGE,
+		};
+	}
+
 	storeListKeyword(listKeyWord) {
 		return {
 			type: types.STORE_LIST_KEYWORD,
@@ -165,16 +171,10 @@ class restaurantAction {
 		};
 	}
 
-	trackingUserScrollReviewListRequest(restaurantId) {
+	trackingUserScrollReviewList(restaurantId) {
 		return {
-			type: types.TRACKING_USER_SCROLL_REVIEW_LIST_REQUEST,
+			type: types.TRACKING_USER_SCROLL_REVIEW_LIST,
 			restaurantId,
-		};
-	}
-	trackingUserScrollReviewListSucceeded(enjoy) {
-		return {
-			type: types.TRACKING_USER_SCROLL_REVIEW_LIST_SUCCEEDED,
-			enjoy,
 		};
 	}
 

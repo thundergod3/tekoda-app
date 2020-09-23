@@ -76,8 +76,8 @@ const Navbar = ({
 						</div>
 					</Link>
 					{pathname.slice(1, 10) === "today-eat" || pathname.slice(1, 16) === "save-restaurant" ? (
-						<div className="search-bar__compactWrapper" onClick={() => setShowSearchBar(true)}>
-							<div className="search-bar__compact">
+						<div className="search-bar__compactWrapper">
+							<div className="search-bar__compact" onClick={() => setShowSearchBar(true)}>
 								<SearchIcon />
 								<input
 									type="text"
@@ -104,7 +104,7 @@ const Navbar = ({
 						<LanguageIcon />
 						<ExpandMoreIcon />
 					</div>
-					{!authenticated && (
+					{!authenticated ? (
 						<>
 							<Link to="/login">
 								<div className="navbar__button">
@@ -117,8 +117,7 @@ const Navbar = ({
 								</div>
 							</Link>
 						</>
-					)}
-					{authenticated && (
+					) : (
 						<div className="navbar__button">
 							<div className="navbar__buttonDrawerContainer">
 								<MenuIcon />
