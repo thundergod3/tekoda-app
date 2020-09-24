@@ -86,7 +86,10 @@ const Navbar = ({
 								/>
 								{showSearchBar && (
 									<div className="search-bar__compactContainer" ref={searchBarRef}>
-										<SearchBar style={{ position: "absolute", left: "9%", top: "20px" }} />
+										<SearchBar
+											style={{ position: "absolute", left: "9%", top: "20px" }}
+											setShowSearchBar={setShowSearchBar}
+										/>
 									</div>
 								)}
 							</div>

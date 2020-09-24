@@ -14,6 +14,7 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-au
 import SearchIcon from "@material-ui/icons/Search";
 import PreferenceItem from "../../utils/preferenceItem/PreferenceItem";
 import PopupSearch from "../../utils/popupSearch/PopupSearch";
+import { handleChooseItem } from "../../../helpers/handleChangeActive";
 
 const listSearchDishes = [
 	{
@@ -130,17 +131,6 @@ const listSearchPreference = [
 	},
 ];
 
-const listSearchLocation = [
-	{
-		title: "Hủ tiếu",
-		icon: LocationIcon,
-	},
-	{
-		title: "Bánh tráng",
-		icon: LocationIcon,
-	},
-];
-
 const listSearchTime = [
 	{
 		title: "Bữa sáng",
@@ -164,7 +154,7 @@ const listSearchTime = [
 	},
 ];
 
-const SearchBar = ({ style }) => {
+const SearchBar = ({ style, setShowSearchBar }) => {
 	const popupDishesEl = useRef(null);
 	const inputPeopleRef = useRef(null);
 	const popupTimeEl = useRef(null);
@@ -183,13 +173,13 @@ const SearchBar = ({ style }) => {
 	const addPrefernce = (preference) => {
 		let found = false;
 		for (let i = 0; i < choosePreference.length; i++) {
-			if (preference === choosePreference[i]) {
+			if (preference?.title === choosePreference[i]?.title) {
 				found = true;
 			}
 		}
 
 		if (found) {
-			setChoosePreference(choosePreference.filter((item) => item !== preference));
+			setChoosePreference(choosePreference.filter((item) => item?.id !== preference?.id));
 		} else {
 			setChoosePreference([...choosePreference, preference]);
 		}
@@ -199,7 +189,7 @@ const SearchBar = ({ style }) => {
 		<div className="layout-search__dishesContainer" ref={popupDishesEl}>
 			<div className="layout-search__dishes">
 				{listSearchDishes.map((dishes, index) => (
-					<div className="layout-search__item" key={index} onClick={() => addPrefernce(dishes.title)}>
+					<div className="layout-search__item" key={index} onClick={() => addPrefernce(dishes)}>
 						<img src={dishes.icon} alt={dishes.title} />
 						<p className="layout-search__title">{dishes.title}</p>
 					</div>
@@ -214,8 +204,8 @@ const SearchBar = ({ style }) => {
 								<PreferenceItem
 									key={typeItem.id}
 									typeItem={typeItem}
-									addPrefernce={addPrefernce}
 									choosePreference={choosePreference}
+									setChoosePreference={setChoosePreference}
 								/>
 							))}
 						</div>
@@ -233,7 +223,7 @@ const SearchBar = ({ style }) => {
 						peopleSearchText,
 						searchAdd,
 						chooseTime,
-						...choosePreference,
+						...choosePreference.map(({ title }) => title),
 					]);
 					inputPeopleRef.current.focus();
 				}}>
@@ -243,7 +233,7 @@ const SearchBar = ({ style }) => {
 	);
 
 	// Function
-	const popUpSearchFunc = (e, itemTitle, typePopup) => {
+	const popUpSearchFunc = (e, itemTitle) => {
 		e.stopPropagation();
 		setChooseTime(itemTitle);
 		setShowSearchTime(false);
@@ -310,15 +300,6 @@ const SearchBar = ({ style }) => {
 			</div>
 			<div className="search-bar__container search-bar__location">
 				<p className="search-bar__containerTitle">địa điểm</p>
-				{/* {showSearchLocation && (
-					<PopupSearch
-						classPopup="layout-search__location"
-						popupRef={popupLocationEl}
-						listSearch={listSearchLocation}
-						typePopup="popupLocation"
-						popupFunction={popUpSearchFunc}
-					/>
-				)} */}
 				<PlacesAutocomplete value={searchAdd} onChange={handleChange} onSelect={handleSelect}>
 					{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
 						<div>
@@ -372,19 +353,22 @@ const SearchBar = ({ style }) => {
 				</div>
 				<Link
 					to={`/today-eat/${[
-						...choosePreference,
-						peopleSearchText !== "" ? `${peopleSearchText} người` : null,
-						chooseTime !== "" ? chooseTime : null,
-					].join("+")}/page=1`}
-					onClick={() => {
+						...choosePreference.map(({ title }) => title),
+						peopleSearchText !== "" ? `${peopleSearchText} người` : "",
+						chooseTime !== "" ? chooseTime : "",
+					]
+						.filter((item) => item !== "")
+						.join("+")}/page=1`}
+					onClick={(e) => {
+						e.stopPropagation();
 						dispatch(loadingUI());
 						dispatch(
 							storeListKeyword(
 								[
 									searchAnyDishes,
-									...choosePreference,
+									...choosePreference.map(({ title }) => title),
 									peopleSearchText !== "" ? `${peopleSearchText} người` : "",
-									chooseTime,
+									chooseTime !== "" ? chooseTime : "",
 								].filter((item) => item !== "")
 							)
 						);
@@ -392,12 +376,13 @@ const SearchBar = ({ style }) => {
 							searchRestaurantRequest(
 								[
 									searchAnyDishes,
-									...choosePreference,
+									...choosePreference.map(({ title }) => title),
 									peopleSearchText !== "" ? `${peopleSearchText} người` : "",
-									chooseTime,
+									chooseTime !== "" ? chooseTime : "",
 								].filter((item) => item !== "")
 							)
 						);
+						if (setShowSearchBar !== undefined) setShowSearchBar(false);
 					}}>
 					<div className="search-bar__searchButton">
 						<SearchIcon />

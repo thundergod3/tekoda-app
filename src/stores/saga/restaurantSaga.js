@@ -126,7 +126,6 @@ function* searchRestaurant({ listKeyWord, page }) {
 	if (!page) page = 1;
 	try {
 		const response = yield call(restaurantService.searchRestaurant, { listKeyWord, page });
-		console.log(response);
 		yield put(restaurantAction.searchRestaurantSucceeded(response.data));
 		const {
 			restaurantReducer: { restaurantSearchDetail },

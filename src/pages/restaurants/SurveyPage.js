@@ -11,6 +11,7 @@ import "./restaurants.scss";
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import Geocode from "react-geocode";
 import cookieLocal from "../../helpers/cookieLocal";
+import { handleCheckActiveItem, handleChooseItem } from "../../helpers/handleChangeActive";
 
 Geocode.setApiKey("AIzaSyAHF5sU-uXkvCZ6L1ieDNBwOhERg3moCkg");
 Geocode.enableDebug();
@@ -172,26 +173,6 @@ const SurveyPage = () => {
 			.catch((error) => console.error("Error", error));
 	};
 
-	const handleChooseRestaurant = (restaurant) => {
-		let found = false;
-		for (let k = 0; k < chooseRestaurant.length; k++) {
-			if (restaurant.title === chooseRestaurant[k]?.title) {
-				found = true;
-			}
-		}
-
-		if (chooseRestaurant.length < 5) {
-			if (found) {
-				setChooseRestaurant(chooseRestaurant.filter((item) => item.title !== restaurant.title));
-			} else {
-				setChooseRestaurant([...chooseRestaurant, restaurant]);
-			}
-		} else {
-			setChooseRestaurant(chooseRestaurant.filter((item) => item.title !== restaurant.title));
-			return;
-		}
-	};
-
 	return (
 		<>
 			{authenticated !== undefined && (
@@ -303,33 +284,44 @@ const SurveyPage = () => {
 									Hãy chọn tối thiểu 5 nhóm nhà hàng bạn thích
 								</p>
 								<div className="drawer-sidebar-right__listRestaurant">
-									{listRestaurant.map((restaurant, index) => {
-										let chooseRestaurantActive = "";
-
-										for (let i = 0; i < chooseRestaurant.length; i++) {
-											if (chooseRestaurant[i].title === restaurant.title)
-												chooseRestaurantActive = "choose--active";
-										}
-
-										return (
-											<div
-												key={index}
-												className={`drawer-sidebar-right__itemRestaurant ${chooseRestaurantActive}`}
-												onClick={() => handleChooseRestaurant(restaurant)}>
-												<p>{restaurant.title}</p>
-											</div>
-										);
-									})}
+									{listRestaurant.map((restaurant, index) => (
+										<div
+											key={index}
+											className={`drawer-sidebar-right__itemRestaurant ${handleCheckActiveItem(
+												restaurant,
+												chooseRestaurant
+											)}`}
+											onClick={() =>
+												handleChooseItem(restaurant, chooseRestaurant, setChooseRestaurant)
+											}>
+											<p>{restaurant.title}</p>
+										</div>
+									))}
 								</div>
 							</>
 						)}
 						<div className="drawer-sidebar__footer">
-							<button className="drawer-sidebar__buttonBack" onClick={preDrawer}>
+							<button className="drawer-sidebar__buttonBack " onClick={preDrawer}>
 								Trở lại
 							</button>
 							{currentDrawer === 3 ? (
 								<button
-									className="drawer-sidebar__buttonNext"
+									className={`drawer-sidebar__buttonNext ${
+										searchAdd === "" ||
+										chooseAge === "" ||
+										chooseGender === "" ||
+										chooseRestaurant.length === 0
+											? "button--disable"
+											: ""
+									}`}
+									disabled={
+										searchAdd === "" ||
+										chooseAge === "" ||
+										chooseGender === "" ||
+										chooseRestaurant.length === 0
+											? true
+											: false
+									}
 									onClick={() =>
 										dispatch(
 											sendSurveyFormRequest({

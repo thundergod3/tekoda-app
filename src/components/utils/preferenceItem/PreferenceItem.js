@@ -2,9 +2,11 @@ import React from "react";
 
 import { useSelector } from "react-redux";
 
+import { handleCheckActiveItem, handleChooseItem } from "../../../helpers/handleChangeActive";
+
 import "./PreferenceItem.scss";
 
-const PreferenceItem = ({ choosePreference, typeItem, addPrefernce }) => {
+const PreferenceItem = ({ choosePreference, typeItem, setChoosePreference }) => {
 	const {
 		restaurantReducer: { listKeyWord },
 	} = useSelector((state) => state);
@@ -19,7 +21,9 @@ const PreferenceItem = ({ choosePreference, typeItem, addPrefernce }) => {
 	}
 
 	return (
-		<div className={`preference-item ${classNameActive}`} onClick={() => addPrefernce(typeItem.title)}>
+		<div
+			className={`preference-item ${handleCheckActiveItem(typeItem, choosePreference)}`}
+			onClick={() => handleChooseItem(typeItem, choosePreference, setChoosePreference)}>
 			<p>{typeItem.title}</p>
 		</div>
 	);
