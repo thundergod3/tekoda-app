@@ -292,7 +292,7 @@ const SurveyPage = () => {
 												chooseRestaurant
 											)}`}
 											onClick={() =>
-												handleChooseItem(restaurant, chooseRestaurant, setChooseRestaurant)
+												handleChooseItem(restaurant, chooseRestaurant, setChooseRestaurant, 5)
 											}>
 											<p>{restaurant.title}</p>
 										</div>

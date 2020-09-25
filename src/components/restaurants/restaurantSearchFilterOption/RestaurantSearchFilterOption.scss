@@ -1,5 +1,4 @@
 .restaurant-search-filter-option {
-	width: 95px;
 	height: 26px;
 	background: #ffffff;
 	border: 1px solid #b0b0b0;
@@ -11,4 +10,12 @@
 	font-size: 12px;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	padding: 10px;
+
+	.restaurant-search-filter-option__title {
+		width: 95px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
 }

@@ -1,16 +1,15 @@
 import React from "react";
 import { Link, Redirect } from "react-router-dom";
 
-import { Formik } from "formik";
-import * as Yup from "yup";
-import FB from "fb";
-
 import logo from "../../assets/icons/logo.png";
 import logoWhite from "../../assets/icons/Vector.png";
 import facebookLogo from "../../assets/icons/facebook.png";
 
 import "./auths.scss";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+import FB from "fb";
+import { Formik } from "formik";
+import * as Yup from "yup";
 
 import { useSelector, useDispatch } from "react-redux";
 import authAction from "../../stores/redux/actions/authAction";
@@ -28,14 +27,13 @@ const LoginPage = () => {
 		utilReducer: { loading },
 	} = useSelector((state) => state);
 	const dispatch = useDispatch();
-	const { getUserRequest, loginUserRequest } = authAction;
+	const { getUserRequest, loginUserRequest, loginUserSucceeded } = authAction;
 	const { loadingUI } = utilAction;
 
 	const responseFacebook = (response) => {
 		FB.setAccessToken(response.accessToken);
-		FB.api("/me", "GET", { fields: "id,birthday,age_range,email,gender,location,name,short_name" }, (response) => {
-			console.log(response);
-			dispatch(getUserRequest(response));
+		FB.api("/me", "GET", { fields: "id,birthday,age_range,email,gender,location,name,short_name" }, (userData) => {
+			dispatch(getUserRequest(userData, response));
 		});
 	};
 

@@ -170,26 +170,14 @@ const SearchBar = ({ style, setShowSearchBar }) => {
 	const { searchRestaurantRequest, storeListKeyword } = restaurantAction;
 	const { loadingUI } = utilAction;
 
-	const addPrefernce = (preference) => {
-		let found = false;
-		for (let i = 0; i < choosePreference.length; i++) {
-			if (preference?.title === choosePreference[i]?.title) {
-				found = true;
-			}
-		}
-
-		if (found) {
-			setChoosePreference(choosePreference.filter((item) => item?.id !== preference?.id));
-		} else {
-			setChoosePreference([...choosePreference, preference]);
-		}
-	};
-
 	const layoutSearchDishes = () => (
 		<div className="layout-search__dishesContainer" ref={popupDishesEl}>
 			<div className="layout-search__dishes">
 				{listSearchDishes.map((dishes, index) => (
-					<div className="layout-search__item" key={index} onClick={() => addPrefernce(dishes)}>
+					<div
+						className="layout-search__item"
+						key={index}
+						onClick={() => handleChooseItem(dishes, choosePreference, setChoosePreference)}>
 						<img src={dishes.icon} alt={dishes.title} />
 						<p className="layout-search__title">{dishes.title}</p>
 					</div>
@@ -218,13 +206,7 @@ const SearchBar = ({ style, setShowSearchBar }) => {
 				onClick={(e) => {
 					e.stopPropagation();
 					setShowSearchDishes(false);
-					setChoosePreference([
-						searchAnyDishes,
-						peopleSearchText,
-						searchAdd,
-						chooseTime,
-						...choosePreference.map(({ title }) => title),
-					]);
+					setChoosePreference(choosePreference);
 					inputPeopleRef.current.focus();
 				}}>
 				Save
@@ -335,8 +317,8 @@ const SearchBar = ({ style, setShowSearchBar }) => {
 					)}
 				</PlacesAutocomplete>
 			</div>
-			<div className="search-bar__container search-bar__time" onClick={() => setShowSearchTime(true)}>
-				<div className="search-bar__timeWrapper">
+			<div className="search-bar__container search-bar__time">
+				<div className="search-bar__timeWrapper" onClick={() => setShowSearchTime(true)}>
 					<p className="search-bar__containerTitle" id="popup-time">
 						thời gian
 					</p>
@@ -351,45 +333,62 @@ const SearchBar = ({ style, setShowSearchBar }) => {
 						/>
 					)}
 				</div>
-				<Link
-					to={`/today-eat/${[
-						...choosePreference.map(({ title }) => title),
-						peopleSearchText !== "" ? `${peopleSearchText} người` : "",
-						chooseTime !== "" ? chooseTime : "",
-					]
-						.filter((item) => item !== "")
-						.join("+")}/page=1`}
-					onClick={(e) => {
-						e.stopPropagation();
-						dispatch(loadingUI());
-						dispatch(
-							storeListKeyword(
-								[
-									searchAnyDishes,
-									...choosePreference.map(({ title }) => title),
-									peopleSearchText !== "" ? `${peopleSearchText} người` : "",
-									chooseTime !== "" ? chooseTime : "",
-								].filter((item) => item !== "")
-							)
-						);
-						dispatch(
-							searchRestaurantRequest(
-								[
-									searchAnyDishes,
-									...choosePreference.map(({ title }) => title),
-									peopleSearchText !== "" ? `${peopleSearchText} người` : "",
-									chooseTime !== "" ? chooseTime : "",
-								].filter((item) => item !== "")
-							)
-						);
-						if (setShowSearchBar !== undefined) setShowSearchBar(false);
-					}}>
-					<div className="search-bar__searchButton">
-						<SearchIcon />
-						<span>Tìm kiếm</span>
-					</div>
-				</Link>
 			</div>
+			<Link
+				to={`/today-eat/${[
+					searchAnyDishes,
+					...choosePreference,
+					peopleSearchText !== "" ? `${peopleSearchText} người` : "",
+					chooseTime !== "" ? chooseTime : "",
+				]
+					.filter((item) => item !== "")
+					.join("+")}/page=1`}
+				onClick={(e) => {
+					e.stopPropagation();
+					dispatch(loadingUI());
+					dispatch(
+						storeListKeyword(
+							[
+								searchAnyDishes,
+								...choosePreference,
+								peopleSearchText !== "" ? `${peopleSearchText} người` : "",
+								chooseTime !== "" ? chooseTime : "",
+							].filter((item) => item !== "")
+						)
+					);
+					dispatch(
+						searchRestaurantRequest(
+							[
+								searchAnyDishes,
+								...choosePreference,
+								peopleSearchText !== "" ? `${peopleSearchText} người` : "",
+								chooseTime !== "" ? chooseTime : "",
+							].filter((item) => item !== "")
+						)
+					);
+					if (setShowSearchBar !== undefined) setShowSearchBar(false);
+				}}>
+				<button
+					className={`search-bar__searchButton ${
+						choosePreference.length === 0 &&
+						searchAnyDishes === "" &&
+						peopleSearchText === "" &&
+						chooseTime === ""
+							? "button--disable"
+							: ""
+					}`}
+					disable={
+						choosePreference.length === 0 &&
+						searchAnyDishes === "" &&
+						peopleSearchText === "" &&
+						chooseTime === ""
+							? true
+							: false
+					}>
+					<SearchIcon />
+					<span>Tìm kiếm</span>
+				</button>
+			</Link>
 		</div>
 	);
 };

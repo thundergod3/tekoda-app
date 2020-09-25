@@ -10,10 +10,13 @@ import authService from "../../services/authService";
 import cookieLocal from "../../helpers/cookieLocal";
 import history from "../../constants/history";
 
-function* getUser({ userData }) {
+function* getUser({ userData, tokenInfo }) {
 	try {
 		if (userData) {
-			yield cookieLocal.saveToCookie("token", userData.accessToken);
+			if (tokenInfo) {
+				yield cookieLocal.saveToCookie("token", tokenInfo.accessToken);
+				yield cookieLocal.saveToLocal("expired-token", tokenInfo.data_access_expiration_time);
+			}
 			yield cookieLocal.saveToLocal("user", userData);
 			yield put(authAction.getUserSucceeded(userData));
 			yield call(checkAuthenticated);
@@ -52,10 +55,9 @@ function* registerUser({ userForm }) {
 
 function* checkAuthenticated() {
 	const token = yield cookieLocal.getFromCookie("token");
+	const expiredToken = yield cookieLocal.getFromLocal("expired-token");
 
 	if (token) {
-		const user = yield cookieLocal.getFromLocal("user");
-		const expiredToken = yield user?.data_access_expiration_time;
 		if (expiredToken && expiredToken <= Date.now() / 1000) {
 			yield put(authAction.checkAuthenticatedFailed());
 			yield cookieLocal.removeFromCookie("token");

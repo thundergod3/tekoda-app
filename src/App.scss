@@ -6,15 +6,17 @@ $main-color: #0260fd;
 	box-sizing: border-box;
 }
 
-@media screen and (min-width: 320px) and (max-width: 767px) and (orientation: portrait) {
-	html {
-		transform: rotate(-90deg);
-		transform-origin: left top;
-		width: 100vh;
-		height: 100vw;
-		overflow-x: hidden;
-		position: absolute;
-		top: 100%;
-		left: 0;
+.choose--active {
+	background: $main-color !important;
+	color: #fff !important;
+
+	p {
+		color: #fff !important;
 	}
+}
+
+.button--disable {
+	background: rgb(170, 170, 170) !important;
+	color: rgba(16, 16, 16, 0.3) !important;
+	pointer-events: none !important;
 }

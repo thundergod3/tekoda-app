@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import restaurantAction from "../../../stores/redux/actions/restaurantAction";
@@ -6,6 +7,7 @@ import utilAction from "../../../stores/redux/actions/utilAction";
 
 import "./RestaurantSearchFilterList.scss";
 import RingIcon from "../../../assets/icons/ring.png";
+import { handleChooseItem } from "../../../helpers/handleChangeActive";
 
 import AddBoxIcon from "@material-ui/icons/AddBox";
 
@@ -165,30 +167,8 @@ const RestaurantSearchFilterList = () => {
 	const popupPreferenceEl = useRef(null);
 	const closePreferenceEl = useRef(null);
 	const dispatch = useDispatch();
-	const {
-		addstoreListKeyword,
-		deleleItemStoreListKeyword,
-		searchRestaurantRequest,
-		getAllSearchRestaurantRequest,
-	} = restaurantAction;
+	const { storeListKeyword, searchRestaurantRequest, getAllSearchRestaurantRequest } = restaurantAction;
 	const { loadingUI } = utilAction;
-
-	const addPrefernce = (preference) => {
-		let found = false;
-		for (let i = 0; i < choosePreference.length; i++) {
-			if (preference === choosePreference[i]) {
-				found = true;
-			}
-		}
-
-		if (found) {
-			setChoosePreference(choosePreference.filter((item) => item !== preference));
-			dispatch(deleleItemStoreListKeyword(preference));
-		} else {
-			setChoosePreference([...choosePreference, preference]);
-			dispatch(addstoreListKeyword(preference));
-		}
-	};
 
 	const layoutSearchPreference = () => (
 		<div className="layout-search__perferenceAddFilter" ref={popupPreferenceEl}>
@@ -200,22 +180,25 @@ const RestaurantSearchFilterList = () => {
 							<PreferenceItem
 								key={typeItem.id}
 								typeItem={typeItem}
-								addPrefernce={addPrefernce}
 								choosePreference={choosePreference}
+								setChoosePreference={setChoosePreference}
 							/>
 						))}
 					</div>
 				</div>
 			))}
-			<button
-				className="layout-search__perferenceSave"
-				onClick={() => {
-					dispatch(loadingUI());
-					dispatch(searchRestaurantRequest(listKeyWord));
-					dispatch(getAllSearchRestaurantRequest(listKeyWord));
-				}}>
-				Save
-			</button>
+			<Link to={`/today-eat/${[...choosePreference].join("+")}/page=1`}>
+				<button
+					className="layout-search__perferenceSave"
+					onClick={() => {
+						dispatch(loadingUI());
+						dispatch(storeListKeyword(choosePreference));
+						dispatch(searchRestaurantRequest(choosePreference));
+						dispatch(getAllSearchRestaurantRequest(choosePreference));
+					}}>
+					Save
+				</button>
+			</Link>
 		</div>
 	);
 
@@ -245,7 +228,7 @@ const RestaurantSearchFilterList = () => {
 		<>
 			<div className="search-restaurant-search-filter-list">
 				<div className="search-restaurant-search-filter-list__container">
-					{listKeyWord.map((title, index) => (
+					{choosePreference.map((title, index) => (
 						<RestaurantSearchFilterOption key={index} title={title} />
 					))}
 				</div>

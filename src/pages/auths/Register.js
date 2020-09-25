@@ -12,6 +12,7 @@ import "./auths.scss";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import FB from "fb";
 
 import { useSelector, useDispatch } from "react-redux";
 import authAction from "../../stores/redux/actions/authAction";
@@ -37,7 +38,12 @@ const RegisterPage = () => {
 	const { getUserRequest, registerUserRequest } = authAction;
 	const { loadingUI } = utilAction;
 
-	const responseFacebook = (response) => dispatch(getUserRequest(response));
+	const responseFacebook = (response) => {
+		FB.setAccessToken(response.accessToken);
+		FB.api("/me", "GET", { fields: "id,birthday,age_range,email,gender,location,name,short_name" }, (userData) => {
+			dispatch(getUserRequest(...response, userData));
+		});
+	};
 
 	if (authenticated === true) return <Redirect to="/" />;
 

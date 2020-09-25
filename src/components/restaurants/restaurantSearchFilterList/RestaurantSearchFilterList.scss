@@ -65,18 +65,20 @@
 		}
 	}
 
-	.layout-search__perferenceSave {
-		position: absolute;
-		width: 167px;
-		height: 56px;
-		left: 1035px;
-		top: 450px;
-		background: #0260fd;
-		border-radius: 23.5px;
-		color: #fff;
-		font-family: Roboto;
-		font-weight: 900;
-		font-size: 20px;
-		text-align: center;
+	a {
+		.layout-search__perferenceSave {
+			position: absolute;
+			width: 167px;
+			height: 56px;
+			left: 1035px;
+			top: 450px;
+			background: #0260fd;
+			border-radius: 23.5px;
+			color: #fff;
+			font-family: Roboto;
+			font-weight: 900;
+			font-size: 20px;
+			text-align: center;
+		}
 	}
 }

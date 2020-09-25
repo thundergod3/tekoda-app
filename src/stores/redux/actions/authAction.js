@@ -1,16 +1,18 @@
 import * as types from "../../../constants/types";
 
 class authdaAction {
-	getUserRequest(userData) {
+	getUserRequest(userData, tokenInfo) {
 		return {
 			type: types.GET_USER_REQUEST,
 			userData,
+			tokenInfo,
 		};
 	}
-	getUserSucceeded(userData) {
+	getUserSucceeded(userData, token) {
 		return {
 			type: types.GET_USER_SUCCEEDED,
 			userData,
+			token,
 		};
 	}
 

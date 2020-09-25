@@ -13,6 +13,7 @@
 	flex-direction: row;
 	align-items: center;
 	padding: 20px;
+	position: relative;
 
 	.search-bar__container {
 		display: flex;
@@ -54,6 +55,8 @@
 
 		&.search-bar__location {
 			flex: 0.2;
+			margin-top: 4px;
+
 			&:before {
 				content: "";
 				height: 81px;
@@ -76,39 +79,48 @@
 			.search-bar__timeWrapper {
 				display: flex;
 				flex-direction: column;
-				margin-top: 8px;
+				margin-top: 2px;
 
 				.search-bar__containerBio {
 					width: 150px !important;
+					font-family: Roboto;
+					font-style: normal;
+					font-size: 13px;
+					color: #717171;
 				}
 			}
+		}
+	}
 
-			a {
-				width: 0;
+	a {
+		width: 0;
+		position: absolute;
+		left: 85%;
 
-				.search-bar__searchButton {
-					display: flex;
-					align-items: center;
-					width: 167px;
-					height: 56px;
-					background: $main-color;
-					border-radius: 23.5px;
-					color: #fff;
-					padding: 10px;
-					margin-left: 50px;
+		.search-bar__searchButton {
+			display: flex;
+			align-items: center;
+			width: 167px;
+			height: 56px;
+			background: $main-color;
+			border-radius: 23.5px;
+			color: #fff;
+			padding: 10px;
+			font-size: 16px;
+			font-family: Roboto;
+			font-style: normal;
 
-					&:hover {
-						cursor: pointer !important;
-					}
+			&:hover {
+				cursor: pointer !important;
+			}
 
-					.MuiSvgIcon-root {
-						flex: 0.3;
-					}
+			.MuiSvgIcon-root {
+				flex: 0.3;
+			}
 
-					span {
-						flex: 0.7;
-					}
-				}
+			span {
+				flex: 0.7;
+				display: flex;
 			}
 		}
 	}
@@ -118,9 +130,7 @@
 	margin-bottom: 15px;
 	font-family: Roboto;
 	font-style: normal;
-	font-weight: normal;
 	font-size: 10px;
-	letter-spacing: 0.4px;
 	text-transform: uppercase;
 	color: #222222;
 	margin-bottom: 10px;
