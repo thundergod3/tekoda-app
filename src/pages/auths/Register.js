@@ -41,7 +41,7 @@ const RegisterPage = () => {
 	const responseFacebook = (response) => {
 		FB.setAccessToken(response.accessToken);
 		FB.api("/me", "GET", { fields: "id,birthday,age_range,email,gender,location,name,short_name" }, (userData) => {
-			dispatch(getUserRequest(...response, userData));
+			dispatch(getUserRequest(userData, response));
 		});
 	};
 

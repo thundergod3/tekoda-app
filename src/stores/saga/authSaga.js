@@ -15,7 +15,7 @@ function* getUser({ userData, tokenInfo }) {
 		if (userData) {
 			if (tokenInfo) {
 				yield cookieLocal.saveToCookie("token", tokenInfo.accessToken);
-				yield cookieLocal.saveToLocal("expired-token", tokenInfo.data_access_expiration_time);
+				yield cookieLocal.saveToCookie("expired-token", tokenInfo.data_access_expiration_time);
 			}
 			yield cookieLocal.saveToLocal("user", userData);
 			yield put(authAction.getUserSucceeded(userData));
@@ -55,13 +55,14 @@ function* registerUser({ userForm }) {
 
 function* checkAuthenticated() {
 	const token = yield cookieLocal.getFromCookie("token");
-	const expiredToken = yield cookieLocal.getFromLocal("expired-token");
+	const expiredToken = yield cookieLocal.getFromCookie("expired-token");
 
 	if (token) {
-		if (expiredToken && expiredToken <= Date.now() / 1000) {
+		if (expiredToken && parseInt(expiredToken) <= Date.now() / 1000) {
 			yield put(authAction.checkAuthenticatedFailed());
 			yield cookieLocal.removeFromCookie("token");
-			yield cookieLocal.removeFromCookie("user");
+			yield cookieLocal.removeFromCookie("expired-token");
+			yield cookieLocal.removeFromLocal("user");
 			yield cookieLocal.removeFromLocal("statusSurvey");
 		} else {
 			yield put(authAction.checkAuthenticatedSucceeded());
