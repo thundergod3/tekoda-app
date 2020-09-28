@@ -1,4 +1,37 @@
-$main-color: #0260fd;
+$main-color: #f98600;
+
+@font-face {
+	font-family: "SVN-Circular-Black";
+	src: local("SVN-Circular"), url("./assets/fonts/SVN-Circular Black.ttf") format("opentype");
+}
+@font-face {
+	font-family: "SVN-Circular";
+	src: local("SVN-Circular"), url("./assets/fonts/SVN-Circular Black Italic.ttf") format("opentype");
+}
+@font-face {
+	font-family: "SVN-Circular";
+	src: local("SVN-Circular"), url("./assets/fonts/SVN-Circular Bold.ttf");
+}
+@font-face {
+	font-family: "SVN-Circular";
+	src: local("SVN-Circular"), url("./assets/fonts/SVN-Circular Bold Italic.ttf") format("opentype");
+}
+@font-face {
+	font-family: "SVN-Circular";
+	src: local("SVN-Circular"), url("./assets/fonts/SVN-Circular Book.ttf") format("opentype");
+}
+@font-face {
+	font-family: "SVN-Circular";
+	src: local("SVN-Circular"), url("./assets/fonts/SVN-Circular Book Italic.ttf") format("opentype");
+}
+@font-face {
+	font-family: "SVN-Circular-Normal";
+	src: local("SVN-Circular"), url("./assets/fonts/SVN-Circular Medium.ttf") format("opentype");
+}
+@font-face {
+	font-family: "SVN-Circular";
+	src: local("SVN-Circular"), url("./assets/fonts/SVN-Circular Medium Italic.ttf") format("opentype");
+}
 
 * {
 	margin: 0;
@@ -19,4 +52,12 @@ $main-color: #0260fd;
 	background: rgb(170, 170, 170) !important;
 	color: rgba(16, 16, 16, 0.3) !important;
 	pointer-events: none !important;
+}
+
+.status--active {
+	color: #373737 !important;
+
+	&:after {
+		background: $main-color !important;
+	}
 }

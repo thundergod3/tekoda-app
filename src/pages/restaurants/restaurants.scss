@@ -26,252 +26,316 @@
 }
 
 .survey-page {
-	display: flex;
-	flex-direction: row;
+	height: 100vh;
 
-	.drawer-sidebar-left {
-		flex: 0.3;
-		height: 100vh;
-		padding: 40px 50px;
-		background: $main-color;
+	.survey-page__navbar {
+		background-image: url("../../assets/utils/wave.png");
+		background-size: cover;
+		background-repeat: no-repeat;
+		height: 300px;
+		display: flex;
 
-		.drawer-sidebar__navbarleft {
-			display: flex;
-			align-items: center;
-			margin-bottom: 128px;
-
-			img {
-				height: 35px;
-				width: 35px;
-				object-fit: contain;
-			}
-
-			p {
-				margin-left: 16px;
-				font-family: Roboto;
-				font-style: normal;
-				font-weight: 500;
-				font-size: 14px;
-				line-height: 18px;
-				color: #ffffff;
-			}
+		.survey-page__navbarLeft {
+			flex: 0.3;
 		}
 
-		.drawer-sidebar__info {
-			color: #fff;
+		.survey-page__navbarRight {
+			flex: 0.7;
+			height: max-content;
+			margin-top: 20px;
 
-			h4 {
-				font-family: Roboto;
-				font-style: bold;
-				font-size: 44px;
-				line-height: 42px;
-				margin-bottom: 70px;
+			.survey-page__navbarSlogan {
+				width: 660px;
+				font-family: SVN-Circular-Black;
+				font-size: 40px;
+				color: #ffffff;
 			}
 
-			p {
-				font-family: Roboto;
-				font-style: normal;
-				font-size: 26px;
-				line-height: 35px;
+			.survey-page__navbarBio {
+				font-family: SVN-Circular-Normal;
+				font-size: 14px;
+				color: #ffffff;
+				margin-top: 20px;
 			}
 		}
 	}
 
-	.drawer-sidebar-right {
-		flex: 0.7;
+	.survey-page__container {
 		display: flex;
-		justify-content: center;
-		align-items: center;
-		flex-direction: column;
-		position: relative;
+		flex-direction: row;
+		height: calc(100vh - 300px);
 
-		.drawer-sidebar-right__form,
-		.drawer-sidebar-right__listRestaurant {
-			max-width: 650px;
-			width: 100%;
+		.drawer-sidebar-left {
+			flex: 0.3;
 			display: flex;
-			// flex: 0.9;
-		}
-
-		.drawer-sidebar-right__form {
 			flex-direction: column;
-			justify-content: center;
-
-			label {
-				font-family: Roboto;
-				font-style: normal;
-				font-weight: normal;
-				font-size: 26px;
-				line-height: 35px;
-				color: #222222;
-				margin-bottom: 20px;
-			}
-
-			input {
-				width: 400px;
-				outline: none;
-				border: 3px solid #eeeeee;
-				padding: 12px;
-			}
-		}
-
-		.drawer-sidebar-right__formAgeTitle {
-			font-family: Roboto;
-			font-size: 26px;
-			color: #222222;
-			margin-top: 60px;
-		}
-
-		.drawer-sidebar-right__formAge {
-			display: flex;
-			flex-direction: row;
 			align-items: center;
-			margin-top: 25px;
+			position: relative;
 
-			.drawer-sidebar-right__formAgeItem {
-				margin-right: 30px;
-				width: 98px;
-				height: 41px;
-				background: rgb(226, 226, 226);
-				border-radius: 10px;
-				font-family: Roboto;
-				font-size: 20px;
-				color: #000;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				cursor: pointer !important;
-			}
-		}
-
-		.drawer-sidebar-right__formGenderTitle {
-			margin-top: 50px;
-			font-family: Roboto;
-			font-size: 26px;
-			color: #222222;
-		}
-
-		.drawer-sidebar-right__formGender {
-			display: flex;
-			flex-direction: row;
-			align-items: center;
-			margin-top: 25px;
-
-			.drawer-sidebar-right__formGenderItem {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				width: 169px;
-				height: 41px;
-				background: rgb(226, 226, 226);
-				padding: 9px 63px;
-				border-radius: 10px;
-				margin-right: 35px;
-				font-family: Roboto;
-				font-size: 20px;
-				color: #000;
-				cursor: pointer !important;
-			}
-		}
-
-		.drawer-sidebar-right__title {
-			align-self: flex-start;
-			font-family: Roboto;
-			font-style: normal;
-			font-weight: normal;
-			font-size: 23px;
-			color: #222222;
-			position: absolute;
-			top: 5%;
-			left: 5%;
-		}
-
-		.drawer-sidebar-right__listRestaurant {
-			flex-wrap: wrap;
-			gap: 20px;
-			display: flex;
-			flex-direction: row;
-			align-items: center;
-			justify-content: center;
-			overflow: scroll;
-			overflow-x: hidden;
-
-			&::-webkit-scrollbar {
-				display: none;
-			}
-
-			.drawer-sidebar-right__itemRestaurant {
-				width: calc(590px / 3);
-				height: 130px;
-				margin-bottom: 30px;
-
-				background: #c4c4c4;
-				border-radius: 12px;
-				width: calc(590px / 3);
+			.survey-page__navbarStatus {
 				height: 130px;
 				display: flex;
-				align-items: center;
-				justify-content: center;
+				flex-direction: column;
+				justify-content: flex-end;
+				color: #c4c4c4;
 
-				&:hover {
-					cursor: pointer;
+				&::after {
+					content: "";
+					background: #c4c4c4;
+					width: 10px;
+					height: calc((100vh - 215px) / 3);
+					position: absolute;
+					left: 80%;
+					z-index: -1;
+				}
+
+				.survey-page__navbarStatusInfo {
+					font-family: SVN-Circular-Normal;
+					font-weight: normal;
+					font-size: 18px;
+				}
+
+				&.survey-page__navbarStatusInfoAll {
+					&:after {
+						top: -45%;
+						height: calc(100vw / 3);
+					}
+				}
+
+				&.survey-page__navbarStatusLocation {
+					&:after {
+						top: 20%;
+					}
+				}
+
+				&.survey-page__navbarStatusRestaurant {
+					&:after {
+						top: 60%;
+					}
+				}
+			}
+
+			.drawer-sidebar__info {
+				color: #fff;
+
+				h4 {
+					font-family: Roboto;
+					font-style: bold;
+					font-size: 44px;
+					line-height: 42px;
+					margin-bottom: 70px;
 				}
 
 				p {
 					font-family: Roboto;
 					font-style: normal;
-					font-weight: 500;
-					font-size: 18px;
-					text-align: center;
-					color: #4a4a4a;
-					margin-top: 20px;
-					text-transform: uppercase;
+					font-size: 26px;
+					line-height: 35px;
 				}
 			}
 		}
 
-		.drawer-sidebar__footer {
-			flex: 0.1;
-			width: 100%;
+		.drawer-sidebar-right {
+			flex: 0.7;
 			display: flex;
-			flex-direction: row;
-			align-items: center;
-			justify-content: space-around;
-			position: absolute;
-			bottom: 5%;
+			flex-direction: column;
+			position: relative;
 
-			.drawer-sidebar__buttonBack,
-			.drawer-sidebar__buttonNext {
-				width: 150px;
-				height: 40px;
+			.drawer-sidebar-right__form {
+				max-width: 650px;
+				width: 100%;
+				display: flex;
+			}
 
-				&:hover {
-					cursor: pointer;
+			.drawer-sidebar-right__form {
+				flex-direction: column;
+				justify-content: center;
+
+				label {
+					font-family: SVN-Circular-Normal;
+					font-style: normal;
+					font-weight: 500;
+					font-size: 18px;
+					color: #373737;
+					margin-bottom: 3px;
+				}
+
+				input {
+					width: 400px;
+					outline: none;
+					padding: 15px;
+					padding-left: 30px;
+					background: #ffffff;
+					border: 2px solid #eeeeee;
+					border-radius: 41px;
 				}
 			}
 
-			.drawer-sidebar__buttonBack {
-				outline: none;
-				border: none;
-				background: transparent;
-				font-family: Roboto;
+			.drawer-sidebar-right__formAgeTitle {
+				font-family: SVN-Circular-Normal;
 				font-style: normal;
 				font-weight: 500;
-				font-size: 15px;
-				text-transform: capitalize;
-				color: #747474;
+				font-size: 18px;
+				color: #373737;
+				margin-top: 10px;
 			}
 
-			.drawer-sidebar__buttonNext {
-				background: $main-color;
-				border: none;
-				outline: none;
-				font-family: Roboto;
-				font-weight: bold;
-				font-size: 15px;
-				text-align: center;
-				text-transform: capitalize;
-				color: #ffffff;
+			.drawer-sidebar-right__formAge {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				margin-top: 25px;
+
+				.drawer-sidebar-right__formAgeItem {
+					margin-right: 30px;
+					width: 116px;
+					height: 37px;
+					background: #717171;
+					border-radius: 41px;
+					font-family: SVN-Circular-Normal;
+					font-style: normal;
+					font-weight: 500;
+					font-size: 18px;
+					text-align: center;
+					color: #ffffff;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					cursor: pointer !important;
+				}
+			}
+
+			.drawer-sidebar-right__formGenderTitle {
+				font-family: SVN-Circular-Normal;
+				font-style: normal;
+				font-weight: 500;
+				font-size: 18px;
+				color: #373737;
+				margin-top: 30px;
+			}
+
+			.drawer-sidebar-right__formGender {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				margin-top: 25px;
+
+				.drawer-sidebar-right__formGenderItem {
+					margin-right: 30px;
+					width: 116px;
+					height: 37px;
+					background: #717171;
+					border-radius: 41px;
+					font-family: SVN-Circular-Normal;
+					font-style: normal;
+					font-weight: 500;
+					font-size: 18px;
+					text-align: center;
+					color: #ffffff;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					cursor: pointer !important;
+				}
+			}
+
+			.drawer-sidebar-right__title {
+				align-self: flex-start;
+				font-family: SVN-Circular-Normal;
+				font-style: normal;
+				font-weight: 500;
+				font-size: 18px;
+				color: #202020;
+				margin-bottom: 20px;
+			}
+
+			.drawer-sidebar-right__listRestaurant {
+				max-height: 300px;
+				flex-wrap: wrap;
+				gap: 20px;
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				overflow: scroll;
+				overflow-x: hidden;
+
+				&::-webkit-scrollbar {
+					display: none;
+				}
+
+				.drawer-sidebar-right__itemRestaurant {
+					width: calc(960px / 4);
+					height: 130px;
+					margin-bottom: 30px;
+					background: #c4c4c4;
+					border-radius: 12px;
+					height: 130px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+
+					&:hover {
+						cursor: pointer;
+					}
+
+					p {
+						font-family: Roboto;
+						font-style: normal;
+						font-weight: 500;
+						font-size: 18px;
+						text-align: center;
+						color: #4a4a4a;
+						margin-top: 20px;
+						text-transform: uppercase;
+					}
+				}
+			}
+
+			.drawer-sidebar__footer {
+				flex: 0.1;
+				width: 100%;
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				position: absolute;
+				bottom: 5%;
+
+				.drawer-sidebar__buttonBack,
+				.drawer-sidebar__buttonNext {
+					width: 150px;
+					height: 40px;
+
+					&:hover {
+						cursor: pointer;
+					}
+				}
+
+				.drawer-sidebar__buttonBack {
+					outline: none;
+					border: none;
+					background: #eeeeee;
+					border-radius: 41px;
+					font-family: SVN-Circular-Normal;
+					font-style: normal;
+					font-weight: 500;
+					font-size: 18px;
+					text-align: center;
+					color: #717171;
+				}
+
+				.drawer-sidebar__buttonNext {
+					background: $main-color;
+					border-radius: 41px;
+					border: none;
+					outline: none;
+					font-family: SVN-Circular-Normal;
+					font-style: normal;
+					font-weight: 500;
+					font-size: 18px;
+					text-align: center;
+					color: #ffffff;
+					margin-left: 20px;
+				}
 			}
 		}
 	}
@@ -285,6 +349,7 @@
 	display: flex;
 	align-items: center;
 	font-size: 1rem;
+	border-bottom: 1px solid #c4c4c4;
 }
 
 .save-restaurant-page {
@@ -302,4 +367,9 @@
 		margin-top: 35px;
 		margin-bottom: 10px;
 	}
+}
+
+.location-search-input {
+	width: 746px !important;
+	margin-top: 10px;
 }

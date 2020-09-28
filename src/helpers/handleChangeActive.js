@@ -27,4 +27,5 @@ export const handleCheckActiveItem = (itemCheck, listItem) => {
 			return chooseItemActive;
 		}
 	}
+	return chooseItemActive;
 };

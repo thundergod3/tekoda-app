@@ -177,173 +177,209 @@ const SurveyPage = () => {
 		<>
 			{authenticated !== undefined && (
 				<div className="survey-page">
-					<div className="drawer-sidebar-left">
-						<div className="drawer-sidebar__navbarleft">
-							<img src={logoWhite} alt="Logo" />
-							<p>TekodaApp </p>
+					<div className="survey-page__navbar">
+						<div className="survey-page__navbarLeft"></div>
+						<div className="survey-page__navbarRight">
+							<p className="survey-page__navbarSlogan">
+								Bước vào thế giới ẩm thực được cá nhân hóa cho riêng bạn!
+							</p>
+							<p className="survey-page__navbarBio">
+								Lựa chọn những quán ăn theo sở thích của bạn để chúng tôi gợi ý cho bạn những nhà hàng
+								phù hợp nhất!
+							</p>
 						</div>
-						<div className="drawer-sidebar__info">
-							{(currentDrawer === 1 || currentDrawer === 2) && (
-								<>
-									<h4>Bước vào thế giới ẩm thực được cá nhân hóa theo sở thích của bạn!</h4>
-									<p>
-										Lựa chọn những quán ăn theo sở thích của bạn để chúng tôi gợi ý cho bạn những
-										nhà hàng phù hợp nhất
-									</p>
-								</>
+					</div>
+					<div className="survey-page__container">
+						<div className="drawer-sidebar-left">
+							<div
+								className={`survey-page__navbarStatus survey-page__navbarStatusInfoAll ${
+									currentDrawer === 1 ? "status--active" : ""
+								}`}
+								style={{ justifyContent: "flex-start" }}>
+								<p className="survey-page__navbarStatusInfo">Thông tin chung</p>
+							</div>
+							<div
+								className={`survey-page__navbarStatus survey-page__navbarStatusLocation  ${
+									currentDrawer === 2 ? "status--active" : ""
+								}`}
+								style={{ justifyContent: "center" }}>
+								<p className="survey-page__navbarStatusInfo">Chọn địa điểm</p>
+							</div>
+							<div
+								className={`survey-page__navbarStatus survey-page__navbarStatusRestaurant ${
+									currentDrawer === 3 ? "status--active" : ""
+								}`}>
+								<p className="survey-page__navbarStatusInfo">Chọn nhóm nhà hàng</p>
+							</div>
+						</div>
+						<div className="drawer-sidebar-right">
+							{currentDrawer === 1 && (
+								<div className="drawer-sidebar-right__form">
+									<label htmlFor="username">Hãy cho chúng mình biết tên của bạn nhé!</label>
+									<input
+										id="username"
+										type="text"
+										placeholder="Tên bạn ..."
+										value={username}
+										onChange={(e) => setUsername(e.target.value)}
+									/>
+									<div className="drawer-sidebar-right__formAgeTitle">Bạn trong nhóm tuổi nào</div>
+									<div className="drawer-sidebar-right__formAge">
+										{surveyAgeList.map((age) => (
+											<div
+												className={`drawer-sidebar-right__formAgeItem ${
+													chooseAge.age === age.age ? "choose--active" : ""
+												}`}
+												key={age.id}
+												onClick={() => setChooseAge(age)}>
+												{age.age}
+											</div>
+										))}
+									</div>
+									<div className="drawer-sidebar-right__formGenderTitle">Giới tính</div>
+									<div className="drawer-sidebar-right__formGender">
+										{surveyGenderList.map((gender) => (
+											<div
+												className={`drawer-sidebar-right__formGenderItem ${
+													chooseGender.gender === gender.gender ? "choose--active" : ""
+												}`}
+												key={gender.id}
+												onClick={() => setChooseGender(gender)}>
+												{gender.gender}
+											</div>
+										))}
+									</div>
+								</div>
+							)}
+							{currentDrawer === 2 && (
+								<div className="drawer-sidebar-right__form">
+									<label htmlFor="address">
+										Hãy cho chúng mình biết địa điểm của bạn để hiển thị kết quả chính xác hơn với
+										bạn
+									</label>
+									<PlacesAutocomplete
+										value={searchAdd}
+										onChange={handleChange}
+										onSelect={handleSelect}>
+										{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+											<div>
+												<input
+													id="address"
+													{...getInputProps({
+														placeholder: "Nhập địa điểm ...",
+														className: "location-search-input",
+													})}
+												/>
+												<div className="autocomplete-dropdown-container">
+													{suggestions.length > 4
+														? suggestions.slice(0, 4).map((suggestion) => {
+																const style = suggestion.active
+																	? { backgroundColor: "#fafafa", cursor: "pointer" }
+																	: { backgroundColor: "#ffffff", cursor: "pointer" };
+																return (
+																	<div
+																		className="survey-page_suggestion"
+																		{...getSuggestionItemProps(suggestion, {
+																			style,
+																		})}>
+																		<RoomIcon />
+																		<span>{suggestion.description}</span>
+																	</div>
+																);
+														  })
+														: suggestions.map((suggestion) => {
+																const style = suggestion.active
+																	? { backgroundColor: "#fafafa", cursor: "pointer" }
+																	: { backgroundColor: "#ffffff", cursor: "pointer" };
+																return (
+																	<div
+																		className="survey-page_suggestion"
+																		{...getSuggestionItemProps(suggestion, {
+																			style,
+																		})}>
+																		<RoomIcon />
+																		<span>{suggestion.description}</span>
+																	</div>
+																);
+														  })}
+												</div>
+											</div>
+										)}
+									</PlacesAutocomplete>
+								</div>
 							)}
 							{currentDrawer === 3 && (
 								<>
-									<h4>Chọn quán ăn theo sở thích của bạn</h4>
-									<p>
-										Lựa chọn những quán ăn theo sở thích của bạn để chúng tôi gợi ý cho bạn những
-										nhà hàng phù hợp nhất
+									<p className="drawer-sidebar-right__title">
+										Hãy chọn tối thiểu 5 nhóm nhà hàng bạn thích
 									</p>
+									<div className="drawer-sidebar-right__listRestaurant">
+										{listRestaurant.map((restaurant, index) => (
+											<div
+												key={index}
+												className={`drawer-sidebar-right__itemRestaurant ${handleCheckActiveItem(
+													restaurant,
+													chooseRestaurant
+												)}`}
+												onClick={() =>
+													handleChooseItem(
+														restaurant,
+														chooseRestaurant,
+														setChooseRestaurant,
+														5
+													)
+												}>
+												<p>{restaurant.title}</p>
+											</div>
+										))}
+									</div>
 								</>
 							)}
-						</div>
-					</div>
-					<div className="drawer-sidebar-right">
-						{currentDrawer === 1 && (
-							<div className="drawer-sidebar-right__form">
-								<label htmlFor="username">Hãy cho chúng mình biết tên của bạn nhé!</label>
-								<input
-									id="username"
-									type="text"
-									placeholder="Tên bạn ..."
-									value={username}
-									onChange={(e) => setUsername(e.target.value)}
-								/>
-								<div className="drawer-sidebar-right__formAgeTitle">Bạn trong nhóm tuổi nào</div>
-								<div className="drawer-sidebar-right__formAge">
-									{surveyAgeList.map((age) => (
-										<div
-											className={`drawer-sidebar-right__formAgeItem ${
-												chooseAge.age === age.age ? "choose--active" : ""
-											}`}
-											key={age.id}
-											onClick={() => setChooseAge(age)}>
-											{age.age}
-										</div>
-									))}
-								</div>
-								<div className="drawer-sidebar-right__formGenderTitle">Giới tính</div>
-								<div className="drawer-sidebar-right__formGender">
-									{surveyGenderList.map((gender) => (
-										<div
-											className={`drawer-sidebar-right__formGenderItem ${
-												chooseGender.gender === gender.gender ? "choose--active" : ""
-											}`}
-											key={gender.id}
-											onClick={() => setChooseGender(gender)}>
-											{gender.gender}
-										</div>
-									))}
-								</div>
-							</div>
-						)}
-						{currentDrawer === 2 && (
-							<div className="drawer-sidebar-right__form">
-								<label htmlFor="address">
-									Hãy cho chúng mình biết địa điểm của bạn để hiển thị kết quả chính xác hơn với bạn
-								</label>
-								<PlacesAutocomplete value={searchAdd} onChange={handleChange} onSelect={handleSelect}>
-									{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-										<div>
-											<input
-												{...getInputProps({
-													placeholder: "Nhập địa điểm ...",
-													className: "location-search-input",
-												})}
-											/>
-											<div className="autocomplete-dropdown-container">
-												{suggestions.map((suggestion) => {
-													const style = suggestion.active
-														? { backgroundColor: "#fafafa", cursor: "pointer" }
-														: { backgroundColor: "#ffffff", cursor: "pointer" };
-													return (
-														<div
-															className="survey-page_suggestion"
-															{...getSuggestionItemProps(suggestion, {
-																style,
-															})}>
-															<RoomIcon />
-															<span>{suggestion.description}</span>
-														</div>
-													);
-												})}
-											</div>
-										</div>
-									)}
-								</PlacesAutocomplete>
-							</div>
-						)}
-						{currentDrawer === 3 && (
-							<>
-								<p className="drawer-sidebar-right__title">
-									Hãy chọn tối thiểu 5 nhóm nhà hàng bạn thích
-								</p>
-								<div className="drawer-sidebar-right__listRestaurant">
-									{listRestaurant.map((restaurant, index) => (
-										<div
-											key={index}
-											className={`drawer-sidebar-right__itemRestaurant ${handleCheckActiveItem(
-												restaurant,
-												chooseRestaurant
-											)}`}
-											onClick={() =>
-												handleChooseItem(restaurant, chooseRestaurant, setChooseRestaurant, 5)
-											}>
-											<p>{restaurant.title}</p>
-										</div>
-									))}
-								</div>
-							</>
-						)}
-						<div className="drawer-sidebar__footer">
-							<button className="drawer-sidebar__buttonBack " onClick={preDrawer}>
-								Trở lại
-							</button>
-							{currentDrawer === 3 ? (
-								<button
-									className={`drawer-sidebar__buttonNext ${
-										searchAdd === "" ||
-										chooseAge === "" ||
-										chooseGender === "" ||
-										chooseRestaurant.length === 0
-											? "button--disable"
-											: ""
-									}`}
-									disabled={
-										searchAdd === "" ||
-										chooseAge === "" ||
-										chooseGender === "" ||
-										chooseRestaurant.length === 0
-											? true
-											: false
-									}
-									onClick={() =>
-										dispatch(
-											sendSurveyFormRequest({
-												username,
-												address: searchAdd,
-												age: chooseAge,
-												gender: chooseGender,
-											})
-										)
-									}>
-									Hoàn thành
+							<div className="drawer-sidebar__footer">
+								<button className="drawer-sidebar__buttonBack " onClick={preDrawer}>
+									Trở lại
 								</button>
-							) : (
-								<button
-									className={`drawer-sidebar__buttonNext ${
-										currentDrawer === 2 && searchAdd === "" ? "button--disable" : ""
-									}`}
-									onClick={nextDrawer}
-									disabled={currentDrawer === 2 && searchAdd === "" ? true : false}>
-									Tiếp theo
-								</button>
-							)}
+								{currentDrawer === 3 ? (
+									<button
+										className={`drawer-sidebar__buttonNext ${
+											searchAdd === "" ||
+											chooseAge === "" ||
+											chooseGender === "" ||
+											chooseRestaurant.length === 0
+												? "button--disable"
+												: ""
+										}`}
+										disabled={
+											searchAdd === "" ||
+											chooseAge === "" ||
+											chooseGender === "" ||
+											chooseRestaurant.length === 0
+												? true
+												: false
+										}
+										onClick={() =>
+											dispatch(
+												sendSurveyFormRequest({
+													username,
+													address: searchAdd,
+													age: chooseAge,
+													gender: chooseGender,
+												})
+											)
+										}>
+										Hoàn thành
+									</button>
+								) : (
+									<button
+										className={`drawer-sidebar__buttonNext ${
+											currentDrawer === 2 && searchAdd === "" ? "button--disable" : ""
+										}`}
+										onClick={nextDrawer}
+										disabled={currentDrawer === 2 && searchAdd === "" ? true : false}>
+										Tiếp theo
+									</button>
+								)}
+							</div>
 						</div>
 					</div>
 				</div>
