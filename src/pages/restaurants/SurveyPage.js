@@ -1,6 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 
+import monAuImg from "../../assets/restaurants/mon_au.png";
+import monAImg from "../../assets/restaurants/mon_a.png";
+import nhaHangSangTrongImg from "../../assets/restaurants/nha_hang_sang_trong.png";
+import dacSanVungMineImg from "../../assets/restaurants/dac_san_vung_mien.png";
+import quanNhauImg from "../../assets/restaurants/mon_nhau.png";
+import comVanPhongImg from "../../assets/restaurants/com_van_phong.png";
+import quanBinhDanImg from "../../assets/restaurants/quan_binh_dan.png";
+import quanVieHeImg from "../../assets/restaurants/quan_via_he.png";
+import buffetImg from "../../assets/restaurants/buffet.png";
+import fastFoodImg from "../../assets/restaurants/fast_food.png";
+import lauNuongImg from "../../assets/restaurants/lau_nuong.png";
+import doChayImg from "../../assets/restaurants/do_chay.png";
+import coffeeImg from "../../assets/restaurants/coffee.png";
+import traBanhImg from "../../assets/restaurants/tra_banh.png";
+import barPubImg from "../../assets/restaurants/bar_pub.png";
+import xuHuongImg from "../../assets/restaurants/xu_huong.png";
+
 import RoomIcon from "@material-ui/icons/Room";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -19,39 +36,67 @@ Geocode.enableDebug();
 const listRestaurant = [
 	{
 		title: "món âu",
-		img: "",
+		img: monAuImg,
 	},
 	{
-		title: "hải sản",
-		img: "",
+		title: "món á",
+		img: monAImg,
 	},
 	{
-		title: "lẩu nướng",
-		img: "",
+		title: "Nhà hàng sang trọng",
+		img: nhaHangSangTrongImg,
 	},
 	{
-		title: "đồ chay",
-		img: "",
+		title: "Đặc sản vùng miền",
+		img: doChayImg,
 	},
 	{
-		title: "nhậu/ bia hơi",
-		img: "",
+		title: "Quán nhậu",
+		img: quanNhauImg,
 	},
 	{
-		title: "bình dân",
-		img: "",
+		title: "Cơm văn phòng",
+		img: comVanPhongImg,
 	},
 	{
-		title: "ăn vặt",
-		img: "",
+		title: "Quán bình dân",
+		img: quanBinhDanImg,
 	},
 	{
-		title: "trendy",
-		img: "",
+		title: "Quán vỉa hè",
+		img: quanVieHeImg,
 	},
 	{
-		title: "mới nổi",
-		img: "",
+		title: "Buffet",
+		img: buffetImg,
+	},
+	{
+		title: "Fast-food",
+		img: fastFoodImg,
+	},
+	{
+		title: "Lẩu & Nướng",
+		img: lauNuongImg,
+	},
+	{
+		title: "Đồ chay & Healthy",
+		img: doChayImg,
+	},
+	{
+		title: "Coffee",
+		img: coffeeImg,
+	},
+	{
+		title: "Trà & Bánh",
+		img: traBanhImg,
+	},
+	{
+		title: "Bar & Pub",
+		img: barPubImg,
+	},
+	{
+		title: "Xu hướng",
+		img: xuHuongImg,
 	},
 ];
 
@@ -319,7 +364,8 @@ const SurveyPage = () => {
 												key={index}
 												className={`drawer-sidebar-right__itemRestaurant ${handleCheckActiveItem(
 													restaurant,
-													chooseRestaurant
+													chooseRestaurant,
+													true
 												)}`}
 												onClick={() =>
 													handleChooseItem(
@@ -328,7 +374,11 @@ const SurveyPage = () => {
 														setChooseRestaurant,
 														5
 													)
-												}>
+												}
+												style={{ position: "relative" }}>
+												<div className="drawer-sidebar-right__itemRestaurantImg">
+													<img src={restaurant.img} alt="" />
+												</div>
 												<p>{restaurant.title}</p>
 											</div>
 										))}

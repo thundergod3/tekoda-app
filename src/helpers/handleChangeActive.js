@@ -18,12 +18,13 @@ export const handleChooseItem = (itemChoose, listItem, functionSetState, limitNu
 	}
 };
 
-export const handleCheckActiveItem = (itemCheck, listItem) => {
+export const handleCheckActiveItem = (itemCheck, listItem, chooseRestaurantUI) => {
 	let chooseItemActive = "";
 
 	for (let i = 0; i < listItem.length; i++) {
 		if (listItem[i] === itemCheck.title) {
-			chooseItemActive = "choose--active";
+			if (chooseRestaurantUI) chooseItemActive = "choose-restaurant--active";
+			else chooseItemActive = "choose--active";
 			return chooseItemActive;
 		}
 	}

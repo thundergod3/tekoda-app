@@ -8,6 +8,8 @@ import iconMap from "../../assets/icons/map_icon.png";
 import foodImage from "../../assets/utils/food_bg.png";
 import iconUser from "../../assets/icons/user.png";
 import iconPassword from "../../assets/icons/password.png";
+import iconError from "../../assets/icons/error.png";
+import iconErrorRed from "../../assets/icons/error_red.png";
 
 import "./auths.scss";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
@@ -20,6 +22,8 @@ import authAction from "../../stores/redux/actions/authAction";
 import utilAction from "../../stores/redux/actions/utilAction";
 import Loading from "../../components/utils/loading/Loading";
 
+import InputField from "../../components/utils/inputField/InputField";
+
 const YupSchema = Yup.object({
 	email: Yup.string().email("Địa chỉ email không hợp lệ").required("Địa chỉ email là bắt buộc"),
 	password: Yup.string().required("Mật khẩu là bắt buộc"),
@@ -29,6 +33,7 @@ const LoginPage = () => {
 	const {
 		authReducer: { authenticated },
 		utilReducer: { loading },
+		errorReducer: { errorMsg, errorActive },
 	} = useSelector((state) => state);
 	const dispatch = useDispatch();
 	const { getUserRequest, loginUserRequest, loginUserSucceeded } = authAction;
@@ -79,10 +84,8 @@ const LoginPage = () => {
 										</div>
 									</div>
 									<div className="auth-page-right">
-										<p className="auth-page-right__titleLine1">
-											TRỞ THÀNH NGƯỜI <strong>SÀNH ĂN</strong>
-										</p>
-										<p className="auth-page-right__titleLine2">CÙNG TEKODA</p>
+										<p className="auth-page-right__titleLine1">khám phá ẩm thực</p>
+										<p className="auth-page-right__titleLine2">cùng tekoda</p>
 										<FacebookLogin
 											appId="370435007655920"
 											autoLoad={false}
@@ -95,41 +98,31 @@ const LoginPage = () => {
 											)}
 										/>
 										<p>hoặc</p>
-										<div className="auth-page__form">
-											<img src={iconUser} alt="" className="auth-page__fieldIcon" />
-											<input
-												id="email"
-												type="email"
-												placeholder={!props.touched.email ? "Tên đăng nhập" : ""}
-												className="auth-page__field"
-												onChange={props.handleChange("email")}
-												onBlur={props.handleBlur("email")}
-												value={props.values.email}
-											/>
-											{props.touched.email && (
-												<label htmlFor="email" className="text-error">
-													{props.errors.email}
-												</label>
-											)}
-										</div>
-										<div className="auth-page__form">
-											<img src={iconPassword} alt="" className="auth-page__fieldIcon" />
-											<input
-												id="password"
-												type="password"
-												placeholder={!props.touched.email ? "Mật khẩu" : ""}
-												className="auth-page__field"
-												onChange={props.handleChange("password")}
-												onBlur={props.handleBlur("password")}
-												value={props.values.password}
-											/>
-											{props.touched.password && (
-												<label htmlFor="password" className="text-error">
-													{props.errors.password}
-												</label>
-											)}
-										</div>
-										<button type="submit" className="auth-page__login" onClick={props.handleSubmit}>
+										<InputField
+											{...props}
+											titleField="email"
+											titlePlaceholder="Tên đăng nhập"
+											fieldIcon={iconUser}
+										/>
+										<InputField
+											{...props}
+											titleField="password"
+											titlePlaceholder="Mật khẩu"
+											fieldIcon={iconPassword}
+										/>
+										{errorActive && (
+											<div className="error-field__container">
+												<img src={iconErrorRed} alt="" className="error-field__fieldIcon" />
+												<p className="error-field__text">{errorMsg}</p>
+											</div>
+										)}
+										<button
+											type="submit"
+											className={`auth-page__login ${
+												props.errors.email && props.errors.password ? "button--disable" : ""
+											}`}
+											onClick={props.handleSubmit}
+											disabled={props.errors.email && props.errors.password ? true : false}>
 											Đăng nhập
 										</button>
 										<div className="auth-page__changePageContainer">

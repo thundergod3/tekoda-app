@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 
-import VisibilityIcon from "@material-ui/icons/Visibility";
-import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
-
 import logo from "../../assets/icons/logo.png";
 import logoWhite from "../../assets/icons/Vector.png";
 import facebookLogo from "../../assets/icons/facebook.png";
@@ -12,6 +9,7 @@ import foodImage from "../../assets/utils/food_bg.png";
 import iconUser from "../../assets/icons/user.png";
 import iconPassword from "../../assets/icons/password.png";
 import iconEmail from "../../assets/icons/email.png";
+import iconErrorRed from "../../assets/icons/error_red.png";
 
 import "./auths.scss";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
@@ -24,6 +22,7 @@ import authAction from "../../stores/redux/actions/authAction";
 import utilAction from "../../stores/redux/actions/utilAction";
 
 import Loading from "../../components/utils/loading/Loading";
+import InputField from "../../components/utils/inputField/InputField";
 
 const YupSchema = Yup.object({
 	name: Yup.string().required("Tên đăng nhập là bắt buộc"),
@@ -36,6 +35,7 @@ const RegisterPage = () => {
 	const {
 		authReducer: { authenticated },
 		utilReducer: { loading },
+		errorReducer: { errorMsg, errorActive },
 	} = useSelector((state) => state);
 	const dispatch = useDispatch();
 	const { getUserRequest, registerUserRequest } = authAction;
@@ -99,78 +99,53 @@ const RegisterPage = () => {
 											)}
 										/>
 										<p>hoặc</p>
-										<div className="auth-page__form">
-											<img src={iconUser} className="auth-page__fieldIcon" />
-											<input
-												id="name"
-												value={props.values.name}
-												onChange={props.handleChange("name")}
-												onBlur={props.handleBlur("name")}
-												type="text"
-												placeholder="Nhập username của bạn"
-												className="auth-page__field"
-											/>
-											{props.touched.name && (
-												<label htmlFor="name" className="text-error">
-													{props.errors.name}
-												</label>
-											)}
-										</div>
-										<div className="auth-page__form">
-											<img src={iconEmail} className="auth-page__fieldIcon" />
-											<input
-												id="email"
-												value={props.values.email}
-												onChange={props.handleChange("email")}
-												onBlur={props.handleBlur("email")}
-												type="text"
-												placeholder="Nhập email của bạn"
-												className="auth-page__field"
-											/>
-											{props.touched.email && (
-												<label className="text-error">{props.errors.email}</label>
-											)}
-										</div>
-										<div className="auth-page__form">
-											<div style={{ display: "flex", alignItems: "center", color: "grey" }}>
-												<img src={iconPassword} className="auth-page__fieldIcon" />
-												<input
-													id="password"
-													value={props.values.password}
-													onChange={props.handleChange("password")}
-													onBlur={props.handleBlur("password")}
-													type={showPassword ? "text" : "password"}
-													placeholder="Nhập password"
-													className="auth-page__field"
-												/>
-												{!showPassword ? (
-													<VisibilityIcon onClick={() => setShowPassword(true)} />
-												) : (
-													<VisibilityOffIcon onClick={() => setShowPassword(false)} />
-												)}
+										<InputField
+											{...props}
+											titleField="name"
+											titlePlaceholder="Tên đăng nhập"
+											fieldIcon={iconUser}
+										/>
+										<InputField
+											{...props}
+											titleField="email"
+											titlePlaceholder="Nhập email của bạn"
+											fieldIcon={iconEmail}
+										/>
+										<InputField
+											{...props}
+											titleField="password"
+											titlePlaceholder="Nhập mật khẩu"
+											fieldIcon={iconPassword}
+											showPassword={showPassword}
+											setShowPassword={setShowPassword}
+											style={{ display: "flex", alignItems: "center", color: "grey" }}
+										/>
+										{errorActive && (
+											<div className="error-field__container">
+												<img src={iconErrorRed} alt="" className="error-field__fieldIcon" />
+												<p className="error-field__text">{errorMsg}</p>
 											</div>
-											{props.touched.password && (
-												<label htmlFor="password" className="text-error">
-													{props.errors.password}
-												</label>
-											)}
-										</div>
-										<div className="auth-page__privacyContainer">
+										)}
+										<label className="auth-page__privacyContainer" htmlFor="privacy">
 											<input
 												id="privacy"
 												type="checkbox"
 												className="auth-page__privacyCheckbox"
 											/>
-											<label htmlFor="privacy" className="auth-page__privacy">
-												Tôi đồng ý với <strong>Chính Sách Bảo Mật</strong> và{" "}
-												<strong>Điều Khoản Hoạt Động</strong>
-												của Tekoda.
-											</label>
-										</div>
+											<span className="input--checked"></span>
+											<span className="auth-page__privacy">
+												Tôi đồng ý với <strong>Chính Sách Bảo Mật</strong> và
+												<strong> Điều Khoản Hoạt Động</strong> của Tekoda.
+											</span>
+										</label>
 										<button
 											type="submit"
 											onClick={props.handleSubmit}
-											className="auth-page__register"
+											className={`auth-page__register ${
+												props.errors.name && props.errors.email && props.errors.password
+													? "button--disable"
+													: ""
+											}`}
 											disabled={
 												props.errors.name && props.errors.email && props.errors.password
 													? true
@@ -181,7 +156,7 @@ const RegisterPage = () => {
 										<div className="auth-page__changePageContainer">
 											<span className="auth-page__changePage">Bạn đã có tài khoản Tekoda ?</span>
 											<span>
-												<Link to="/login">Đăng nhập</Link>
+												<Link to="/login"> Đăng nhập</Link>
 											</span>
 										</div>
 									</div>

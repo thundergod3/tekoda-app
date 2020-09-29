@@ -34,8 +34,10 @@ function* loginUser({ userForm }) {
 		yield cookieLocal.saveToCookie("token", response.data.jwt_token);
 		yield call(checkAuthenticated);
 		yield put(utilAction.loadedUI());
+		yield put(errorAction.clearError());
 	} catch (error) {
 		console.log(error);
+		yield put(errorAction.getError(error.response?.data?.error));
 		yield put(utilAction.loadedUI());
 	}
 }
@@ -47,8 +49,10 @@ function* registerUser({ userForm }) {
 		yield cookieLocal.saveToCookie("token", response.data.jwt_token);
 		yield call(checkAuthenticated);
 		yield put(utilAction.loadedUI());
+		yield put(errorAction.clearError());
 	} catch (error) {
-		console.log(error);
+		console.log(error.response?.data?.error);
+		yield put(errorAction.getError(error.response?.data?.error));
 		yield put(utilAction.loadedUI());
 	}
 }

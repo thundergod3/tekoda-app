@@ -1,4 +1,5 @@
 $main-color: #f98600;
+$disable-color: #c4c4c4;
 
 @font-face {
 	font-family: "SVN-Circular-Black";
@@ -48,14 +49,38 @@ $main-color: #f98600;
 	}
 }
 
+.choose-restaurant--active {
+	&::before {
+		content: "";
+		position: absolute;
+		top: 30%;
+		left: 37%;
+		width: 50%;
+		height: 50%;
+		background-image: url("./assets/utils/check_img_icon.png");
+		background-size: contain;
+		background-repeat: no-repeat;
+		z-index: 1000;
+	}
+
+	&::after {
+		content: "";
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background: $disable-color;
+		opacity: 0.5;
+	}
+}
+
 .button--disable {
-	background: rgb(170, 170, 170) !important;
-	color: rgba(16, 16, 16, 0.3) !important;
+	background: $disable-color !important;
+	color: #a7a7a7 !important;
 	pointer-events: none !important;
 }
 
 .status--active {
-	color: #373737 !important;
+	color: $disable-color !important;
 
 	&:after {
 		background: $main-color !important;

@@ -267,26 +267,36 @@
 					width: calc(960px / 4);
 					height: 130px;
 					margin-bottom: 30px;
-					background: #c4c4c4;
 					border-radius: 12px;
 					height: 130px;
 					display: flex;
+					flex-direction: column;
 					align-items: center;
-					justify-content: center;
 
 					&:hover {
 						cursor: pointer;
 					}
 
+					.drawer-sidebar-right__itemRestaurantImg {
+						width: 100%;
+						height: 130px;
+
+						img {
+							background-size: cover;
+							background-repeat: no-repeat;
+							width: 100%;
+							height: 100%;
+						}
+					}
+
 					p {
-						font-family: Roboto;
-						font-style: normal;
+						font-family: SVN-Circular-Normal;
 						font-weight: 500;
-						font-size: 18px;
+						font-size: 16px;
 						text-align: center;
-						color: #4a4a4a;
+						color: #717171;
 						margin-top: 20px;
-						text-transform: uppercase;
+						text-transform: capitalize;
 					}
 				}
 			}
