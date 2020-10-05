@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
 
 import "./App.scss";
-import ttiPolyfill from "tti-polyfill";
-import ReactGA from "react-ga";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import authAction from "./stores/redux/actions/authAction";
 
 import Navbar from "./components/layouts/navbar/Navbar";
@@ -21,26 +19,8 @@ const App = ({
 		location: { pathname },
 	},
 }) => {
-	const {
-		authReducer: { authenticated },
-	} = useSelector((state) => state);
-	const [screenOrientation, setScreenOrientation] = useState("portrait");
 	const dispatch = useDispatch();
 	const { checkAuthenticatedRequest } = authAction;
-
-	const changeScreenOrientation = () => {
-		if (window.matchMedia("(orientation: portrait)").matches) {
-			setScreenOrientation("portrait");
-		}
-
-		if (window.matchMedia("(orientation: landscape)").matches) {
-			setScreenOrientation("landscape");
-		}
-	};
-
-	useEffect(() => {
-		window.addEventListener("orientationchange", changeScreenOrientation);
-	}, []);
 
 	useEffect(() => {
 		dispatch(checkAuthenticatedRequest());
@@ -54,7 +34,7 @@ const App = ({
 				<Route exact path="/" component={Homepage} />
 				<Route
 					exact
-					path={["/today-eat/:params/page=:pageNumber", "/today-eat", "/today-eat/page=:pageNumber"]}
+					path={["/today-eat", "/today-eat/:params/page=:pageNumber", "/today-eat/page=:pageNumber"]}
 					component={SearchRestaurantPage}
 				/>
 				<Route exact path={"/survey"} component={SurveyPage} />

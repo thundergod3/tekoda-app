@@ -178,10 +178,12 @@ const RestaurantSearchFilterList = () => {
 					<div className="layout-search__perfenceList">
 						{preference.type_list.map((typeItem) => (
 							<PreferenceItem
+								style={{ background: "#FFF4EA", color: "#000" }}
 								key={typeItem.id}
 								typeItem={typeItem}
 								choosePreference={choosePreference}
 								setChoosePreference={setChoosePreference}
+								styleText={{ color: "#000" }}
 							/>
 						))}
 					</div>

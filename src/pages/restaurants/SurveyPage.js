@@ -241,20 +241,35 @@ const SurveyPage = () => {
 									currentDrawer === 1 ? "status--active" : ""
 								}`}
 								style={{ justifyContent: "flex-start" }}>
-								<p className="survey-page__navbarStatusInfo">Thông tin chung</p>
+								<p
+									className={`survey-page__navbarStatusInfo ${
+										currentDrawer === 1 ? "status--active" : ""
+									}`}>
+									Thông tin chung
+								</p>
 							</div>
 							<div
-								className={`survey-page__navbarStatus survey-page__navbarStatusLocation  ${
+								className={`survey-page__navbarStatus survey-page__navbarStatusLocation ${
 									currentDrawer === 2 ? "status--active" : ""
 								}`}
 								style={{ justifyContent: "center" }}>
-								<p className="survey-page__navbarStatusInfo">Chọn địa điểm</p>
+								<p
+									className={`survey-page__navbarStatusInfo ${
+										currentDrawer === 2 ? "status--active" : ""
+									}`}>
+									Chọn địa điểm
+								</p>
 							</div>
 							<div
 								className={`survey-page__navbarStatus survey-page__navbarStatusRestaurant ${
 									currentDrawer === 3 ? "status--active" : ""
 								}`}>
-								<p className="survey-page__navbarStatusInfo">Chọn nhóm nhà hàng</p>
+								<p
+									className={`survey-page__navbarStatusInfo ${
+										currentDrawer === 3 ? "status--active" : ""
+									}`}>
+									Chọn nhóm nhà hàng
+								</p>
 							</div>
 						</div>
 						<div className="drawer-sidebar-right">

@@ -6,13 +6,11 @@ import { handleCheckActiveItem, handleChooseItem } from "../../../helpers/handle
 
 import "./PreferenceItem.scss";
 
-const PreferenceItem = ({ choosePreference, typeItem, setChoosePreference }) => {
+const PreferenceItem = ({ choosePreference, typeItem, setChoosePreference, style, styleText }) => {
 	const {
 		restaurantReducer: { listKeyWord },
 	} = useSelector((state) => state);
 	let classNameActive = "";
-
-	// if(listKeyWord)
 
 	if (choosePreference && choosePreference.length !== 0) {
 		choosePreference.forEach((el) => {
@@ -23,8 +21,9 @@ const PreferenceItem = ({ choosePreference, typeItem, setChoosePreference }) => 
 	return (
 		<div
 			className={`preference-item ${handleCheckActiveItem(typeItem, choosePreference)}`}
-			onClick={() => handleChooseItem(typeItem, choosePreference, setChoosePreference)}>
-			<p>{typeItem.title}</p>
+			onClick={() => handleChooseItem(typeItem, choosePreference, setChoosePreference)}
+			style={style}>
+			<p style={styleText}>{typeItem.title}</p>
 		</div>
 	);
 };

@@ -2,11 +2,10 @@
 
 .search-bar {
 	background: #ffffff;
-	border: 1px solid #b0b0b0;
-	box-sizing: border-box;
+	border: 1px solid #c4c4c4;
+	border-radius: 99px;
 	box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
-	border-radius: 12px;
-	width: 1241px;
+	width: 100%;
 	height: 83px;
 	margin-top: 60px;
 	display: flex;
@@ -25,17 +24,14 @@
 			position: relative;
 			height: 100%;
 			margin-top: 29px;
-		}
 
-		&.search-bar__formSearch {
 			&::before {
 				content: "";
-				height: 81px;
+				height: 40px;
 				width: 1px;
 				border-right: solid 1px #dddddd;
 				position: absolute;
 				left: 92%;
-				top: -25px;
 			}
 		}
 
@@ -44,27 +40,25 @@
 
 			&:before {
 				content: "";
-				height: 81px;
+				height: 40px;
 				width: 1px;
 				border-right: solid 1px #dddddd;
 				position: absolute;
 				left: 92%;
-				top: -23px;
 			}
 		}
 
 		&.search-bar__location {
 			flex: 0.2;
-			margin-top: 4px;
+			margin-top: 6px;
 
 			&:before {
 				content: "";
-				height: 81px;
+				height: 40px;
 				width: 1px;
 				border-right: solid 1px #dddddd;
 				position: absolute;
 				left: 92%;
-				top: -21px;
 			}
 		}
 
@@ -79,7 +73,7 @@
 			.search-bar__timeWrapper {
 				display: flex;
 				flex-direction: column;
-				margin-top: 2px;
+				margin-top: -4px;
 
 				.search-bar__containerBio {
 					width: 150px !important;
@@ -100,15 +94,14 @@
 		.search-bar__searchButton {
 			display: flex;
 			align-items: center;
-			width: 167px;
+			width: 140px;
 			height: 56px;
 			background: $main-color;
-			border-radius: 23.5px;
+			border-radius: 68px;
 			color: #fff;
 			padding: 10px;
 			font-size: 16px;
-			font-family: Roboto;
-			font-style: normal;
+			font-family: SVN-Circular-Normal;
 
 			&:hover {
 				cursor: pointer !important;

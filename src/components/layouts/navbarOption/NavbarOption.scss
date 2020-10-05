@@ -4,19 +4,17 @@ a {
 
 	.navbar-option {
 		width: 158px;
-		font-family: Roboto;
-		font-style: normal;
-		font-weight: normal;
 		font-size: 15px;
 		line-height: 20px;
 		position: relative;
 		text-align: center;
+		color: #fff;
 
 		&.navbar-option--active {
 			&::before {
 				content: "";
 				position: absolute;
-				background: #000;
+				background: #fff;
 				top: 33.6px;
 				left: 20px;
 				height: 2.4px;

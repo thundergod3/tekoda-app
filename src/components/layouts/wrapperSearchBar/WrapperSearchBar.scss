@@ -1,0 +1,14 @@
+.wrapper-search-bar {
+	width: 100%;
+	background: url("../../../assets/utils/wave_navbar.png");
+	background-size: cover;
+	background-repeat: no-repeat;
+	padding-top: 120px;
+	height: 600px;
+
+	.wrapper-search-bar__container {
+		width: 100%;
+		margin: 0 auto;
+		max-width: 1100px;
+	}
+}

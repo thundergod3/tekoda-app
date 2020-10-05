@@ -1,7 +1,49 @@
 .filter-list {
 	display: flex;
 	flex-direction: row;
-	align-items: center;
-	justify-content: space-between;
 	margin-top: 45px;
+
+	.filter-list__welcome {
+		flex: 0.3;
+		display: flex;
+
+		.filter-list__welcomeImg {
+			width: 30px;
+			height: 30px;
+			object-fit: contain;
+			margin-right: 10px;
+		}
+
+		.filter-list__welcomeBio {
+			width: 250px;
+
+			.filter-list__welcomeText {
+				font-family: SVN-Circular-Normal;
+				font-size: 24px;
+				color: #ffffff;
+			}
+
+			.filter-list__welcomeBioExpand {
+				display: flex;
+				margin-top: 10px;
+				color: #fff;
+
+				.filter-list__welcomeBioExpandText {
+					font-family: SVN-Circular-Italic;
+					font-size: 16px;
+					display: flex;
+					align-items: center;
+				}
+			}
+		}
+	}
+
+	.filter-list__optionContainer {
+		margin-right: 20px;
+		flex: 0.7;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+	}
 }

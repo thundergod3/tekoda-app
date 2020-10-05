@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Redirect } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import restaurantAction from "../../stores/redux/actions/restaurantAction";
@@ -9,15 +10,14 @@ import cookieLocal from "../../helpers/cookieLocal";
 
 import SearchBar from "../../components/layouts/searchBar/SearchBar";
 import FilterList from "../../components/utils/filterList/FilterList";
-import RestaurantSocialRecommendList from "../../components/restaurants/restaurantSocialRecommendList/RestaurantSocialRecommendList";
-import RestaurantLocationRecommendList from "../../components/restaurants/restaurantLocationRecommendList/RestaurantLocationRecommendList";
 import WarningCookie from "../../components/utils/warningCookie/WarningCookie";
-import { Redirect } from "react-router-dom";
 import Loading from "../../components/utils/loading/Loading";
+import RestaurantRecommendList from "../../components/restaurants/restaurantRecommendList/RestaurantRecommendList";
+import WrapperSearchBar from "../../components/layouts/wrapperSearchBar/WrapperSearchBar";
 
 const Homepage = () => {
 	const {
-		restaurantReducer: { statusSurvey },
+		restaurantReducer: { trendingRestaurantList, statusSurvey },
 		authReducer: { authenticated },
 		utilReducer: { loading },
 	} = useSelector((state) => state);
@@ -46,12 +46,24 @@ const Homepage = () => {
 				<Loading />
 			) : (
 				<>
+					<WrapperSearchBar />
 					<div className="homepage">
-						<SearchBar />
-						<FilterList />
-						<RestaurantSocialRecommendList />
-						<RestaurantLocationRecommendList />
-						<WarningCookie />
+						<RestaurantRecommendList
+							restaurantRecommendList={trendingRestaurantList}
+							title="Top nhà hàng nổi bật trên mạng xã hội"
+							bio="Take a fresh view an span our top visited places"
+							style={{ marginTop: 0 }}
+						/>
+						<RestaurantRecommendList
+							restaurantRecommendList={trendingRestaurantList}
+							title="Top ăn trưa gần Hoàng Đạo Thúy gợi ý cho riêng bạn"
+							bio="Take a fresh view an span our top visited places"
+						/>
+						<RestaurantRecommendList
+							restaurantRecommendList={trendingRestaurantList}
+							title="Top nhà hàng nổi bật trên mạng xã hội"
+							bio="Take a fresh view an span our top visited places"
+						/>
 					</div>
 				</>
 			)}

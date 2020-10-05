@@ -1,7 +1,9 @@
+@import "../../../App.scss";
+
 .preference-item {
 	width: 110px;
 	height: 35px;
-	border: 1px solid #0260fd;
+	border: 1px solid $main-color;
 	box-sizing: border-box;
 	border-radius: 28px;
 	display: flex;

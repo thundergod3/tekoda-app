@@ -1,16 +1,16 @@
 .restaurant-recommend-item {
-	width: 400px;
-	height: 470px;
+	width: 100%;
+	height: 300px;
 
 	img {
-		width: 400px;
+		width: 200px;
 		object-fit: contain;
-		border-radius: 27px;
+		border-radius: 15px;
 	}
 
 	.restaurant-recommend-item__info {
-		height: 150px;
-		width: 355px;
+		height: 100px;
+		width: 200px;
 
 		.restaurant-recommend-item__rating {
 			display: flex;
@@ -30,21 +30,23 @@
 				}
 
 				&.restaurant-recommend-item__rateStar {
-					font-size: 14px;
+					font-family: SVN-Circular-Normal;
+					font-size: 13px;
 					color: #222222 !important;
 					margin-left: 7px;
 				}
 
 				&.restaurant-recommend-item__comment {
+					font-family: SVN-Circular-Normal;
+					color: #717171;
 					font-size: 10px;
-					line-height: 18px;
 					margin-left: 10px;
 				}
 			}
 
 			.restaurant-recommend-item__star {
-				width: 16px;
-				height: 16px;
+				width: 12px;
+				height: 12px;
 				object-fit: contain;
 			}
 		}
@@ -54,27 +56,23 @@
 			font-style: normal;
 
 			&.restaurant-recommend-item__location {
-				width: 340px;
-
-				font-weight: bold;
-				font-size: 18px;
-				line-height: 24px;
+				width: 100%;
+				font-family: SVN-Circular-Black;
+				font-size: 20px;
 				color: #222222;
-				margin-top: 14px;
+				margin-top: 10px;
 			}
 
 			&.restaurant-recommend-item__desc {
-				font-weight: normal;
-				font-size: 14px;
-				line-height: 18px;
+				font-family: SVN-Circular-Normal;
+				font-size: 16px;
 				color: #717171;
 				margin-top: 15px;
 			}
 
 			&.restaurant-recommend-item__price {
-				font-weight: normal;
+				font-family: SVN-Circular-Normal;
 				font-size: 16px;
-				line-height: 24px;
 				color: #222222;
 				margin-top: 12px;
 			}
@@ -84,6 +82,28 @@
 
 .BrainhubCarousel__custom-arrowLeft,
 .BrainhubCarousel__custom-arrowRight {
-	margin-bottom: 80px;
 	cursor: pointer;
+}
+
+.BrainhubCarousel__customArrows {
+	position: absolute;
+	z-index: 100;
+	width: 30px;
+	height: 30px;
+	object-fit: contain;
+
+	.icon-arrow {
+		width: 100%;
+		height: 100%;
+	}
+
+	&.BrainhubCarousel__custom-arrowRight {
+		top: 15%;
+		left: 98%;
+	}
+
+	&.BrainhubCarousel__custom-arrowLeft {
+		top: 15%;
+		left: 95%;
+	}
 }

@@ -71,7 +71,7 @@ const Navbar = ({
 				<div className="navbar__right" style={authenticated ? { flex: 0.87 } : { flex: 0.8 }}>
 					<Link to="/">
 						<div className="navbar__logo">
-							<img src={logo} alt="Logo" />
+							<img src={logoWhite} alt="Logo" />
 							<p>TekodaApp</p>
 						</div>
 					</Link>
@@ -87,7 +87,12 @@ const Navbar = ({
 								{showSearchBar && (
 									<div className="search-bar__compactContainer" ref={searchBarRef}>
 										<SearchBar
-											style={{ position: "absolute", left: "9%", top: "20px" }}
+											style={{
+												position: "absolute",
+												left: "15%",
+												top: "35%",
+												maxWidth: "1100px",
+											}}
 											setShowSearchBar={setShowSearchBar}
 										/>
 									</div>

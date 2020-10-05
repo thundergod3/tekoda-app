@@ -1,5 +1,6 @@
-.restaurant-social-recommend-list {
-	margin-top: 60px;
+.restaurant-recommend-list {
+	margin-top: 80px;
+	position: relative;
 
 	p {
 		font-family: Roboto;
@@ -10,7 +11,7 @@
 			font-size: 35px;
 		}
 
-		&.restaurant-social-recommend-list__bio {
+		&.restaurant-recommend-list__bio {
 			margin-top: 20px;
 			font-weight: normal;
 			font-size: 16px;
@@ -19,7 +20,7 @@
 		}
 	}
 
-	.restaurant-social-recommend-list__container {
+	.restaurant-recommend-list__container {
 		display: flex;
 		flex-direction: row;
 		align-items: center;

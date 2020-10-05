@@ -1,10 +1,13 @@
 .filter-option {
-	width: 152px;
-	height: 152px;
-	background: #f8f5f5;
-	border: 3px solid #f4f4f4;
+	width: 100px;
+	height: 100px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #ffffff;
+	border: 3px solid #ffffff;
 	box-sizing: border-box;
-	border-radius: 7px;
+	border-radius: 15px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -20,16 +23,16 @@
 		width: 37px;
 		height: 37px;
 		object-fit: contain;
-		margin-bottom: 25px;
+		margin-bottom: 5px;
 	}
 
 	p {
-		font-family: Roboto;
-		font-style: normal;
-		font-weight: normal;
+		font-family: SVN-Circular-Normal;
 		font-size: 14px;
+		font-style: normal;
 		display: flex;
 		align-items: center;
 		text-align: center;
+		color: #373737;
 	}
 }

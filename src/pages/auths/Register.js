@@ -30,6 +30,8 @@ const YupSchema = Yup.object({
 	password: Yup.string().min(6, "Mật khẩu cần tối thiếu 6 ký tự").required("Mật khẩu là bắt buộc"),
 });
 
+console.log(process.env);
+
 const RegisterPage = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const {
@@ -88,7 +90,7 @@ const RegisterPage = () => {
 										</p>
 										<p className="auth-page-right__titleLine2">CÙNG TEKODA</p>
 										<FacebookLogin
-											appId="370435007655920"
+											appId={process.env.REACT_APP_FACEBOOK_APP_ID}
 											autoLoad={false}
 											callback={responseFacebook}
 											render={(renderProps) => (
