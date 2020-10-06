@@ -19,6 +19,10 @@
 		flex-direction: column;
 		position: relative;
 
+		input {
+			padding: 0;
+		}
+
 		&.search-bar__formSearch {
 			margin-bottom: 22px;
 			position: relative;
@@ -120,7 +124,6 @@
 }
 
 .search-bar__containerTitle {
-	margin-bottom: 15px;
 	font-family: Roboto;
 	font-style: normal;
 	font-size: 10px;

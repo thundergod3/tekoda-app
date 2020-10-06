@@ -275,44 +275,52 @@ const SurveyPage = () => {
 						<div className="drawer-sidebar-right">
 							{currentDrawer === 1 && (
 								<div className="drawer-sidebar-right__form">
-									<label htmlFor="username">Hãy cho chúng mình biết tên của bạn nhé!</label>
-									<input
-										id="username"
-										type="text"
-										placeholder="Tên bạn ..."
-										value={username}
-										onChange={(e) => setUsername(e.target.value)}
-									/>
-									<div className="drawer-sidebar-right__formAgeTitle">Bạn trong nhóm tuổi nào</div>
-									<div className="drawer-sidebar-right__formAge">
-										{surveyAgeList.map((age) => (
-											<div
-												className={`drawer-sidebar-right__formAgeItem ${
-													chooseAge.age === age.age ? "choose--active" : ""
-												}`}
-												key={age.id}
-												onClick={() => setChooseAge(age)}>
-												{age.age}
-											</div>
-										))}
+									<div className="drawer-sidebar-right__formContainer">
+										<label htmlFor="username">Hãy cho chúng mình biết tên của bạn nhé!</label>
+										<input
+											id="username"
+											type="text"
+											placeholder="Tên bạn ..."
+											value={username}
+											onChange={(e) => setUsername(e.target.value)}
+										/>
 									</div>
-									<div className="drawer-sidebar-right__formGenderTitle">Giới tính</div>
-									<div className="drawer-sidebar-right__formGender">
-										{surveyGenderList.map((gender) => (
-											<div
-												className={`drawer-sidebar-right__formGenderItem ${
-													chooseGender.gender === gender.gender ? "choose--active" : ""
-												}`}
-												key={gender.id}
-												onClick={() => setChooseGender(gender)}>
-												{gender.gender}
-											</div>
-										))}
+									<div className="drawer-sidebar-right__formContainer">
+										<div className="drawer-sidebar-right__formAgeTitle">
+											Bạn trong nhóm tuổi nào
+										</div>
+										<div className="drawer-sidebar-right__formAge">
+											{surveyAgeList.map((age) => (
+												<div
+													className={`drawer-sidebar-right__formAgeItem ${
+														chooseAge.age === age.age ? "choose--active" : ""
+													}`}
+													key={age.id}
+													onClick={() => setChooseAge(age)}>
+													{age.age}
+												</div>
+											))}
+										</div>
+									</div>
+									<div className="drawer-sidebar-right__formContainer">
+										<div className="drawer-sidebar-right__formGenderTitle">Giới tính</div>
+										<div className="drawer-sidebar-right__formGender">
+											{surveyGenderList.map((gender) => (
+												<div
+													className={`drawer-sidebar-right__formGenderItem ${
+														chooseGender.gender === gender.gender ? "choose--active" : ""
+													}`}
+													key={gender.id}
+													onClick={() => setChooseGender(gender)}>
+													{gender.gender}
+												</div>
+											))}
+										</div>
 									</div>
 								</div>
 							)}
 							{currentDrawer === 2 && (
-								<div className="drawer-sidebar-right__form">
+								<div className="drawer-sidebar-right__form" style={{ justifyContent: "center" }}>
 									<label htmlFor="address">
 										Hãy cho chúng mình biết địa điểm của bạn để hiển thị kết quả chính xác hơn với
 										bạn
@@ -369,7 +377,13 @@ const SurveyPage = () => {
 								</div>
 							)}
 							{currentDrawer === 3 && (
-								<>
+								<div
+									style={{
+										height: "80%",
+										display: "flex",
+										flexDirection: "column",
+										justifyContent: "space-between",
+									}}>
 									<p className="drawer-sidebar-right__title">
 										Hãy chọn tối thiểu 5 nhóm nhà hàng bạn thích
 									</p>
@@ -398,7 +412,7 @@ const SurveyPage = () => {
 											</div>
 										))}
 									</div>
-								</>
+								</div>
 							)}
 							<div className="drawer-sidebar__footer">
 								<button className="drawer-sidebar__buttonBack " onClick={preDrawer}>

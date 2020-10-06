@@ -27,7 +27,8 @@
 		background-image: url("../../assets/utils/wave.png");
 		background-size: cover;
 		background-repeat: no-repeat;
-		height: 300px;
+		max-height: 300px;
+		height: 100%;
 		display: flex;
 
 		.survey-page__navbarLeft {
@@ -137,99 +138,102 @@
 			position: relative;
 
 			.drawer-sidebar-right__form {
-				max-width: 650px;
+				max-width: 700px;
 				width: 100%;
 				display: flex;
+				height: 80%;
 			}
 
 			.drawer-sidebar-right__form {
 				flex-direction: column;
 				justify-content: center;
 
-				label {
-					font-family: SVN-Circular-Normal;
-					font-style: normal;
-					font-weight: 500;
-					font-size: 18px;
-					color: #373737;
-					margin-bottom: 3px;
-				}
+				.drawer-sidebar-right__formContainer {
+					label {
+						font-family: SVN-Circular-Normal;
+						font-style: normal;
+						font-weight: 500;
+						font-size: 18px;
+						color: #373737;
+					}
 
-				input {
-					width: 400px;
-					outline: none;
-					padding: 15px;
-					padding-left: 30px;
-					background: #ffffff;
-					border: 2px solid #eeeeee;
-					border-radius: 41px;
-				}
-			}
+					input {
+						width: 400px;
+						outline: none;
+						padding: 15px;
+						padding-left: 30px;
+						background: #ffffff;
+						border: 2px solid #eeeeee;
+						border-radius: 41px;
+						margin-top: 10px;
+					}
 
-			.drawer-sidebar-right__formAgeTitle {
-				font-family: SVN-Circular-Normal;
-				font-style: normal;
-				font-weight: 500;
-				font-size: 18px;
-				color: #373737;
-				margin-top: 10px;
-			}
+					.drawer-sidebar-right__formAgeTitle {
+						font-family: SVN-Circular-Normal;
+						font-style: normal;
+						font-weight: 500;
+						font-size: 18px;
+						color: #373737;
+						margin-top: 10px;
+					}
 
-			.drawer-sidebar-right__formAge {
-				display: flex;
-				flex-direction: row;
-				align-items: center;
-				margin-top: 25px;
+					.drawer-sidebar-right__formAge {
+						display: flex;
+						flex-direction: row;
+						align-items: center;
+						margin-top: 25px;
 
-				.drawer-sidebar-right__formAgeItem {
-					margin-right: 30px;
-					width: 116px;
-					height: 37px;
-					background: #717171;
-					border-radius: 41px;
-					font-family: SVN-Circular-Normal;
-					font-style: normal;
-					font-weight: 500;
-					font-size: 18px;
-					text-align: center;
-					color: #ffffff;
-					display: flex;
-					justify-content: center;
-					align-items: center;
-					cursor: pointer !important;
-				}
-			}
+						.drawer-sidebar-right__formAgeItem {
+							margin-right: 30px;
+							width: 116px;
+							height: 37px;
+							background: #717171;
+							border-radius: 41px;
+							font-family: SVN-Circular-Normal;
+							font-style: normal;
+							font-weight: 500;
+							font-size: 18px;
+							text-align: center;
+							color: #ffffff;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							cursor: pointer !important;
+						}
+					}
 
-			.drawer-sidebar-right__formGenderTitle {
-				font-family: SVN-Circular-Normal;
-				font-style: normal;
-				font-weight: 500;
-				font-size: 18px;
-				color: #373737;
-				margin-top: 30px;
-			}
+					.drawer-sidebar-right__formGenderTitle {
+						font-family: SVN-Circular-Normal;
+						font-style: normal;
+						font-weight: 500;
+						font-size: 18px;
+						color: #373737;
+						margin-top: 30px;
+					}
 
-			.drawer-sidebar-right__formGender {
-				display: flex;
-				flex-direction: row;
-				align-items: center;
-				margin-top: 25px;
+					.drawer-sidebar-right__formGender {
+						display: flex;
+						flex-direction: row;
+						align-items: center;
+						margin-top: 25px;
 
-				.drawer-sidebar-right__formGenderItem {
-					margin-right: 30px;
-					width: 116px;
-					height: 37px;
-					background: #717171;
-					border-radius: 41px;
-					font-family: SVN-Circular-Normal;
-					font-weight: 500;
-					font-size: 18px;
-					text-align: center;
-					color: #ffffff;
-					display: flex;
-					justify-content: center;
-					align-items: center;
-					cursor: pointer !important;
+						.drawer-sidebar-right__formGenderItem {
+							margin-right: 30px;
+							width: 116px;
+							height: 37px;
+							background: #717171;
+							border-radius: 41px;
+							font-family: SVN-Circular-Normal;
+							font-weight: 500;
+							font-size: 18px;
+							text-align: center;
+							color: #ffffff;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							cursor: pointer !important;
+						}
+					}
 				}
 			}
 
@@ -376,4 +380,23 @@
 .location-search-input {
 	width: 746px !important;
 	margin-top: 10px;
+}
+
+label {
+	font-family: SVN-Circular-Normal;
+	font-style: normal;
+	font-weight: 500;
+	font-size: 18px;
+	color: #373737;
+	margin-bottom: 3px;
+}
+
+input {
+	width: 400px;
+	outline: none;
+	padding: 15px;
+	padding-left: 30px;
+	background: #ffffff;
+	border: 2px solid #eeeeee;
+	border-radius: 41px;
 }

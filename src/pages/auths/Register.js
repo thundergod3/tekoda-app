@@ -30,8 +30,6 @@ const YupSchema = Yup.object({
 	password: Yup.string().min(6, "Mật khẩu cần tối thiếu 6 ký tự").required("Mật khẩu là bắt buộc"),
 });
 
-console.log(process.env);
-
 const RegisterPage = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const {

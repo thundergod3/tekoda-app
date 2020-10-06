@@ -100,3 +100,29 @@ body {
 		background: lightgray;
 	}
 }
+
+@media (max-width: 1920px) and (min-width: 1550px) {
+	.survey-page {
+		.survey-page__container {
+			.drawer-sidebar-left {
+				.survey-page__navbarStatus {
+					margin-top: 8%;
+
+					&::after {
+						height: calc((100vh - 170px) / 3);
+					}
+				}
+			}
+
+			.drawer-sidebar-right {
+				.drawer-sidebar-right__form {
+					justify-content: space-around;
+				}
+			}
+		}
+	}
+
+	.drawer-sidebar-right__listRestaurant {
+		max-height: 450px !important;
+	}
+}

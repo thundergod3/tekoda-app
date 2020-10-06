@@ -154,12 +154,12 @@ const listSearchTime = [
 	},
 ];
 
-const SearchBar = ({ style, setShowSearchBar }) => {
+const SearchBar = ({ style, setShowSearchBar, searchBarItemRef, showSearchBar }) => {
 	const popupDishesEl = useRef(null);
 	const inputPeopleRef = useRef(null);
 	const popupTimeEl = useRef(null);
 	const buttonSaveEl = useRef(null);
-	const [showSearchDishes, setShowSearchDishes] = useState(false);
+	const [showSearchDishes, setShowSearchDishes] = useState(showSearchBar ? showSearchBar : false);
 	const [choosePreference, setChoosePreference] = useState([]);
 	const [peopleSearchText, setPeopleSearchText] = useState("");
 	const [showSearchTime, setShowSearchTime] = useState(false);
@@ -259,6 +259,7 @@ const SearchBar = ({ style, setShowSearchBar }) => {
 			<div className="search-bar__container search-bar__formSearch" onClick={() => setShowSearchDishes(true)}>
 				<p className="search-bar__containerTitle">Tìm món</p>
 				<input
+					ref={searchBarItemRef}
 					type="text"
 					className="search-bar__containerBio search-bar__containerInput"
 					value={searchAnyDishes}

@@ -48,6 +48,7 @@ const Navbar = ({
 		authReducer: { authenticated },
 	} = useSelector((state) => state);
 	const searchBarRef = useRef(null);
+	const searchBarItemRef = useRef(null);
 	const [showSearchBar, setShowSearchBar] = useState(false);
 
 	const handleOutSideClick = (e) => {
@@ -65,6 +66,12 @@ const Navbar = ({
 		};
 	}, []);
 
+	useEffect(() => {
+		if (showSearchBar === true) {
+			searchBarItemRef.current.focus();
+		}
+	}, [showSearchBar]);
+
 	return (
 		<div className="navbar">
 			<div className="navbar__container">
@@ -77,9 +84,10 @@ const Navbar = ({
 					</Link>
 					{pathname.slice(1, 10) === "today-eat" || pathname.slice(1, 16) === "save-restaurant" ? (
 						<div className="search-bar__compactWrapper">
-							<div className="search-bar__compact" onClick={() => setShowSearchBar(true)}>
+							<div className="search-bar__compact" onClick={(e) => setShowSearchBar(true)}>
 								<SearchIcon />
 								<input
+									disabled={true}
 									type="text"
 									className="search-bar__compactInput"
 									placeholder="Tìm kiếm nhà hàng theo sở thích"
@@ -93,7 +101,9 @@ const Navbar = ({
 												top: "35%",
 												maxWidth: "1100px",
 											}}
+											showSearchBar={showSearchBar}
 											setShowSearchBar={setShowSearchBar}
+											searchBarItemRef={searchBarItemRef}
 										/>
 									</div>
 								)}
