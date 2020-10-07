@@ -4,7 +4,7 @@ import cookieLocal from "../helpers/cookieLocal";
 class HTTPMethod {
 	constructor() {
 		this.axios = axios;
-		this.axios.defaults.baseURL = "https://tekoda.ml";
+		this.axios.defaults.baseURL = "http://10.1.9.246:8888";
 		this.axios.defaults.headers = {
 			Authorization: `Bearer ${cookieLocal.getFromCookie("token")}`,
 		};
