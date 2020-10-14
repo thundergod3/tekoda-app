@@ -27,7 +27,6 @@ const RestaurantFilterList = ({ match: { params }, history, scrollTopRestaurantD
 				restaurant={restaurant}
 				id={restaurant?._id}
 				scrollTopRestaurantDetail={scrollTopRestaurantDetail}
-				rating={restaurant?._score}
 			/>
 		));
 
@@ -66,7 +65,7 @@ const RestaurantFilterList = ({ match: { params }, history, scrollTopRestaurantD
 						hidePrevButton={pageNumber === 1 ? true : false}
 						hideNextButton={pageNumber === Math.ceil(restaurantList.length / 10) ? true : false}
 					/>
-					<p className="restaurant-filter__length">1 - 20 / Hơn 300 nhà hàng</p>
+					<p className="restaurant-filter__length">1 - 10 / Hơn {restaurantList.length} nhà hàng</p>
 				</div>
 			</div>
 		</div>

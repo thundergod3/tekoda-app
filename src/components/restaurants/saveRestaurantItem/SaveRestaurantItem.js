@@ -16,7 +16,7 @@ const SaveRestaurantItem = ({ restaurant }) => {
 	const [like, setLike] = useState(false);
 	const dispatch = useDispatch();
 	const { saveRestaurantRequest } = restaurantAction;
-	const { Name, PhotoUrl, Address, AvgRatingText } = restaurant?._source;
+	const { Name, PhotoUrl, Address, AvgRatingText } = restaurant;
 
 	let checkLike = false;
 

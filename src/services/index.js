@@ -1,12 +1,18 @@
 import axios from "axios";
-import cookieLocal from "../helpers/cookieLocal";
+
+const { default: rootReducer } = require("../stores/rootReducer");
+const { createStore } = require("redux");
+const store = createStore(rootReducer);
 
 class HTTPMethod {
 	constructor() {
+		const {
+			authReducer: { token },
+		} = store.getState();
 		this.axios = axios;
-		this.axios.defaults.baseURL = "http://10.1.9.246:8888";
+		this.axios.defaults.baseURL = "https://tekoda.ml";
 		this.axios.defaults.headers = {
-			Authorization: `Bearer ${cookieLocal.getFromCookie("token")}`,
+			Authorization: `Bearer ${token}`,
 		};
 	}
 

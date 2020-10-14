@@ -63,7 +63,7 @@ const FilterList = () => {
 				<img src={SunImg} className="filter-list__welcomeImg" />
 				<div className="filter-list__welcomeBio">
 					<p className="filter-list__welcomeText">
-						Chào buổi sáng {userData.short_name ? `,${userData.short_name}!` : ""}{" "}
+						Chào buổi sáng {userData.name ? `,${userData.name}!` : ""}{" "}
 						<strong>Khám phá ẩm thực cùng Tekoda!</strong>
 					</p>
 					<div className="filter-list__welcomeBioExpand">
@@ -74,7 +74,7 @@ const FilterList = () => {
 			</div>
 			<div className="filter-list__optionContainer">
 				{filterList.map((option, index) => (
-					<Link to={`/today-eat/${option.title}/page=1`} key={index} onClick={() => dispatch(loadingUI())}>
+					<Link to={`/today-eat/${option.title.split("/").join(" ")}/page=1`} key={index} onClick={() => dispatch(loadingUI())}>
 						<FilterOption option={option} />
 					</Link>
 				))}

@@ -35,10 +35,22 @@ class authdaAction {
 			userForm,
 		};
 	}
-	registerUserSucceeded(token) {
+	registerUserSucceeded(userData) {
 		return {
 			type: types.REGISTER_USER_SUCCEEDED,
-			token,
+			userData,
+		};
+	}
+
+	getUserDataRequest() {
+		return {
+			type: types.GET_USER_REQUEST,
+		};
+	}
+	getUserDataSucceeded(userData) {
+		return {
+			type: types.GET_USER_SUCCEEDED,
+			userData,
 		};
 	}
 

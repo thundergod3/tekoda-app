@@ -27,7 +27,7 @@ import logoWhite from "../../assets/icons/Vector.png";
 import "./restaurants.scss";
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import Geocode from "react-geocode";
-import cookieLocal from "../../helpers/cookieLocal";
+import saveLocal from "../../helpers/saveLocal";
 import { handleCheckActiveItem, handleChooseItem } from "../../helpers/handleChangeActive";
 
 Geocode.setApiKey("AIzaSyAHF5sU-uXkvCZ6L1ieDNBwOhERg3moCkg");
@@ -162,7 +162,7 @@ const SurveyPage = () => {
 								const address = response.results[0].formatted_address;
 								const streetName = response.results[0].address_components[2].short_name;
 								setSearchAdd(address);
-								cookieLocal.saveToLocal("street", streetName);
+								saveLocal.saveToLocal("street", streetName);
 							}
 						},
 						(error) => {
@@ -208,7 +208,7 @@ const SurveyPage = () => {
 					(response) => {
 						const address = response?.results[0]?.formatted_address;
 						const streetName = response?.results[0]?.address_components[2]?.short_name;
-						cookieLocal.saveToLocal("street", streetName);
+						saveLocal.saveToLocal("street", streetName);
 					},
 					(error) => {
 						console.error(error);
@@ -237,31 +237,37 @@ const SurveyPage = () => {
 					<div className="survey-page__container">
 						<div className="drawer-sidebar-left">
 							<div
-								className={`survey-page__navbarStatus survey-page__navbarStatusInfoAll ${currentDrawer === 1 ? "status--active" : ""
-									}`}
+								className={`survey-page__navbarStatus survey-page__navbarStatusInfoAll ${
+									currentDrawer === 1 ? "status--active" : ""
+								}`}
 								style={{ justifyContent: "flex-start" }}>
 								<p
-									className={`survey-page__navbarStatusInfo ${currentDrawer === 1 ? "status--active" : ""
-										}`}>
+									className={`survey-page__navbarStatusInfo ${
+										currentDrawer === 1 ? "status--active" : ""
+									}`}>
 									Thông tin chung
 								</p>
 							</div>
 							<div
-								className={`survey-page__navbarStatus survey-page__navbarStatusLocation ${currentDrawer === 2 ? "status--active" : ""
-									}`}
+								className={`survey-page__navbarStatus survey-page__navbarStatusLocation ${
+									currentDrawer === 2 ? "status--active" : ""
+								}`}
 								style={{ justifyContent: "center" }}>
 								<p
-									className={`survey-page__navbarStatusInfo ${currentDrawer === 2 ? "status--active" : ""
-										}`}>
+									className={`survey-page__navbarStatusInfo ${
+										currentDrawer === 2 ? "status--active" : ""
+									}`}>
 									Chọn địa điểm
 								</p>
 							</div>
 							<div
-								className={`survey-page__navbarStatus survey-page__navbarStatusRestaurant ${currentDrawer === 3 ? "status--active" : ""
-									}`}>
+								className={`survey-page__navbarStatus survey-page__navbarStatusRestaurant ${
+									currentDrawer === 3 ? "status--active" : ""
+								}`}>
 								<p
-									className={`survey-page__navbarStatusInfo ${currentDrawer === 3 ? "status--active" : ""
-										}`}>
+									className={`survey-page__navbarStatusInfo ${
+										currentDrawer === 3 ? "status--active" : ""
+									}`}>
 									Chọn nhóm nhà hàng
 								</p>
 							</div>
@@ -286,8 +292,9 @@ const SurveyPage = () => {
 										<div className="drawer-sidebar-right__formAge">
 											{surveyAgeList.map((age) => (
 												<div
-													className={`drawer-sidebar-right__formAgeItem ${chooseAge.age === age.age ? "choose--active" : ""
-														}`}
+													className={`drawer-sidebar-right__formAgeItem ${
+														chooseAge.age === age.age ? "choose--active" : ""
+													}`}
 													key={age.id}
 													onClick={() => setChooseAge(age)}>
 													{age.age}
@@ -300,8 +307,9 @@ const SurveyPage = () => {
 										<div className="drawer-sidebar-right__formGender">
 											{surveyGenderList.map((gender) => (
 												<div
-													className={`drawer-sidebar-right__formGenderItem ${chooseGender.gender === gender.gender ? "choose--active" : ""
-														}`}
+													className={`drawer-sidebar-right__formGenderItem ${
+														chooseGender.gender === gender.gender ? "choose--active" : ""
+													}`}
 													key={gender.id}
 													onClick={() => setChooseGender(gender)}>
 													{gender.gender}
@@ -333,35 +341,35 @@ const SurveyPage = () => {
 												<div className="autocomplete-dropdown-container">
 													{suggestions.length > 4
 														? suggestions.slice(0, 4).map((suggestion) => {
-															const style = suggestion.active
-																? { backgroundColor: "#fafafa", cursor: "pointer" }
-																: { backgroundColor: "#ffffff", cursor: "pointer" };
-															return (
-																<div
-																	className="survey-page_suggestion"
-																	{...getSuggestionItemProps(suggestion, {
-																		style,
-																	})}>
-																	<RoomIcon />
-																	<span>{suggestion.description}</span>
-																</div>
-															);
-														})
+																const style = suggestion.active
+																	? { backgroundColor: "#fafafa", cursor: "pointer" }
+																	: { backgroundColor: "#ffffff", cursor: "pointer" };
+																return (
+																	<div
+																		className="survey-page_suggestion"
+																		{...getSuggestionItemProps(suggestion, {
+																			style,
+																		})}>
+																		<RoomIcon />
+																		<span>{suggestion.description}</span>
+																	</div>
+																);
+														  })
 														: suggestions.map((suggestion) => {
-															const style = suggestion.active
-																? { backgroundColor: "#fafafa", cursor: "pointer" }
-																: { backgroundColor: "#ffffff", cursor: "pointer" };
-															return (
-																<div
-																	className="survey-page_suggestion"
-																	{...getSuggestionItemProps(suggestion, {
-																		style,
-																	})}>
-																	<RoomIcon />
-																	<span>{suggestion.description}</span>
-																</div>
-															);
-														})}
+																const style = suggestion.active
+																	? { backgroundColor: "#fafafa", cursor: "pointer" }
+																	: { backgroundColor: "#ffffff", cursor: "pointer" };
+																return (
+																	<div
+																		className="survey-page_suggestion"
+																		{...getSuggestionItemProps(suggestion, {
+																			style,
+																		})}>
+																		<RoomIcon />
+																		<span>{suggestion.description}</span>
+																	</div>
+																);
+														  })}
 												</div>
 											</div>
 										)}
@@ -412,18 +420,23 @@ const SurveyPage = () => {
 								</button>
 								{currentDrawer === 3 ? (
 									<button
-										className={`drawer-sidebar__buttonNext ${searchAdd === "" ||
-												chooseAge === "" ||
-												chooseGender === "" ||
-												chooseRestaurant.length === 0
+										className={`drawer-sidebar__buttonNext ${
+											username === "" ||
+											searchAdd === "" ||
+											chooseAge === "" ||
+											chooseGender === "" ||
+											chooseRestaurant.length === 0 ||
+											chooseRestaurant.length < 4
 												? "button--disable"
 												: ""
-											}`}
+										}`}
 										disabled={
+											username === "" ||
 											searchAdd === "" ||
-												chooseAge === "" ||
-												chooseGender === "" ||
-												chooseRestaurant.length === 0
+											chooseAge === "" ||
+											chooseGender === "" ||
+											chooseRestaurant.length === 0 ||
+											chooseRestaurant.length < 4
 												? true
 												: false
 										}
@@ -440,14 +453,15 @@ const SurveyPage = () => {
 										Hoàn thành
 									</button>
 								) : (
-										<button
-											className={`drawer-sidebar__buttonNext ${currentDrawer === 2 && searchAdd === "" ? "button--disable" : ""
-												}`}
-											onClick={nextDrawer}
-											disabled={currentDrawer === 2 && searchAdd === "" ? true : false}>
-											Tiếp theo
-										</button>
-									)}
+									<button
+										className={`drawer-sidebar__buttonNext ${
+											currentDrawer === 2 && searchAdd === "" ? "button--disable" : ""
+										}`}
+										onClick={nextDrawer}
+										disabled={currentDrawer === 2 && searchAdd === "" ? true : false}>
+										Tiếp theo
+									</button>
+								)}
 							</div>
 						</div>
 					</div>

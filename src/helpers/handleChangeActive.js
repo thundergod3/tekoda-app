@@ -1,4 +1,4 @@
-export const handleChooseItem = (itemChoose, listItem, functionSetState, limitNumber) => {
+export const handleChooseItem = (itemChoose, listItem, functionSetState) => {
 	let found = false;
 	for (let k = 0; k < listItem.length; k++) {
 		if (itemChoose.title === listItem[k]) {
@@ -6,15 +6,12 @@ export const handleChooseItem = (itemChoose, listItem, functionSetState, limitNu
 		}
 	}
 
-	if (limitNumber && listItem.length >= limitNumber) {
+	functionSetState(listItem.filter((item) => item !== itemChoose.title));
+
+	if (found) {
 		functionSetState(listItem.filter((item) => item !== itemChoose.title));
-		return;
 	} else {
-		if (found) {
-			functionSetState(listItem.filter((item) => item !== itemChoose.title));
-		} else {
-			functionSetState([...listItem, itemChoose.title]);
-		}
+		functionSetState([...listItem, itemChoose.title]);
 	}
 };
 

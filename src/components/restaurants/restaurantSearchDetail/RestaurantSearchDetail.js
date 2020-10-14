@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./RestaurantSearchDetail.scss";
 import MoneyIcon from "../../../assets/icons/money.png";
@@ -17,49 +17,29 @@ import { withStyles } from "@material-ui/core/styles";
 import UserReviewList from "../userReviewList/UserReviewList";
 import { Link } from "react-router-dom";
 
-const listRating = [
-	{
-		title: "Mức độ sạch sẽ",
-		rate: 4.3,
-	},
-	{
-		title: "Độ chính xác",
-		rate: 4.2,
-	},
-	{
-		title: "Liên lạc",
-		rate: 4.8,
-	},
-	{
-		title: "Vị trí",
-		rate: 4.9,
-	},
-	{
-		title: "Nhận phòng",
-		rate: 4.8,
-	},
-	{
-		title: "Giá trị",
-		rate: 4.5,
-	},
-];
-
 const RestaurantSearchDetail = ({ searchPageRef }) => {
 	const {
 		restaurantReducer: { restaurantSearchDetail, restaurantReviewList, saveRestaurantList },
 		utilReducer: { active },
 	} = useSelector((state) => state);
 	const [save, setSave] = useState(false);
+	const [checkSave, setCheckSave] = useState(false);
 	const dispatch = useDispatch();
 	const { saveRestaurantRequest, searchRestaurantRequest, getAllSearchRestaurantRequest } = restaurantAction;
 	const { loadingUI } = utilAction;
 
-	let checkSave = false;
-	for (let i = 0; i < saveRestaurantList.length; i++) {
-		console.log(restaurantSearchDetail._id);
-		console.log(saveRestaurantList[i]._id);
-		if (restaurantSearchDetail._id === saveRestaurantList[i]._id) checkSave = true;
-	}
+	useEffect(() => {
+		for (let i = 0; i < saveRestaurantList.length; i++) {
+			if (
+				restaurantSearchDetail._id &&
+				saveRestaurantList[i]._id &&
+				restaurantSearchDetail._id === saveRestaurantList[i]._id
+			) {
+				setSave(true);
+				setCheckSave(true);
+			} else setCheckSave(false);
+		}
+	}, [saveRestaurantList]);
 
 	return (
 		<>
@@ -67,8 +47,8 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 				<div
 					className={`restaurant-search-detail ${active === true ? "restaurant-search-detail--active" : ""}`}>
 					<div className="restaurant-search-detail__container" ref={searchPageRef}>
-						<p className="restaurant-search-detail__title">{restaurantSearchDetail?._source.Name}</p>
-						<p className="restaurant-search-detail__bio">{restaurantSearchDetail?._source.Address}</p>
+						<p className="restaurant-search-detail__title">{restaurantSearchDetail?.Name}</p>
+						<p className="restaurant-search-detail__bio">{restaurantSearchDetail?.Address}</p>
 						<div className="restaurant-search-detail__info">
 							<div className="restaurant-search-detail__price">
 								<img src={MoneyIcon} alt="money" className="restaurant-search-detail__priceIcon" />
@@ -82,7 +62,7 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 							</div>
 						</div>
 						<div className="restaurant-search-detail__description">
-							{restaurantSearchDetail?._source?.descriptionList.map((description, index) => (
+							{restaurantSearchDetail?.descriptionList.map((description, index) => (
 								<div key={index} className="restaurant-search-detail__descriptionContainer">
 									<img src={description.icon} alt="" />
 									<div className="restaurant-search-detail__descriptionInfo">
@@ -98,25 +78,25 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 						</div>
 						<div className="restaurant-search-detail__imageContainer">
 							<img
-								src={restaurantSearchDetail?._source.image}
-								alt={restaurantSearchDetail?._source.Name}
+								src={restaurantSearchDetail?.image}
+								alt={restaurantSearchDetail?.Name}
 								className="restaurant-search-detail__bigImage"
 							/>
 							<div className="restaurant-search-detail__imageSmaliList">
 								<img
-									src={restaurantSearchDetail?._source.image}
-									alt={restaurantSearchDetail?._source.Name}
+									src={restaurantSearchDetail?.image}
+									alt={restaurantSearchDetail?.Name}
 									className="restaurant-search-detail__imageSmallTitle"
 								/>
 								<div className="restaurant-search-detail__imageSmallContainer">
 									<img
-										src={restaurantSearchDetail?._source.image}
-										alt={restaurantSearchDetail?._source.Name}
+										src={restaurantSearchDetail?.image}
+										alt={restaurantSearchDetail?.Name}
 										className="restaurant-search-detail__imageSmall"
 									/>
 									<img
-										src={restaurantSearchDetail?._source.image}
-										alt={restaurantSearchDetail?._source.Name}
+										src={restaurantSearchDetail?.image}
+										alt={restaurantSearchDetail?.Name}
 										className="restaurant-search-detail__imageSmall"
 									/>
 								</div>
@@ -124,11 +104,11 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 						</div>
 						<div className="restaurant-search-detail__reviewContainer">
 							<p className="restaurant-search-detail__reviewRate">
-								{restaurantSearchDetail?._source?.AvgRatingText} out of 10 stars from{" "}
+								{restaurantSearchDetail?.AvgRatingText} out of 10 stars from{" "}
 								{restaurantReviewList.length} reviews
 							</p>
 							<div className="restaurant-search-detail__reviewListRate">
-								{listRating.map((rating, index) => (
+								{restaurantSearchDetail.listRating.map((rating, index) => (
 									<div className="restaurant-search-detail__reviewItemRate" key={index}>
 										<p className="restaurant-search-detail__reviewItemRateTitle">{rating.title}</p>
 										<div className="restaurant-search-detail__reviewItemRateContainer">
@@ -136,7 +116,7 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 												<span className="restaurant-seearch-detail__reviewPercentBefore"></span>
 												<span
 													className="restaurant-seearch-detail__reviewPercentAfter"
-													style={{ width: `${(rating.rate / 5) * 100}%` }}></span>
+													style={{ width: `${(rating.rate / 10) * 100}%` }}></span>
 											</div>
 											<p className="restaurant-search-detail__reviewItemRateScore">
 												{rating.rate}
@@ -153,8 +133,8 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 							className="restaurant-search-detail__button"
 							onClick={() => {
 								dispatch(loadingUI());
-								dispatch(searchRestaurantRequest([restaurantSearchDetail?._source.Name]));
-								dispatch(getAllSearchRestaurantRequest([restaurantSearchDetail?._source.Name]));
+								dispatch(searchRestaurantRequest([restaurantSearchDetail?.Name]));
+								dispatch(getAllSearchRestaurantRequest([restaurantSearchDetail?.Name]));
 							}}>
 							<SearchIcon />
 							<p className="restaurant-search-detail__buttonTitle">Tìm nhà hàng tương tự</p>
@@ -188,15 +168,8 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 								</>
 							) : (
 								<>
-									<img src={CheckIcon} alt="check" style={{ marginRight: "5px" }} />
-									<p
-										className="restaurant-search-detail__buttonTitle"
-										style={{ width: "204px", height: "36px" }}>
-										Đã lưu thành công, xem{" "}
-										<Link to="/save-restaurant" onClick={(e) => e.stopPropagation()}>
-											danh sách
-										</Link>
-									</p>
+									<BookmarkBorderIcon />
+									<p className="restaurant-search-detail__buttonTitle">Lưu vào danh sách</p>
 								</>
 							)}
 						</div>

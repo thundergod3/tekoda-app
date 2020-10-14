@@ -1,3 +1,5 @@
+@import "../../../App.scss";
+
 .restaurant-filter-item {
 	display: flex;
 	margin-bottom: 45px;
@@ -35,6 +37,10 @@
 					line-height: 18px;
 					color: #717171;
 				}
+			}
+
+			.MuiSvgIcon-root {
+				color: $main-color;
 			}
 		}
 

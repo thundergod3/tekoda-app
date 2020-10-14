@@ -1,19 +1,24 @@
 import * as types from "../../../constants/types";
 import produce from "immer";
-import cookieLocal from "../../../helpers/cookieLocal";
+import saveLocal from "../../../helpers/saveLocal";
 
 const initialState = {
 	userData: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
-	token: cookieLocal.getFromCookie("token") ? cookieLocal.getFromCookie("token") : "",
+	token: saveLocal.getFromLocal("token") ? saveLocal.getFromLocal("token") : "",
 	authenticated: undefined,
 };
 
 const authReducer = (state = initialState, action) =>
 	produce(state, (draft) => {
 		switch (action.type) {
-			case types.LOGIN_USER_SUCCEEDED:
-			case types.REGISTER_USER_SUCCEEDED: {
+			case types.LOGIN_USER_SUCCEEDED: {
 				draft.token = action.token;
+				break;
+			}
+
+			case types.REGISTER_USER_SUCCEEDED: {
+				console.log(action.userData);
+				draft.userData = action.userData;
 				break;
 			}
 

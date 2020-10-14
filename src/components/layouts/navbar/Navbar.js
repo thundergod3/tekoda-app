@@ -73,79 +73,83 @@ const Navbar = ({
 	}, [showSearchBar]);
 
 	return (
-		<div className="navbar">
-			<div className="navbar__container">
-				<div className="navbar__right" style={authenticated ? { flex: 0.87 } : { flex: 0.8 }}>
-					<Link to="/">
-						<div className="navbar__logo">
-							<img src={logoWhite} alt="Logo" />
-							<p>TekodaApp</p>
-						</div>
-					</Link>
-					{pathname.slice(1, 10) === "today-eat" || pathname.slice(1, 16) === "save-restaurant" ? (
-						<div className="search-bar__compactWrapper">
-							<div className="search-bar__compact" onClick={(e) => setShowSearchBar(true)}>
-								<SearchIcon />
-								<input
-									disabled={true}
-									type="text"
-									className="search-bar__compactInput"
-									placeholder="Tìm kiếm nhà hàng theo sở thích"
-								/>
-								{showSearchBar && (
-									<div className="search-bar__compactContainer" ref={searchBarRef}>
-										<SearchBar
-											style={{
-												position: "absolute",
-												left: "15%",
-												top: "35%",
-												maxWidth: "1100px",
-											}}
-											showSearchBar={showSearchBar}
-											setShowSearchBar={setShowSearchBar}
-											searchBarItemRef={searchBarItemRef}
+		<>
+			{authenticated !== undefined && (
+				<div className="navbar">
+					<div className="navbar__container">
+						<div className="navbar__right" style={authenticated ? { flex: 0.85 } : { flex: 0.8 }}>
+							<Link to="/">
+								<div className="navbar__logo">
+									<img src={logoWhite} alt="Logo" />
+									<p>TekodaApp</p>
+								</div>
+							</Link>
+							{pathname.slice(1, 10) === "today-eat" || pathname.slice(1, 16) === "save-restaurant" ? (
+								<div className="search-bar__compactWrapper">
+									<div className="search-bar__compact" onClick={(e) => setShowSearchBar(true)}>
+										<SearchIcon />
+										<input
+											disabled={true}
+											type="text"
+											className="search-bar__compactInput"
+											placeholder="Tìm kiếm nhà hàng theo sở thích"
 										/>
+										{showSearchBar && (
+											<div className="search-bar__compactContainer" ref={searchBarRef}>
+												<SearchBar
+													style={{
+														position: "absolute",
+														left: "15%",
+														top: "35%",
+														maxWidth: "1100px",
+													}}
+													showSearchBar={showSearchBar}
+													setShowSearchBar={setShowSearchBar}
+													searchBarItemRef={searchBarItemRef}
+												/>
+											</div>
+										)}
 									</div>
-								)}
+								</div>
+							) : (
+								<div className="navbar__listOption">
+									{navbarOption.map((option, index) => (
+										<NavbarOption key={index} option={option} />
+									))}
+								</div>
+							)}
+						</div>
+						<div className="navbar__left" style={authenticated ? { flex: 0.13 } : { flex: 0.2 }}>
+							<div className="navbar__icon">
+								<LanguageIcon />
+								<ExpandMoreIcon />
 							</div>
+							{!authenticated ? (
+								<>
+									<Link to="/login">
+										<div className="navbar__button">
+											<p>Đăng nhập</p>
+										</div>
+									</Link>
+									<Link to="/register">
+										<div className="navbar__button">
+											<p>Đăng ký</p>
+										</div>
+									</Link>
+								</>
+							) : (
+								<div className="navbar__button">
+									<div className="navbar__buttonDrawerContainer">
+										<MenuIcon />
+										<AccountCircleIcon />
+									</div>
+								</div>
+							)}
 						</div>
-					) : (
-						<div className="navbar__listOption">
-							{navbarOption.map((option, index) => (
-								<NavbarOption key={index} option={option} />
-							))}
-						</div>
-					)}
-				</div>
-				<div className="navbar__left" style={authenticated ? { flex: 0.13 } : { flex: 0.2 }}>
-					<div className="navbar__icon">
-						<LanguageIcon />
-						<ExpandMoreIcon />
 					</div>
-					{!authenticated ? (
-						<>
-							<Link to="/login">
-								<div className="navbar__button">
-									<p>Đăng nhập</p>
-								</div>
-							</Link>
-							<Link to="/register">
-								<div className="navbar__button">
-									<p>Đăng ký</p>
-								</div>
-							</Link>
-						</>
-					) : (
-						<div className="navbar__button">
-							<div className="navbar__buttonDrawerContainer">
-								<MenuIcon />
-								<AccountCircleIcon />
-							</div>
-						</div>
-					)}
 				</div>
-			</div>
-		</div>
+			)}
+		</>
 	);
 };
 

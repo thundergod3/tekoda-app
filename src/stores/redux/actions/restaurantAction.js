@@ -156,20 +156,24 @@ class restaurantAction {
 			listKeyWord,
 		};
 	}
-
 	addstoreListKeyword(keyword) {
 		return {
 			type: types.ADD_STORE_LIST_KEYWORD,
 			keyword,
 		};
 	}
-
+	deleteStoreListKeyWord() {
+		return {
+			type: types.DELETE_STORE_LIST_KEYWORD
+		}
+	}
 	deleleItemStoreListKeyword(keyword) {
 		return {
 			type: types.DELETE_ITEM_STORE_LIST_KEYWORD,
 			keyword,
 		};
 	}
+
 
 	trackingUserScrollReviewList(restaurantId) {
 		return {

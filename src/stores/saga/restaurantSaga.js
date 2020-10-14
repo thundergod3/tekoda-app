@@ -7,7 +7,7 @@ import errorAction from "../redux/actions/errorAction";
 
 import restaurantService from "../../services/restaurantService";
 
-import cookieLocal from "../../helpers/cookieLocal";
+import saveLocal from "../../helpers/saveLocal";
 import history from "../../constants/history";
 
 function* fetchListRestaurant() {
@@ -103,8 +103,8 @@ function* getRestaurantDetail({ id }) {
 
 function* sendSurveyForm({ surveyForm }) {
 	try {
-		yield cookieLocal.saveToLocal("statusSurvey", true);
-		yield cookieLocal.saveToLocal("surveyForm", surveyForm);
+		yield saveLocal.saveToLocal("statusSurvey", true);
+		yield saveLocal.saveToLocal("surveyForm", surveyForm);
 		yield history.push("/");
 		yield put(restaurantAction.sendSurveyFormSucceeded());
 	} catch (error) {

@@ -13,12 +13,12 @@ import { useDispatch } from "react-redux";
 import restaurantAction from "../../../stores/redux/actions/restaurantAction";
 import utilAction from "../../../stores/redux/actions/utilAction";
 
-const RestaurantFilterItem = ({ restaurant, scrollTopRestaurantDetail, rating }) => {
+const RestaurantFilterItem = ({ restaurant, scrollTopRestaurantDetail }) => {
 	const {
 		restaurantReducer: { saveRestaurantList },
 	} = useSelector((state) => state);
 	const [like, setLike] = useState(false);
-	const { Name, AvgRatingText, comments, Address, PhotoUrl } = restaurant?._source;
+	const { Name, AvgRatingText, comments, Address, PhotoUrl } = restaurant;
 	const dispatch = useDispatch();
 	const { getRestaurantSearchDetailRequest, saveRestaurantRequest } = restaurantAction;
 	const { showActive } = utilAction;
@@ -26,7 +26,7 @@ const RestaurantFilterItem = ({ restaurant, scrollTopRestaurantDetail, rating })
 	let checkLike = false;
 
 	for (let i = 0; i < saveRestaurantList.length; i++) {
-		if (restaurant._id === saveRestaurantList[i]?._id) checkLike = true;
+		if (saveRestaurantList[i]._id && restaurant._id === saveRestaurantList[i]._id) checkLike = true;
 	}
 
 	return (
@@ -79,7 +79,7 @@ const RestaurantFilterItem = ({ restaurant, scrollTopRestaurantDetail, rating })
 				<div className="restaurant-filter-item__infoFooter">
 					<div className="restaurant-filter-item__rating">
 						<img src={star} alt={star} className="restaurant-filter-item__star" />
-						<span className="restaurant-filter-item__rateStar">{Math.floor(rating)}</span>
+						<span className="restaurant-filter-item__rateStar">{Math.floor(AvgRatingText)}</span>
 						<span className="restaurant-filter-item__comment">(110 đánh giá)</span>
 					</div>
 					<p className="restaurant-filter-item__price">Giá: vnd 100-400k</p>
