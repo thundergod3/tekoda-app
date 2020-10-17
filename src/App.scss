@@ -132,6 +132,7 @@ body {
 		flex-direction: column-reverse;
 		background: url("./assets/utils/background_mobile.png") !important;
 		background-size: cover !important;
+		overflow: hidden;
 
 		.auth-page-left {
 			flex: 0.3 !important;
@@ -153,7 +154,7 @@ body {
 				}
 
 				.auth-page__infoFoodImgWrapper {
-					top: 80% !important;
+					top: 75% !important;
 
 					img {
 						width: 250px;
