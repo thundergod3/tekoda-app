@@ -32,6 +32,7 @@ const YupSchema = Yup.object({
 
 const RegisterPage = () => {
 	const [showPassword, setShowPassword] = useState(false);
+	const [privacyStatus, setPrivacyStatus] = useState(false);
 	const {
 		authReducer: { authenticated },
 		utilReducer: { loading },
@@ -58,11 +59,13 @@ const RegisterPage = () => {
 				dispatch(loadingUI());
 				dispatch(registerUserRequest(values));
 			}}>
-			{(props) => (
-				<>
-					{loading ? (
-						<Loading />
-					) : (
+			{(props) => {
+				console.log(privacyStatus);
+				return (
+					<>
+						{loading ? (
+							<Loading />
+						) : (
 							<>
 								{authenticated !== undefined && (
 									<div className="auth-page" role="presentation">
@@ -132,28 +135,41 @@ const RegisterPage = () => {
 													type="checkbox"
 													className="auth-page__privacyCheckbox"
 												/>
-												<span className="input--checked"></span>
-												<span className="auth-page__privacy">
+												<span
+													className="input--checked"
+													onClick={() => setPrivacyStatus(!privacyStatus)}></span>
+												<span
+													className="auth-page__privacy"
+													onClick={() => setPrivacyStatus(!privacyStatus)}>
 													Tôi đồng ý với <strong>Chính Sách Bảo Mật</strong> và
-												<strong> Điều Khoản Hoạt Động</strong> của Tekoda.
-											</span>
+													<strong> Điều Khoản Hoạt Động</strong> của Tekoda.
+												</span>
 											</label>
 											<button
 												type="submit"
 												onClick={props.handleSubmit}
-												className={`auth-page__register ${props.errors.name && props.errors.email && props.errors.password
+												className={`auth-page__register ${
+													props.errors.name ||
+													props.errors.email ||
+													props.errors.password ||
+													!privacyStatus
 														? "button--disable"
 														: ""
-													}`}
+												}`}
 												disabled={
-													props.errors.name && props.errors.email && props.errors.password
+													props.errors.name &&
+													props.errors.email &&
+													props.errors.password &&
+													!privacyStatus
 														? true
 														: false
 												}>
 												Đăng ký
-										</button>
+											</button>
 											<div className="auth-page__changePageContainer">
-												<span className="auth-page__changePage">Bạn đã có tài khoản Tekoda ?</span>
+												<span className="auth-page__changePage">
+													Bạn đã có tài khoản Tekoda ?
+												</span>
 												<span>
 													<Link to="/login"> Đăng nhập</Link>
 												</span>
@@ -163,8 +179,9 @@ const RegisterPage = () => {
 								)}
 							</>
 						)}
-				</>
-			)}
+					</>
+				);
+			}}
 		</Formik>
 	);
 };

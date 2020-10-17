@@ -43,7 +43,7 @@ const listRestaurant = [
 		img: monAImg,
 	},
 	{
-		title: "Nhà hàng sang trọng",
+		title: "Sang trọng",
 		img: nhaHangSangTrongImg,
 	},
 	{
@@ -272,6 +272,33 @@ const SurveyPage = () => {
 								</p>
 							</div>
 						</div>
+						<div className="drawer-sidebar-leftMobile">
+							<div className="survey-page__numberDrawer">
+								<p>{currentDrawer}</p>
+							</div>
+							{currentDrawer === 1 ? (
+								<div className="survey-page__navbarStatus">
+									<p className="survey-page__navbarStatusInfo">Thông tin chung</p>
+								</div>
+							) : (
+								""
+							)}
+							{currentDrawer === 2 ? (
+								<div className="survey-page__navbarStatus">
+									<p className="survey-page__navbarStatusInfo">Chọn địa điểm</p>
+								</div>
+							) : (
+								""
+							)}
+
+							{currentDrawer === 3 ? (
+								<div className="survey-page__navbarStatus">
+									<p className="survey-page__navbarStatusInfo">Chọn nhóm nhà hàng</p>
+								</div>
+							) : (
+								""
+							)}
+						</div>
 						<div className="drawer-sidebar-right">
 							{currentDrawer === 1 && (
 								<div className="drawer-sidebar-right__form">
@@ -297,7 +324,7 @@ const SurveyPage = () => {
 													}`}
 													key={age.id}
 													onClick={() => setChooseAge(age)}>
-													{age.age}
+													<p>{age.age}</p>
 												</div>
 											))}
 										</div>
@@ -377,13 +404,7 @@ const SurveyPage = () => {
 								</div>
 							)}
 							{currentDrawer === 3 && (
-								<div
-									style={{
-										height: "80%",
-										display: "flex",
-										flexDirection: "column",
-										justifyContent: "space-between",
-									}}>
+								<div className="drawer-sidebar-right__listRestaurantContainer">
 									<p className="drawer-sidebar-right__title">
 										Hãy chọn tối thiểu 5 nhóm nhà hàng bạn thích
 									</p>

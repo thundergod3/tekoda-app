@@ -131,6 +131,11 @@
 			}
 		}
 
+		.drawer-sidebar-leftMobile {
+			display: none;
+			position: absolute;
+		}
+
 		.drawer-sidebar-right {
 			flex: 0.7;
 			display: flex;
@@ -189,16 +194,20 @@
 							height: 37px;
 							background: #717171;
 							border-radius: 41px;
-							font-family: SVN-Circular-Normal;
-							font-style: normal;
-							font-weight: 500;
-							font-size: 18px;
-							text-align: center;
-							color: #ffffff;
-							display: flex;
-							justify-content: center;
-							align-items: center;
 							cursor: pointer !important;
+
+							p {
+								font-family: SVN-Circular-Normal;
+								font-style: normal;
+								font-weight: 500;
+								font-size: 18px;
+								color: #ffffff;
+								width: 100%;
+								height: 100%;
+								display: flex;
+								justify-content: center;
+								align-items: center;
+							}
 						}
 					}
 
@@ -237,64 +246,71 @@
 				}
 			}
 
-			.drawer-sidebar-right__title {
-				align-self: flex-start;
-				font-family: SVN-Circular-Normal;
-				font-style: normal;
-				font-weight: 500;
-				font-size: 18px;
-				color: #202020;
-				margin-bottom: 20px;
-			}
-
-			.drawer-sidebar-right__listRestaurant {
-				max-height: 300px;
-				flex-wrap: wrap;
-				gap: 20px;
+			.drawer-sidebar-right__listRestaurantContainer {
+				height: 80%;
+				flex-direction: column;
 				display: flex;
-				flex-direction: row;
-				align-items: center;
-				overflow: scroll;
-				overflow-x: hidden;
+				justify-content: space-between;
 
-				&::-webkit-scrollbar {
-					display: none;
+				.drawer-sidebar-right__title {
+					align-self: flex-start;
+					font-family: SVN-Circular-Normal;
+					font-style: normal;
+					font-weight: 500;
+					font-size: 18px;
+					color: #202020;
+					margin-bottom: 20px;
 				}
 
-				.drawer-sidebar-right__itemRestaurant {
-					width: calc(960px / 4);
-					height: 130px;
-					margin-bottom: 30px;
-					border-radius: 12px;
-					height: 130px;
+				.drawer-sidebar-right__listRestaurant {
+					max-height: 300px;
+					flex-wrap: wrap;
+					gap: 20px;
 					display: flex;
-					flex-direction: column;
+					flex-direction: row;
 					align-items: center;
+					overflow: scroll;
+					overflow-x: hidden;
 
-					&:hover {
-						cursor: pointer;
+					&::-webkit-scrollbar {
+						display: none;
 					}
 
-					.drawer-sidebar-right__itemRestaurantImg {
-						width: 100%;
+					.drawer-sidebar-right__itemRestaurant {
+						width: calc(960px / 4);
 						height: 130px;
+						margin-bottom: 30px;
+						border-radius: 12px;
+						height: 130px;
+						display: flex;
+						flex-direction: column;
+						align-items: center;
 
-						img {
-							background-size: cover;
-							background-repeat: no-repeat;
-							width: 100%;
-							height: 100%;
+						&:hover {
+							cursor: pointer;
 						}
-					}
 
-					p {
-						font-family: SVN-Circular-Normal;
-						font-weight: 500;
-						font-size: 16px;
-						text-align: center;
-						color: #717171;
-						margin-top: 20px;
-						text-transform: capitalize;
+						.drawer-sidebar-right__itemRestaurantImg {
+							width: 100%;
+							height: 130px;
+
+							img {
+								background-size: cover;
+								background-repeat: no-repeat;
+								width: 100%;
+								height: 100%;
+							}
+						}
+
+						p {
+							font-family: SVN-Circular-Normal;
+							font-weight: 500;
+							font-size: 16px;
+							text-align: center;
+							color: #717171;
+							margin-top: 20px;
+							text-transform: capitalize;
+						}
 					}
 				}
 			}

@@ -1,36 +1,71 @@
 import HTTPMethod from "./index";
 
 class restaurantService {
-	fetchAllRestaurant = () => HTTPMethod.get("/api/v1/restaurant/list");
+	fetchAllRestaurant = ({ headers }) =>
+		HTTPMethod.get("/api/v1/restaurant/list", {
+			headers,
+		});
 
-	fetchTrendingRestaurant = () => HTTPMethod.get("/api/v1/restaurant/recommend");
+	fetchTrendingRestaurant = ({ headers }) =>
+		HTTPMethod.get("/api/v1/restaurant/recommend", {
+			headers,
+		});
 
-	fetchRestaurantPerPage = ({ page }) => HTTPMethod.get(`/api/v1/restaurant/paging?page=${page}&limit=10`)	;
+	fetchRestaurantPerPage = ({ page, headers }) =>
+		HTTPMethod.get(`/api/v1/restaurant/paging?page=${page}&limit=10`, {
+			headers,
+		});
 
-	fetchDetailRestaurant = ({ id }) => HTTPMethod.get(`/api/v1/restaurant/get?id=${id}`);
+	fetchDetailRestaurant = ({ id, headers }) =>
+		HTTPMethod.get(`/api/v1/restaurant/get?id=${id}`, {
+			headers,
+		});
 
-	getAllSearchRestaurant = ({ listKeyword }) =>
-		HTTPMethod.get(`/api/v1/restaurant/search?q=${listKeyword.join("+")}&limit=1000&page=1`);
+	getAllSearchRestaurant = ({ listKeyword, headers }) =>
+		HTTPMethod.get(`/api/v1/restaurant/search?q=${listKeyword.join("+")}&limit=1000&page=1`, {
+			headers,
+		});
 
-	searchRestaurant = ({ listKeyWord, page }) =>
-		HTTPMethod.get(`/api/v1/restaurant/search?q=${listKeyWord.join("+")}&limit=10&page=${page}`);
+	searchRestaurant = ({ listKeyWord, page, headers }) =>
+		HTTPMethod.get(`/api/v1/restaurant/search?q=${listKeyWord.join("+")}&limit=10&page=${page}`, {
+			headers,
+		});
 
-	getSearchRestaurantPePage = ({ listKeyWord, page }) =>
-		HTTPMethod.get(`/api/v1/restaurant/search?q=${listKeyWord.join("+")}&limit=10&page=${page}`);
+	getSearchRestaurantPePage = ({ listKeyWord, page, headers }) =>
+		HTTPMethod.get(`/api/v1/restaurant/search?q=${listKeyWord.join("+")}&limit=10&page=${page}`, {
+			headers,
+		});
 
-	getRestaurantReview = ({ restaurantId, count }) =>
-		HTTPMethod.get(`/api/v1/review?resId=${restaurantId}&count=${count}`);
+	getRestaurantReview = ({ restaurantId, count, headers }) =>
+		HTTPMethod.get(`/api/v1/review?resId=${restaurantId}&count=${count}`, {
+			headers,
+		});
 
-	trackingUserScrollReviewList = ({ restaurantId }) =>
-		HTTPMethod.post("/api/v1/user_behavior/view", { restaurant_id: restaurantId });
+	trackingUserScrollReviewList = ({ restaurantId, headers }) =>
+		HTTPMethod.post("/api/v1/user_behavior/view", { restaurant_id: restaurantId }, { headers });
 
-	likeRestaurant = ({ restaurantId }) =>
-		HTTPMethod.post("/api/v1/user_behavior/enjoy", { restaurant_id: restaurantId });
+	likeRestaurant = ({ restaurantId, headers }) =>
+		HTTPMethod.post(
+			"/api/v1/user_behavior/enjoy",
+			{
+				restaurant_id: restaurantId,
+			},
+			{ headers }
+		);
 
-	saveRestaurant = ({ restaurantId }) =>
-		HTTPMethod.post("/api/v1/user_behavior/save", { restaurant_id: restaurantId });
+	saveRestaurant = ({ restaurantId, headers }) =>
+		HTTPMethod.post(
+			"/api/v1/user_behavior/save",
+			{
+				restaurant_id: restaurantId,
+			},
+			{ headers }
+		);
 
-	fetchSaveRestaurant = () => HTTPMethod.get("/api/v1/user_behavior/get_save");
+	fetchSaveRestaurant = ({ headers }) =>
+		HTTPMethod.get("/api/v1/user_behavior/get_save", {
+			headers,
+		});
 }
 
 export default new restaurantService();

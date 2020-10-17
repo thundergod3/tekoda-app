@@ -3,7 +3,7 @@ import produce from "immer";
 import saveLocal from "../../../helpers/saveLocal";
 
 const initialState = {
-	userData: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
+	userData: {},
 	token: saveLocal.getFromLocal("token") ? saveLocal.getFromLocal("token") : "",
 	authenticated: undefined,
 };

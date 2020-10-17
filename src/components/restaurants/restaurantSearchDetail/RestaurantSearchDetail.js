@@ -30,16 +30,14 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 
 	useEffect(() => {
 		for (let i = 0; i < saveRestaurantList.length; i++) {
-			if (
-				restaurantSearchDetail._id &&
-				saveRestaurantList[i]._id &&
-				restaurantSearchDetail._id === saveRestaurantList[i]._id
-			) {
+			if (restaurantSearchDetail.ResId === saveRestaurantList[i].ResId) {
 				setSave(true);
 				setCheckSave(true);
 			} else setCheckSave(false);
 		}
 	}, [saveRestaurantList]);
+
+	console.log(save);
 
 	return (
 		<>
