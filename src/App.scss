@@ -495,7 +495,7 @@ body {
 		height: calc(100vh - 130px);
 		overflow-x: hidden;
 		overflow-y: scroll;
-		margin-top: 50px;
+		margin-top: 30px;
 
 		.search-restaurant-search {
 			position: fixed;
@@ -687,6 +687,26 @@ body {
 }
 
 @media (max-width: 420px) and (min-width: 300px) and (min-height: 700px) and (max-height: 800px) {
+	.auth-page {
+		.auth-page-left {
+			.auth-page__info {
+				.auth-page__infoFoodImgWrapper {
+					top: 80% !important;
+				}
+			}
+		}
+
+		.auth-page-right {
+			.auth-page-right__titleLine1 {
+				margin-top: 20px !important;
+			}
+
+			.input-field__form {
+				margin-bottom: 20px;
+			}
+		}
+	}
+
 	.survey-page {
 		.survey-page__container {
 			.drawer-sidebar-right {
@@ -727,6 +747,41 @@ body {
 }
 
 @media (max-width: 420px) and (min-width: 300px) and (max-height: 700px) {
+	.auth-page {
+		.auth-page-left {
+			.auth-page__info {
+				.auth-page__infoFoodImgWrapper {
+					top: 80% !important;
+
+					img {
+						width: 200px;
+						height: 130px;
+					}
+				}
+			}
+		}
+
+		.auth-page-right {
+			p {
+				&:last-child {
+					margin: 10px 0;
+				}
+			}
+
+			.auth-page-right__titleLine1 {
+				margin-top: 10px !important;
+			}
+
+			.auth-page__changePageContainer {
+				margin-top: 10px !important;
+			}
+
+			.input-field__form {
+				margin-bottom: 25px;
+			}
+		}
+	}
+
 	.survey-page {
 		.survey-page__container {
 			.drawer-sidebar-right {

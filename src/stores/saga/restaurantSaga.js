@@ -95,7 +95,6 @@ function* fetchSaveRestaurant() {
 }
 
 function* getRestaurantDetail({ id }) {
-	console.log(id);
 	const {
 		authReducer: { token },
 	} = yield select((state) => state);
@@ -115,7 +114,7 @@ function* getRestaurantDetail({ id }) {
 					Authorization: `Bearer ${token}`,
 				},
 			});
-			yield put(restaurantAction.getRestaurantSearchDetailSucceeded(response?.data[0]));
+			yield put(restaurantAction.getRestaurantSearchDetailSucceeded(response?.data));
 			const {
 				restaurantReducer: { restaurantSearchDetail },
 			} = yield select((state) => state);
@@ -142,7 +141,7 @@ function* getRestaurantDetail({ id }) {
 					Authorization: `Bearer ${token}`,
 				},
 			});
-			yield put(restaurantAction.getRestaurantSearchDetailSucceeded(response?.data[0]));
+			yield put(restaurantAction.getRestaurantSearchDetailSucceeded(response?.data));
 			yield put(restaurantAction.removeRestaurantReviewList());
 			const {
 				restaurantReducer: { restaurantSearchDetail },

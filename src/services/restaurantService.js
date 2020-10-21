@@ -17,7 +17,7 @@ class restaurantService {
 		});
 
 	fetchDetailRestaurant = ({ id, headers }) =>
-		HTTPMethod.get(`/api/v1/restaurant/get?id=${id}`, {
+		HTTPMethod.get(`/api/v1/restaurant/get?resId=${id}`, {
 			headers,
 		});
 
