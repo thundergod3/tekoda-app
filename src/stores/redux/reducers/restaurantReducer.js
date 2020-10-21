@@ -51,28 +51,6 @@ const restaurantReducer = (state = initialState, action) =>
 				draft.restaurantSearchDetail = {
 					...action.restaurantSearchDetail,
 					image: restaurant,
-					descriptionList: [
-						{
-							title: "Món ăn",
-							icon: home,
-							desc: "Kiểu Nhật, Kiểu Mỹ, Tốt cho sức khỏe, Kiểu Hawai, Hải sản, Kiểu Á",
-						},
-						{
-							title: "Món ăn",
-							icon: home,
-							desc: "Kiểu Nhật, Kiểu Mỹ, Tốt cho sức khỏe, Kiểu Hawai, Hải sản, Kiểu Á",
-						},
-						{
-							title: "Món ăn",
-							icon: home,
-							desc: "Kiểu Nhật, Kiểu Mỹ, Tốt cho sức khỏe, Kiểu Hawai, Hải sản, Kiểu Á",
-						},
-						{
-							title: "Món ăn",
-							icon: home,
-							desc: "Kiểu Nhật, Kiểu Mỹ, Tốt cho sức khỏe, Kiểu Hawai, Hải sản, Kiểu Á",
-						},
-					],
 					listRating: [
 						{
 							title: "Đồ ăn",
@@ -111,33 +89,9 @@ const restaurantReducer = (state = initialState, action) =>
 			}
 
 			case types.SEARCH_RESTAURANT_SUCCEEDED: {
-				console.log(action.restaurantSearchDetail);
-
 				draft.restaurantSearchDetail = {
 					...action.restaurantSearchList[0],
 					image: restaurant,
-					descriptionList: [
-						{
-							title: "Món ăn",
-							icon: home,
-							desc: "Kiểu Nhật, Kiểu Mỹ, Tốt cho sức khỏe, Kiểu Hawai, Hải sản, Kiểu Á",
-						},
-						{
-							title: "Món ăn",
-							icon: home,
-							desc: "Kiểu Nhật, Kiểu Mỹ, Tốt cho sức khỏe, Kiểu Hawai, Hải sản, Kiểu Á",
-						},
-						{
-							title: "Món ăn",
-							icon: home,
-							desc: "Kiểu Nhật, Kiểu Mỹ, Tốt cho sức khỏe, Kiểu Hawai, Hải sản, Kiểu Á",
-						},
-						{
-							title: "Món ăn",
-							icon: home,
-							desc: "Kiểu Nhật, Kiểu Mỹ, Tốt cho sức khỏe, Kiểu Hawai, Hải sản, Kiểu Á",
-						},
-					],
 					listRating: [
 						{
 							title: "Đồ ăn",

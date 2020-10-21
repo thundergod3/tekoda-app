@@ -20,6 +20,8 @@ const RestaurantFilterList = ({ match: { params }, history, scrollTopRestaurantD
 	const { fetchListRestaurantPerPageRequest, getSearchRestaurantPerPageRequest } = restaurantAction;
 	const { loadingUI } = utilAction;
 
+	let listRestaurantChangeByScreen = [];
+
 	const renderLayoutRestaurant = (list) =>
 		list.map((restaurant) => (
 			<RestaurantFilterItem
@@ -29,6 +31,14 @@ const RestaurantFilterList = ({ match: { params }, history, scrollTopRestaurantD
 				scrollTopRestaurantDetail={scrollTopRestaurantDetail}
 			/>
 		));
+
+	console.log(window.innerWidth > 300 && window.innerWidth < 420);
+
+	if (window.innerWidth > 300 && window.innerWidth < 420) {
+		listRestaurantChangeByScreen = restaurantList;
+	} else {
+		listRestaurantChangeByScreen = restaurantListEachPage;
+	}
 
 	useEffect(() => {
 		if (Object.keys(params).length !== 0) {
@@ -44,7 +54,7 @@ const RestaurantFilterList = ({ match: { params }, history, scrollTopRestaurantD
 				{(!params.params ||
 					isNaN(parseInt(params.params) && params.params) ||
 					!isNaN(parseInt(params.params))) &&
-					renderLayoutRestaurant(restaurantListEachPage)}
+					renderLayoutRestaurant(listRestaurantChangeByScreen)}
 				<div className="restaurant-filter__pagination">
 					<Pagination
 						page={pageNumber}

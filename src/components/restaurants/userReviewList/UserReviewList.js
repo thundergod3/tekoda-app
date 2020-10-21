@@ -45,7 +45,11 @@ const UserReviewList = () => {
 
 	return (
 		<>
-			<div className="user-review-list" ref={intersectTarget} id="review">
+			<div
+				className="user-review-list"
+				ref={intersectTarget}
+				id="review"
+				style={restaurantReviewList.length === 0 ? { display: "none", position: "absolute" } : {}}>
 				{restaurantReviewList.length !== 0 &&
 					restaurantReviewList.map((userReview) => (
 						<>{userReview.Description && <UserReviewItem userReview={userReview} />}</>

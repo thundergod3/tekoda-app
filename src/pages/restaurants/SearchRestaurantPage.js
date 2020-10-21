@@ -72,7 +72,7 @@ const SearchRestaurantPage = ({ match }) => {
 		<>
 			{authenticated !== undefined && (
 				<>
-					{loading === true ? (
+					{loading ? (
 						<Loading />
 					) : (
 						<div className="search-page">

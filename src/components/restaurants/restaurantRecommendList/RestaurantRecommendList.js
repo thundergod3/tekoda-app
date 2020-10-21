@@ -29,8 +29,8 @@ const RestaurantRecommendList = ({ restaurantRecommendList, title, bio, style })
 					offset={7}
 					itemWidth={200}>
 					{restaurantRecommendList.slice(0, 10).map((restaurant, index) => (
-						<Link to={`/today-eat/${restaurant._id}/page=1`} key={index}>
-							<RestaurantRecommendItem restaurant={restaurant} id={restaurant._id} />
+						<Link to={`/today-eat/${restaurant.ResId}/page=1`} key={index}>
+							<RestaurantRecommendItem restaurant={restaurant} id={restaurant.ResId} />
 						</Link>
 					))}
 				</Carousel>

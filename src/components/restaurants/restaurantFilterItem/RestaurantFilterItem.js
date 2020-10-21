@@ -26,7 +26,7 @@ const RestaurantFilterItem = ({ restaurant, scrollTopRestaurantDetail }) => {
 	let checkLike = false;
 
 	for (let i = 0; i < saveRestaurantList.length; i++) {
-		if (saveRestaurantList[i]._id && restaurant._id === saveRestaurantList[i]._id) checkLike = true;
+		if (saveRestaurantList[i].ResId && (restaurant.ResId === saveRestaurantList[i].ResId)) checkLike = true;
 	}
 
 	return (
@@ -34,7 +34,7 @@ const RestaurantFilterItem = ({ restaurant, scrollTopRestaurantDetail }) => {
 			className="restaurant-filter-item"
 			onClick={() => {
 				dispatch(showActive());
-				dispatch(getRestaurantSearchDetailRequest(restaurant?._id));
+				dispatch(getRestaurantSearchDetailRequest(restaurant?.ResId));
 				setTimeout(() => {
 					scrollTopRestaurantDetail();
 				}, 200);

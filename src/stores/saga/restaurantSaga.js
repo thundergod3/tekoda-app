@@ -47,8 +47,8 @@ function* fetchListRestaurantPerPage({ page }) {
 		const {
 			restaurantReducer: { restaurantSearchDetail },
 		} = yield select((state) => state);
-		if (Object.keys(restaurantSearchDetail).length === 0) {
-			yield call(getRestaurantDetail, { id: response.data[0]._id });
+		if (Object.keys(restaurantSearchDetail).length === 0 && isNaN(history.location.pathname.substring(11, 13))) {
+			yield call(getRestaurantDetail, { id: response.data[0].ResId });
 		}
 		yield put(utilAction.loadedUI());
 	} catch (error) {
@@ -120,7 +120,7 @@ function* getRestaurantDetail({ id }) {
 				restaurantReducer: { restaurantSearchDetail },
 			} = yield select((state) => state);
 			yield call(getRestaurantReview, {
-				restaurantId: restaurantSearchDetail._id,
+				restaurantId: restaurantSearchDetail.ResId,
 				count: 1,
 				headers: {
 					Authorization: `Bearer ${token}`,
@@ -148,7 +148,7 @@ function* getRestaurantDetail({ id }) {
 				restaurantReducer: { restaurantSearchDetail },
 			} = yield select((state) => state);
 			yield call(getRestaurantReview, {
-				restaurantId: restaurantSearchDetail._id,
+				restaurantId: restaurantSearchDetail.ResId,
 				count: 1,
 				headers: {
 					Authorization: `Bearer ${token}`,
@@ -210,7 +210,7 @@ function* searchRestaurant({ listKeyWord, page }) {
 			restaurantReducer: { restaurantSearchDetail },
 		} = yield select((state) => state);
 		yield call(getRestaurantReview, {
-			restaurantId: restaurantSearchDetail._id,
+			restaurantId: restaurantSearchDetail.ResId,
 			count: 1,
 			headers: {
 				Authorization: `Bearer ${token}`,
@@ -237,8 +237,10 @@ function* getSearchRestaurantPerPage({ listKeyWord, page }) {
 			},
 		});
 		yield put(restaurantAction.getSearchRestaurantPerPageSucceeded(response.data));
+		yield put(utilAction.loadedUI());
 	} catch (error) {
 		console.log(error);
+		yield put(utilAction.loadedUI());
 	}
 }
 
@@ -258,6 +260,7 @@ function* getRestaurantReview({ restaurantId, count }) {
 				Authorization: `Bearer ${token}`,
 			},
 		});
+		console.log("review", response);
 		if (response.data.length !== 0) {
 			if (restaurantReviewList.length === 0) {
 				yield put(restaurantAction.getRestaurantReviewListSucceeded(response.data));
@@ -295,17 +298,15 @@ function* saveRestaurant({ restaurant }) {
 
 	try {
 		const response = yield call(restaurantService.likeRestaurant, {
-			restaurantId: restaurant?._id,
+			restaurantId: restaurant?.ResId,
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},
 		});
-		console.log(restaurant);
-		console.log(response);
 		if (response.data && response.data.enjoy === 1) {
 			yield put(restaurantAction.saveRestaurantSucceeded(restaurant));
 			yield call(restaurantService.saveRestaurant, {
-				restaurantId: restaurant?._id,
+				restaurantId: restaurant?.ResId,
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
@@ -314,7 +315,7 @@ function* saveRestaurant({ restaurant }) {
 		} else {
 			yield put(restaurantAction.removeSaveRestaurant(restaurant));
 			yield call(restaurantService.saveRestaurant, {
-				restaurantId: restaurant?._id,
+				restaurantId: restaurant?.ResId,
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
