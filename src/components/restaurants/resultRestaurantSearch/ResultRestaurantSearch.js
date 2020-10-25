@@ -14,18 +14,20 @@ const ResultRestaurantSearch = ({ scrollTopRestaurantDetail }) => {
 	} = useSelector((state) => state);
 
 	return (
-		<div className="search-restaurant-search">
-			<div className="search-restaurant-search__container">
-				{restaurantList.length !== 0 && (
-					<p className="search-restaurant-search__title">
-						Kết quả hơn {restaurantList.length} nhà hàng{" "}
-						{saveLocal.getFromLocal("street") && `tại ${saveLocal.getFromLocal("street")}`}
-					</p>
-				)}
-				<RestaurantSearchFilterList />
-				<RestaurantFilterList scrollTopRestaurantDetail={scrollTopRestaurantDetail} />
-			</div>
-		</div>
+		<>
+			{restaurantList.length !== 0 && (
+				<div className="search-restaurant-search">
+					<div className="search-restaurant-search__container">
+						<p className="search-restaurant-search__title">
+							Kết quả hơn {restaurantList.length} nhà hàng{" "}
+							{saveLocal.getFromLocal("street") && `tại ${saveLocal.getFromLocal("street")}`}
+						</p>
+						<RestaurantSearchFilterList />
+						<RestaurantFilterList scrollTopRestaurantDetail={scrollTopRestaurantDetail} />
+					</div>
+				</div>
+			)}
+		</>
 	);
 };
 

@@ -117,7 +117,7 @@ const LoginPage = () => {
 												titlePlaceholder="Mật khẩu"
 												fieldIcon={iconPassword}
 											/>
-											{errorActive && (
+											{errorActive && errorMsg && errorMsg !== "" && (
 												<div className="error-field__container">
 													<img src={iconErrorRed} alt="" className="error-field__fieldIcon" />
 													<p className="error-field__text">{errorMsg}</p>

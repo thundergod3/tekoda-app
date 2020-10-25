@@ -12,6 +12,9 @@ import "./SearchBar.scss";
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 import SearchIcon from "@material-ui/icons/Search";
+import RoomIcon from "@material-ui/icons/Room";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+
 import PreferenceItem from "../../utils/preferenceItem/PreferenceItem";
 import PopupSearch from "../../utils/popupSearch/PopupSearch";
 import { handleChooseItem } from "../../../helpers/handleChangeActive";
@@ -172,7 +175,7 @@ const SearchBar = ({ style, setShowSearchBar, searchBarItemRef, showSearchBar })
 
 	const layoutSearchDishes = () => (
 		<div className="layout-search__dishesContainer" ref={popupDishesEl}>
-			<div className="layout-search__dishes">
+			{/* <div className="layout-search__dishes">
 				{listSearchDishes.map((dishes, index) => (
 					<div
 						className="layout-search__item"
@@ -182,7 +185,52 @@ const SearchBar = ({ style, setShowSearchBar, searchBarItemRef, showSearchBar })
 						<p className="layout-search__title">{dishes.title}</p>
 					</div>
 				))}
-			</div>
+			</div> */}
+			{window.innerWidth > 300 && window.innerWidth < 420 && (
+				<>
+					<HighlightOffIcon
+						onClick={(e) => {
+							e.stopPropagation();
+							setShowSearchDishes(false);
+						}}
+					/>
+					<div className="search-bar__locationMobile">
+						<p className="search-bar__containerTitle">địa điểm</p>
+						<PlacesAutocomplete value={searchAdd} onChange={handleChange} onSelect={handleSelect}>
+							{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+								<div>
+									<div className="search-address__container">
+										<RoomIcon />
+										<input
+											id="address"
+											{...getInputProps({
+												placeholder: "Nhập địa điểm của bạn",
+												className: "location-search-input",
+											})}
+										/>
+									</div>
+									<div className="autocomplete-dropdown-container">
+										{suggestions.map((suggestion) => {
+											const style = suggestion.active
+												? { backgroundColor: "#fafafa", cursor: "pointer" }
+												: { backgroundColor: "#ffffff", cursor: "pointer" };
+											return (
+												<div
+													className="survey-page_suggestion"
+													{...getSuggestionItemProps(suggestion, {
+														style,
+													})}>
+													<span>{suggestion.description}</span>
+												</div>
+											);
+										})}
+									</div>
+								</div>
+							)}
+						</PlacesAutocomplete>
+					</div>
+				</>
+			)}
 			<div className="layout-search__perference">
 				{listSearchPreference.map((preference, index) => (
 					<div className="layout-search__perferenceWrapper" key={index}>

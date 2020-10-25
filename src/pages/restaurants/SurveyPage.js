@@ -126,7 +126,7 @@ const surveyAgeList = [
 const surveyGenderList = [
 	{
 		id: 1,
-		gender: "Name",
+		gender: "Nam",
 	},
 	{
 		id: 2,
@@ -142,6 +142,7 @@ const SurveyPage = () => {
 	const {
 		authReducer: { authenticated },
 		restaurantReducer: { statusSurvey },
+		errorReducer: { errorStatus },
 	} = useSelector((state) => state);
 	const dispatch = useDispatch();
 	const { sendSurveyFormRequest } = restaurantAction;
@@ -191,10 +192,6 @@ const SurveyPage = () => {
 		setCurrentDrawer(currentDrawer - 1);
 	};
 
-	if (authenticated === false) return <Redirect to="/login" />;
-
-	if (authenticated === true && statusSurvey === true) return <Redirect to="/" />;
-
 	const handleChange = (address) => {
 		setSearchAdd(address);
 	};
@@ -218,6 +215,21 @@ const SurveyPage = () => {
 			.catch((error) => console.error("Error", error));
 	};
 
+	const checkValidateNextBtn = () =>
+		(currentDrawer === 2 && searchAdd === "") || username === "" || chooseAge === "" || chooseGender === "";
+
+	const checkValidateFinishBtn = () =>
+		username === "" ||
+		searchAdd === "" ||
+		chooseAge === "" ||
+		chooseGender === "" ||
+		chooseRestaurant.length === 0 ||
+		chooseRestaurant.length < 4;
+
+	if (authenticated === false || errorStatus === 401) return <Redirect to="/login" />;
+
+	if (authenticated === true && statusSurvey === true) return <Redirect to="/" />;
+
 	return (
 		<>
 			{authenticated !== undefined && (
@@ -225,9 +237,8 @@ const SurveyPage = () => {
 					<div className="survey-page__navbar">
 						<div className="survey-page__navbarLeft"></div>
 						<div className="survey-page__navbarRight">
-							<p className="survey-page__navbarSlogan">
-								Bước vào thế giới ẩm thực được cá nhân hóa cho riêng bạn!
-							</p>
+							<p className="survey-page__navbarSlogan line1">Bước vào thế giới ẩm thực</p>
+							<p className="survey-page__navbarSlogan line2">được cá nhân hóa cho riêng bạn!</p>
 							<p className="survey-page__navbarBio">
 								Lựa chọn những quán ăn theo sở thích của bạn để chúng tôi gợi ý cho bạn những nhà hàng
 								phù hợp nhất!
@@ -347,7 +358,7 @@ const SurveyPage = () => {
 								</div>
 							)}
 							{currentDrawer === 2 && (
-								<div className="drawer-sidebar-right__form" style={{ justifyContent: "center" }}>
+								<div className="drawer-sidebar-right__form" style={{ justifyContent: "flex-start" }}>
 									<label htmlFor="address">
 										Hãy cho chúng mình biết địa điểm của bạn để hiển thị kết quả chính xác hơn với
 										bạn
@@ -442,25 +453,9 @@ const SurveyPage = () => {
 								{currentDrawer === 3 ? (
 									<button
 										className={`drawer-sidebar__buttonNext ${
-											username === "" ||
-											searchAdd === "" ||
-											chooseAge === "" ||
-											chooseGender === "" ||
-											chooseRestaurant.length === 0 ||
-											chooseRestaurant.length < 4
-												? "button--disable"
-												: ""
+											checkValidateFinishBtn() ? "button--disable" : ""
 										}`}
-										disabled={
-											username === "" ||
-											searchAdd === "" ||
-											chooseAge === "" ||
-											chooseGender === "" ||
-											chooseRestaurant.length === 0 ||
-											chooseRestaurant.length < 4
-												? true
-												: false
-										}
+										disabled={checkValidateFinishBtn() ? true : false}
 										onClick={() =>
 											dispatch(
 												sendSurveyFormRequest({
@@ -476,10 +471,10 @@ const SurveyPage = () => {
 								) : (
 									<button
 										className={`drawer-sidebar__buttonNext ${
-											currentDrawer === 2 && searchAdd === "" ? "button--disable" : ""
+											checkValidateNextBtn() ? "button--disable" : ""
 										}`}
 										onClick={nextDrawer}
-										disabled={currentDrawer === 2 && searchAdd === "" ? true : false}>
+										disabled={checkValidateNextBtn() ? true : false}>
 										Tiếp theo
 									</button>
 								)}

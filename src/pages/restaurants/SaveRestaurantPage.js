@@ -18,6 +18,7 @@ const SaveRestaurantPage = () => {
 		restaurantReducer: { saveRestaurantList, statusSurvey },
 		utilReducer: { loading },
 		authReducer: { authenticated },
+		errorReducer: { errorStatus },
 	} = useSelector((state) => state);
 	const { fetchSaveRestaurantRequest } = restaurantAction;
 	const { loadingUI } = utilAction;
@@ -28,7 +29,7 @@ const SaveRestaurantPage = () => {
 		dispatch(fetchSaveRestaurantRequest());
 	}, []);
 
-	if (authenticated === false) return <Redirect to="/login" />;
+	if (authenticated === false || errorStatus === 401) return <Redirect to="/login" />;
 
 	if (!statusSurvey && authenticated === true) {
 		return <Redirect to="/survey" />;

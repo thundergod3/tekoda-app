@@ -1,10 +1,10 @@
 import * as types from "../../../constants/types";
 
 class errorAction {
-	getError(errorMsg) {
+	getError(error) {
 		return {
 			type: types.GET_ERROR,
-			errorMsg,
+			error,
 		};
 	}
 	clearError() {

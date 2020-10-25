@@ -158,8 +158,9 @@ const restaurantReducer = (state = initialState, action) =>
 
 			case types.REMOVE_SAVE_RESTAURANT: {
 				const index = draft.saveRestaurantList.findIndex(
-					(restaurant) => restaurant._id === action.restaurant._id
+					(restaurant) => restaurant.ResId === action.restaurant.ResId
 				);
+				console.log(index);
 				draft.saveRestaurantList.splice(index, 1);
 				break;
 			}

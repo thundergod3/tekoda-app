@@ -1,5 +1,6 @@
 .save-restaurant-item {
-	width: 504px;
+	width: 100%;
+	max-width: 600px;
 	height: 134px;
 	display: flex;
 	align-items: center;
@@ -22,6 +23,8 @@
 			display: flex;
 
 			.save-restaurant-item__rightBioContainer {
+				flex: 0.9;
+
 				p {
 					&.save-restaurant-item__rightTitle {
 						font-weight: bold;
@@ -34,6 +37,10 @@
 						color: #717171;
 					}
 				}
+			}
+
+			.MuiSvgIcon-root {
+				flex: 0.1;
 			}
 		}
 

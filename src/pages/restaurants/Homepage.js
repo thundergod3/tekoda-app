@@ -41,7 +41,7 @@ const Homepage = () => {
 
 	return (
 		<>
-			{authenticated !== undefined && statusSurvey ? (
+			{authenticated !== undefined && statusSurvey !== undefined ? (
 				<>
 					{loading === true ? (
 						<Loading />

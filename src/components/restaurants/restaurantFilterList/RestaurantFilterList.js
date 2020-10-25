@@ -32,8 +32,6 @@ const RestaurantFilterList = ({ match: { params }, history, scrollTopRestaurantD
 			/>
 		));
 
-	console.log(window.innerWidth > 300 && window.innerWidth < 420);
-
 	if (window.innerWidth > 300 && window.innerWidth < 420) {
 		listRestaurantChangeByScreen = restaurantList;
 	} else {

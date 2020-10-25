@@ -29,15 +29,15 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 	const { loadingUI } = utilAction;
 
 	useEffect(() => {
-		for (let i = 0; i < saveRestaurantList.length; i++) {
-			if (restaurantSearchDetail.ResId === saveRestaurantList[i].ResId) {
-				setSave(true);
-				setCheckSave(true);
-			} else setCheckSave(false);
-		}
-	}, [saveRestaurantList]);
+		const findIndex = saveRestaurantList.findIndex((item) => item.ResId === restaurantSearchDetail.ResId);
 
-	console.log(save);
+		if (findIndex !== -1) {
+			setSave(true);
+			setCheckSave(true);
+		} else {
+			setCheckSave(false);
+		}
+	}, [saveRestaurantList, restaurantSearchDetail]);
 
 	return (
 		<>
@@ -98,7 +98,7 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 									setSave(!save);
 									dispatch(saveRestaurantRequest(restaurantSearchDetail));
 								}}>
-								{!checkSave ? (
+								{checkSave ? (
 									<>
 										{!save ? (
 											<>

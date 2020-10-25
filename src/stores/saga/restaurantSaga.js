@@ -23,8 +23,10 @@ function* fetchListRestaurant() {
 		});
 		yield put(restaurantAction.fetchListRestaurantSucceeded(response.data));
 		yield put(utilAction.loadedUI());
+		yield put(errorAction.clearError());
 	} catch (error) {
 		console.log(error);
+		yield put(errorAction.getError(error.response));
 		yield put(utilAction.loadedUI());
 	}
 }
@@ -51,8 +53,10 @@ function* fetchListRestaurantPerPage({ page }) {
 			yield call(getRestaurantDetail, { id: response.data[0].ResId });
 		}
 		yield put(utilAction.loadedUI());
+		yield put(errorAction.clearError());
 	} catch (error) {
 		console.log(error);
+		yield put(errorAction.getError(error.response));
 		yield put(utilAction.loadedUI());
 	}
 }
@@ -70,8 +74,10 @@ function* fetchTrendingRestaurant() {
 		});
 		console.log(response);
 		yield put(restaurantAction.fetchRecommendRestaurantSucceeded(response.data));
+		yield put(errorAction.clearError());
 	} catch (error) {
 		console.log(error);
+		yield put(errorAction.getError(error.response));
 	}
 }
 
@@ -88,8 +94,10 @@ function* fetchSaveRestaurant() {
 		});
 		yield put(restaurantAction.fetchSaveRestaurantSucceeded(response.data));
 		yield put(utilAction.loadedUI());
+		yield put(errorAction.clearError());
 	} catch (error) {
 		console.log(error);
+		yield put(errorAction.getError(error.response));
 		yield put(utilAction.loadedUI());
 	}
 }
@@ -127,8 +135,10 @@ function* getRestaurantDetail({ id }) {
 			});
 			yield delay(100);
 			yield put(utilAction.endActive());
+			yield put(errorAction.clearError());
 		} catch (error) {
 			console.log(error);
+			yield put(errorAction.getError(error.response));
 			yield put(utilAction.endActive());
 		}
 	} else {
@@ -154,8 +164,10 @@ function* getRestaurantDetail({ id }) {
 				},
 			});
 			yield put(utilAction.loadedUI());
+			yield put(errorAction.clearError());
 		} catch (error) {
 			console.log(error);
+			yield put(errorAction.getError(error.response));
 		}
 	}
 }
@@ -166,8 +178,10 @@ function* sendSurveyForm({ surveyForm }) {
 		yield saveLocal.saveToLocal("surveyForm", surveyForm);
 		yield history.push("/");
 		yield put(restaurantAction.sendSurveyFormSucceeded());
+		yield put(errorAction.clearError());
 	} catch (error) {
 		console.log(error);
+		yield put(errorAction.getError(error.response));
 	}
 }
 
@@ -184,8 +198,10 @@ function* getAllSearchRestaurant({ listKeyword }) {
 			},
 		});
 		yield put(restaurantAction.getAllSearchRestaurantSucceeded(response.data));
+		yield put(errorAction.clearError());
 	} catch (error) {
 		console.log(error);
+		yield put(errorAction.getError(error.response));
 	}
 }
 
@@ -196,6 +212,7 @@ function* searchRestaurant({ listKeyWord, page }) {
 
 	yield put(restaurantAction.removeRestaurantReviewList());
 	if (!page) page = 1;
+
 	try {
 		const response = yield call(restaurantService.searchRestaurant, {
 			listKeyWord,
@@ -216,8 +233,10 @@ function* searchRestaurant({ listKeyWord, page }) {
 			},
 		});
 		yield put(utilAction.loadedUI());
+		yield put(errorAction.clearError());
 	} catch (error) {
 		console.log(error);
+		yield put(errorAction.getError(error.response));
 		yield put(utilAction.loadedUI());
 	}
 }
@@ -237,8 +256,10 @@ function* getSearchRestaurantPerPage({ listKeyWord, page }) {
 		});
 		yield put(restaurantAction.getSearchRestaurantPerPageSucceeded(response.data));
 		yield put(utilAction.loadedUI());
+		yield put(errorAction.clearError());
 	} catch (error) {
 		console.log(error);
+		yield put(errorAction.getError(error.response));
 		yield put(utilAction.loadedUI());
 	}
 }
@@ -264,12 +285,13 @@ function* getRestaurantReview({ restaurantId, count }) {
 			if (restaurantReviewList.length === 0) {
 				yield put(restaurantAction.getRestaurantReviewListSucceeded(response.data));
 			} else {
-				console.log(restaurantReviewList);
 				yield put(restaurantAction.getRestaurantReviewListSucceeded([...restaurantReviewList, response.data]));
 			}
 		}
+		yield put(errorAction.clearError());
 	} catch (error) {
 		console.log(error);
+		yield put(errorAction.getError(error.response));
 	}
 }
 
@@ -285,8 +307,10 @@ function* trackingUserIntersection({ restaurantId }) {
 				Authorization: `Bearer ${token}`,
 			},
 		});
+		yield put(errorAction.clearError());
 	} catch (error) {
 		console.log(error);
+		yield put(errorAction.getError(error.response));
 	}
 }
 
@@ -302,7 +326,8 @@ function* saveRestaurant({ restaurant }) {
 				Authorization: `Bearer ${token}`,
 			},
 		});
-		if (response.data && response.data.enjoy === 1) {
+		console.log(response.data);
+		if (response.data.enjoy === 1) {
 			yield put(restaurantAction.saveRestaurantSucceeded(restaurant));
 			yield call(restaurantService.saveRestaurant, {
 				restaurantId: restaurant?.ResId,
@@ -310,18 +335,13 @@ function* saveRestaurant({ restaurant }) {
 					Authorization: `Bearer ${token}`,
 				},
 			});
-			yield;
+			yield put(errorAction.clearError());
 		} else {
 			yield put(restaurantAction.removeSaveRestaurant(restaurant));
-			yield call(restaurantService.saveRestaurant, {
-				restaurantId: restaurant?.ResId,
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			});
 		}
 	} catch (error) {
 		console.log(error);
+		yield put(errorAction.getError(error.response));
 	}
 }
 

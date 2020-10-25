@@ -52,29 +52,38 @@ const filterList = [
 
 const FilterList = () => {
 	const {
-		authReducer: { userData },
+		authReducer: { userData, authenticated },
 	} = useSelector((state) => state);
 	const dispatch = useDispatch();
 	const { loadingUI } = utilAction;
 
 	return (
-		<div className="filter-list">
-			<div className="filter-list__welcome">
-				<img src={SunImg} className="filter-list__welcomeImg" />
-				<div className="filter-list__welcomeBio">
-					<p className="filter-list__welcomeText">
-						Chào buổi sáng {userData.name ? `,${userData.name}!` : ""}{" "}
-						<strong>Khám phá ẩm thực cùng Tekoda!</strong>
-					</p>
-					<div className="filter-list__welcomeBioExpand">
-						<p className="filter-list__welcomeBioExpandText">Xem thêm gợi ý</p>
-						<ExpandMoreIcon />
+		<div
+			className="filter-list"
+			style={{
+				marginTop: authenticated !== true && window.innerWidth > 300 && window.innerWidth < 420 ? 60 : 40,
+			}}>
+			{authenticated === true && (
+				<div className="filter-list__welcome">
+					<img src={SunImg} className="filter-list__welcomeImg" />
+					<div className="filter-list__welcomeBio">
+						<p className="filter-list__welcomeText">
+							Chào buổi sáng{userData.name ? `, ${userData.name}!` : ""}{" "}
+							<strong>Khám phá ẩm thực cùng Tekoda!</strong>
+						</p>
+						<div className="filter-list__welcomeBioExpand">
+							<p className="filter-list__welcomeBioExpandText">Xem thêm gợi ý</p>
+							<ExpandMoreIcon />
+						</div>
 					</div>
 				</div>
-			</div>
-			<div className="filter-list__optionContainer">
+			)}
+			<div className="filter-list__optionContainer" style={{ flex: authenticated !== true ? 1 : 0.7 }}>
 				{filterList.map((option, index) => (
-					<Link to={`/today-eat/${option.title.split("/").join(" ")}/page=1`} key={index} onClick={() => dispatch(loadingUI())}>
+					<Link
+						to={`/today-eat/${option.title.split("/").join(" ")}/page=1`}
+						key={index}
+						onClick={() => dispatch(loadingUI())}>
 						<FilterOption option={option} />
 					</Link>
 				))}

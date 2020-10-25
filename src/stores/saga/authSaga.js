@@ -42,7 +42,7 @@ function* loginUser({ userForm }) {
 		yield put(errorAction.clearError());
 	} catch (error) {
 		console.log(error);
-		yield put(errorAction.getError(error.response?.data?.error));
+		yield put(errorAction.getError(error.response));
 		yield put(utilAction.loadedUI());
 	}
 }
@@ -58,7 +58,7 @@ function* registerUser({ userForm }) {
 		yield put(errorAction.clearError());
 	} catch (error) {
 		console.log(error);
-		yield put(errorAction.getError(error.response?.data?.error));
+		yield put(errorAction.getError(error.response));
 		yield put(utilAction.loadedUI());
 	}
 }

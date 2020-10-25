@@ -3,7 +3,7 @@ import { Route, Switch, withRouter } from "react-router-dom";
 
 import "./App.scss";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import authAction from "./stores/redux/actions/authAction";
 
 import Navbar from "./components/layouts/navbar/Navbar";
@@ -19,12 +19,16 @@ const App = ({
 		location: { pathname },
 	},
 }) => {
+	const {
+		authReducer: { authenticated },
+		errorReducer: { errorStatus },
+	} = useSelector((state) => state);
 	const dispatch = useDispatch();
 	const { checkAuthenticatedRequest } = authAction;
 
 	useEffect(() => {
 		dispatch(checkAuthenticatedRequest());
-	}, []);
+	}, [errorStatus]);
 
 	return (
 		<>

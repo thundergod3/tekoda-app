@@ -68,7 +68,9 @@ const Navbar = ({
 
 	useEffect(() => {
 		if (showSearchBar === true) {
-			searchBarItemRef.current.focus();
+			if (searchBarItemRef.current) {
+				searchBarItemRef.current.focus();
+			}
 		}
 	}, [showSearchBar]);
 
@@ -84,7 +86,9 @@ const Navbar = ({
 									<p>TekodaApp</p>
 								</div>
 							</Link>
-							{pathname.slice(1, 10) === "today-eat" || pathname.slice(1, 16) === "save-restaurant" ? (
+							{(window.innerWidth > 300 && window.innerWidth < 420) ||
+							pathname.slice(1, 10) === "today-eat" ||
+							pathname.slice(1, 16) === "save-restaurant" ? (
 								<div className="search-bar__compactWrapper">
 									<div className="search-bar__compact" onClick={(e) => setShowSearchBar(true)}>
 										<SearchIcon />

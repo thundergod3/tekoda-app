@@ -41,10 +41,14 @@
 			margin-top: 20px;
 
 			.survey-page__navbarSlogan {
-				width: 660px;
 				font-family: SVN-Circular-Black;
 				font-size: 40px;
 				color: #ffffff;
+
+				&.line1,
+				&.line2 {
+					width: 660px;
+				}
 			}
 
 			.survey-page__navbarBio {
@@ -306,7 +310,7 @@
 							font-size: 16px;
 							text-align: center;
 							color: #717171;
-							margin-top: 20px;
+							margin-top: 10px;
 							text-transform: capitalize;
 						}
 					}
@@ -386,6 +390,13 @@
 		color: #000000;
 		margin-top: 35px;
 		margin-bottom: 10px;
+	}
+
+	.save-restaurant-list {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 100px;
 	}
 }
 
