@@ -20,6 +20,7 @@ const errorReducer = (state = initialState, action) =>
 			case types.CLEAR_ERROR: {
 				draft.errorMsg = "";
 				draft.errorActive = false;
+				draft.errorStatus = 0;
 				break;
 			}
 

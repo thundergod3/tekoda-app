@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 
 import logo from "../../assets/icons/logo.png";
-import logoWhite from "../../assets/icons/Vector.png";
 import facebookLogo from "../../assets/icons/facebook.png";
 import iconMap from "../../assets/icons/map_icon.png";
 import foodImage from "../../assets/utils/food_bg.png";
@@ -60,7 +59,6 @@ const RegisterPage = () => {
 				dispatch(registerUserRequest(values));
 			}}>
 			{(props) => {
-				console.log(privacyStatus);
 				return (
 					<>
 						{loading ? (
@@ -77,12 +75,11 @@ const RegisterPage = () => {
 										}}>
 										<div className="auth-page" role="presentation">
 											<div className="auth-page-left">
-												{/* <Link to="/">
-											<div className="auth-page__leftContainer">
-												<img src={logoWhite} alt="TekodaApp" className="auth-page__logo" />
-												<p className="auth-page__appName">TekodaApp</p>
-											</div>
-										</Link> */}
+												<Link to="/">
+													<div className="auth-page__logoContainer">
+														<img src={logo} alt="" className="auth-page__logo" />
+													</div>
+												</Link>
 												<div className="auth-page__info">
 													<div className="auth-page__infoIconMapWrapper">
 														<img src={iconMap} alt="" className="auth-page__infoIconMap" />
@@ -134,16 +131,19 @@ const RegisterPage = () => {
 													setShowPassword={setShowPassword}
 													style={{ display: "flex", alignItems: "center", color: "grey" }}
 												/>
-												{errorActive && (
-													<div className="error-field__container">
-														<img
-															src={iconErrorRed}
-															alt=""
-															className="error-field__fieldIcon"
-														/>
-														<p className="error-field__text">{errorMsg}</p>
-													</div>
-												)}
+												{errorActive &&
+													errorMsg &&
+													errorMsg !== "" &&
+													errorMsg !== "Unauthorized" && (
+														<div className="error-field__container">
+															<img
+																src={iconErrorRed}
+																alt=""
+																className="error-field__fieldIcon"
+															/>
+															<p className="error-field__text">{errorMsg}</p>
+														</div>
+													)}
 												<label className="auth-page__privacyContainer" htmlFor="privacy">
 													<input
 														id="privacy"

@@ -254,6 +254,7 @@ body {
 
 				.navbar__button {
 					display: flex;
+					justify-content: center;
 					padding: 3px;
 					padding-left: 5px;
 					width: 50px;
@@ -859,6 +860,54 @@ body {
 	}
 
 	.save-restaurant-page {
+		margin-top: 60px;
+		padding: 10px 5%;
+
+		.save-restaurant-page__backPage {
+			.MuiSvgIcon-root,
+			.save-restaurant-page__backPageTitle {
+				font-size: 12px;
+			}
+		}
+
+		.save-restaurant-list {
+			display: block;
+
+			.save-restaurant-item {
+				width: 340px;
+				height: 80px;
+
+				.save-restaurant-item__image {
+					width: 102px;
+					height: 68px;
+					font-size: 12px;
+				}
+
+				.save-restaurant-item__rightContainer {
+					.save-restaurant-item__rightBio {
+						.save-restaurant-item__rightBioContainer {
+							p {
+								font-size: 12px;
+							}
+						}
+
+						.MuiSvgIcon-root {
+							font-size: 12px;
+						}
+					}
+
+					.save-restaurant-item__Info {
+						.save-restaurant-item__rating,
+						.save-restaurant-item__price {
+							span,
+							p {
+								font-size: 12px;
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -944,6 +993,14 @@ body {
 						}
 					}
 				}
+			}
+		}
+	}
+
+	.save-restaurant-page {
+		.save-restaurant-list {
+			.save-restaurant-item {
+				width: 380px;
 			}
 		}
 	}

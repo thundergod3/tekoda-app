@@ -1,18 +1,21 @@
+@import "../../../App.scss";
+
 .save-restaurant-item {
-	width: 100%;
-	max-width: 600px;
+	width: 550px;
 	height: 134px;
 	display: flex;
 	align-items: center;
 	margin-bottom: 30px;
 
 	.save-restaurant-item__image {
+		flex: 0.3;
 		width: 182.5px;
 		height: 134px;
 		object-fit: cover;
 	}
 
 	.save-restaurant-item__rightContainer {
+		flex: 0.7;
 		height: 100%;
 		margin-left: 25px;
 		display: flex;
@@ -41,31 +44,46 @@
 
 			.MuiSvgIcon-root {
 				flex: 0.1;
+				color: $main-color;
 			}
 		}
 
-		.save-restaurant-item__rating {
+		.save-restaurant-item__Info {
 			display: flex;
+			justify-content: space-between;
 			align-items: center;
 
-			.save-restaurant-item__ratingImage {
-				margin-right: 5px;
-				width: 14.18px;
-				height: 11.04px;
-			}
+			.save-restaurant-item__rating {
+				display: flex;
+				align-items: center;
 
-			span {
-				font-style: normal;
-
-				&.save-restaurant-item__ratingStart {
-					font-size: 13px;
-					color: #222222;
-					margin-right: 3px;
+				.save-restaurant-item__ratingImage {
+					margin-right: 5px;
+					width: 14.18px;
+					height: 11.04px;
 				}
 
-				&.save-restaurant-item__ratingComment {
-					font-size: 10px;
-					color: #484848;
+				span {
+					font-style: normal;
+
+					&.save-restaurant-item__ratingStart {
+						font-size: 13px;
+						color: #222222;
+						margin-right: 3px;
+					}
+
+					&.save-restaurant-item__ratingComment {
+						font-size: 10px;
+						color: #484848;
+					}
+				}
+
+				.save-restaurant-item__price {
+					p {
+						font-family: SVN-Circular-Normal;
+						font-size: 14px;
+						color: #373737;
+					}
 				}
 			}
 		}

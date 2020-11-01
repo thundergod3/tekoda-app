@@ -49,7 +49,12 @@ function* fetchListRestaurantPerPage({ page }) {
 		const {
 			restaurantReducer: { restaurantSearchDetail },
 		} = yield select((state) => state);
-		if (Object.keys(restaurantSearchDetail).length === 0 && isNaN(history.location.pathname.substring(11, 13))) {
+		if (
+			Object.keys(restaurantSearchDetail).length === 0 &&
+			(isNaN(history.location.pathname.substring(11, 13)) || history.location.pathname.substring(11, 13) === "")
+		) {
+			yield call(getRestaurantDetail, { id: response.data[0].ResId });
+		} else {
 			yield call(getRestaurantDetail, { id: response.data[0].ResId });
 		}
 		yield put(utilAction.loadedUI());
@@ -329,16 +334,17 @@ function* saveRestaurant({ restaurant }) {
 		console.log(response.data);
 		if (response.data.enjoy === 1) {
 			yield put(restaurantAction.saveRestaurantSucceeded(restaurant));
-			yield call(restaurantService.saveRestaurant, {
-				restaurantId: restaurant?.ResId,
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			});
-			yield put(errorAction.clearError());
 		} else {
 			yield put(restaurantAction.removeSaveRestaurant(restaurant));
 		}
+
+		yield call(restaurantService.saveRestaurant, {
+			restaurantId: restaurant?.ResId,
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		yield put(errorAction.clearError());
 	} catch (error) {
 		console.log(error);
 		yield put(errorAction.getError(error.response));

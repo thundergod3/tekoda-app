@@ -159,7 +159,7 @@ const SurveyPage = () => {
 				(position) => {
 					Geocode.fromLatLng(position.coords.latitude, position.coords.longitude).then(
 						(response) => {
-							if (response.status === "OK") {
+							if (response.status === "OK" && searchAdd === "") {
 								const address = response.results[0].formatted_address;
 								const streetName = response.results[0].address_components[2].short_name;
 								setSearchAdd(address);

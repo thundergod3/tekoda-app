@@ -36,6 +36,7 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 			setCheckSave(true);
 		} else {
 			setCheckSave(false);
+			setSave(false);
 		}
 	}, [saveRestaurantList, restaurantSearchDetail]);
 
@@ -96,6 +97,7 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 								className="restaurant-search-detail__button"
 								onClick={() => {
 									setSave(!save);
+									setCheckSave(!checkSave);
 									dispatch(saveRestaurantRequest(restaurantSearchDetail));
 								}}>
 								{checkSave ? (

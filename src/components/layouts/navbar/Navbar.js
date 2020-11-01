@@ -4,7 +4,6 @@ import { Link, withRouter } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import logo from "../../../assets/icons/logo.png";
-import logoWhite from "../../../assets/icons/Vector.png";
 import "./Navbar.scss";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
@@ -82,8 +81,7 @@ const Navbar = ({
 						<div className="navbar__right" style={authenticated ? { flex: 0.85 } : { flex: 0.8 }}>
 							<Link to="/">
 								<div className="navbar__logo">
-									<img src={logoWhite} alt="Logo" />
-									<p>TekodaApp</p>
+									<img src={logo} alt="Logo" />
 								</div>
 							</Link>
 							{(window.innerWidth > 300 && window.innerWidth < 420) ||

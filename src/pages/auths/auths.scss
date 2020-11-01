@@ -7,6 +7,21 @@
 	background: url("../../assets/utils/background.png");
 	background-size: cover;
 
+	a {
+		width: 0;
+
+		.auth-page__logoContainer {
+			position: absolute;
+			left: 2%;
+			top: 2%;
+
+			.auth-page__logo {
+				height: 80px;
+				object-fit: contain;
+			}
+		}
+	}
+
 	.auth-page-left {
 		flex: 0.6;
 		// background: $main-color;
