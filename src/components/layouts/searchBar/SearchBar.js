@@ -1,15 +1,16 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import restaurantAction from "../../../stores/redux/actions/restaurantAction";
 import utilAction from "../../../stores/redux/actions/utilAction";
 
 import RingIcon from "../../../assets/icons/ring.png";
-import LocationIcon from "../../../assets/icons/location.png";
 
 import "./SearchBar.scss";
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+import Geocode from "react-geocode";
+import history from "../../../constants/history";
 
 import SearchIcon from "@material-ui/icons/Search";
 import RoomIcon from "@material-ui/icons/Room";
@@ -18,6 +19,10 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import PreferenceItem from "../../utils/preferenceItem/PreferenceItem";
 import PopupSearch from "../../utils/popupSearch/PopupSearch";
 import { handleChooseItem } from "../../../helpers/handleChangeActive";
+import getLocation from "../../../helpers/getLocation";
+
+Geocode.setApiKey("AIzaSyAHF5sU-uXkvCZ6L1ieDNBwOhERg3moCkg");
+Geocode.enableDebug();
 
 const listSearchDishes = [
 	{
@@ -158,6 +163,9 @@ const listSearchTime = [
 ];
 
 const SearchBar = ({ style, setShowSearchBar, searchBarItemRef, showSearchBar }) => {
+	const {
+		authReducer: { authenticated },
+	} = useSelector((state) => state);
 	const popupDishesEl = useRef(null);
 	const inputPeopleRef = useRef(null);
 	const popupTimeEl = useRef(null);
@@ -173,19 +181,148 @@ const SearchBar = ({ style, setShowSearchBar, searchBarItemRef, showSearchBar })
 	const { searchRestaurantRequest, storeListKeyword } = restaurantAction;
 	const { loadingUI } = utilAction;
 
+	// const testGroupTree = [
+	// 	{
+	// 		pharse: 1,
+	// 		attributes: {
+	// 			attributes1: "11",
+	// 			attributes2: "21",
+	// 			attributes3: "31",
+	// 		},
+	// 		children: [
+	// 			{
+	// 				pharse: 2,
+	// 				attributes: {
+	// 					attributes1: "12",
+	// 					attributes2: "22",
+	// 					attributes3: "32",
+	// 				},
+	// 				children: [
+	// 					{
+	// 						pharse: 3,
+	// 						attributes: {
+	// 							attributes1: "13",
+	// 							attributes2: "23",
+	// 							attributes3: "33",
+	// 						},
+	// 						children: [
+	// 							{
+	// 								pharse: 4,
+	// 								attributes: {
+	// 									attributes1: "14",
+	// 									attributes2: "24",
+	// 									attributes3: "34",
+	// 								},
+	// 								children: [],
+	// 							},
+	// 							{
+	// 								pharse: 4,
+	// 								attributes: {
+	// 									attributes1: "14",
+	// 									attributes2: "24",
+	// 									attributes3: "34",
+	// 								},
+	// 								children: [],
+	// 							},
+	// 							{
+	// 								pharse: 4,
+	// 								attributes: {
+	// 									attributes1: "14",
+	// 									attributes2: "24",
+	// 									attributes3: "34",
+	// 								},
+	// 								children: [],
+	// 							},
+	// 						],
+	// 					},
+	// 					{
+	// 						pharse: 3,
+	// 						attributes: {
+	// 							attributes1: "13",
+	// 							attributes2: "23",
+	// 							attributes3: "33",
+	// 						},
+	// 						children: [
+	// 							{
+	// 								pharse: 4,
+	// 								attributes: {
+	// 									attributes1: "14",
+	// 									attributes2: "24",
+	// 									attributes3: "34",
+	// 								},
+	// 								children: [],
+	// 							},
+	// 							{
+	// 								pharse: 4,
+	// 								attributes: {
+	// 									attributes1: "14",
+	// 									attributes2: "24",
+	// 									attributes3: "34",
+	// 								},
+	// 								children: [],
+	// 							},
+	// 						],
+	// 					},
+	// 				],
+	// 			},
+	// 		],
+	// 	},
+	// ];
+
+	// let newList = [];
+	// const mapGroupTreeToArray = (groupTree) => {
+	// 	let objectInChildren = {};
+
+	// 	for (let i = 0; i < groupTree.length; ++i) {
+	// 		objectInChildren = {
+	// 			pharse: groupTree[i].pharse,
+	// 			name: groupTree[i].attributes.attributes1,
+	// 			label: groupTree[i].attributes.attributes2,
+	// 		};
+
+	// 		newList.push(objectInChildren);
+	// 		mapGroupTreeToArray(groupTree[i].children);
+	// 	}
+	// };
+
+	// mapGroupTreeToArray(testGroupTree);
+
+	// console.log(newList);
+
+	// let newStructureTree = [];
+	// const mapArrayToCustomGroupTree = (list) => {
+	// 	let countCheck = 0;
+
+	// 	for (let i = 0; i < list.length; ++i) {
+	// 		let itemChildren = list[i];
+	// 		let pharseItem = list[i].pharse;
+
+	// 		itemChildren.children = [];
+
+	// 		if (pharseItem === 1) {
+	// 			newStructureTree.push(itemChildren);
+	// 		} else if (pharseItem === 2) {
+	// 			newStructureTree[0].children.push(itemChildren);
+	// 		} else if (pharseItem === 3) {
+	// 			newStructureTree[0].children[0].children.push(itemChildren);
+	// 		} else if (pharseItem === 4) {
+	// 			countCheck += 1;
+
+	// 			if (countCheck <= 3) {
+	// 				newStructureTree[0].children[0].children[0].children.push(itemChildren);
+	// 			} else {
+	// 				newStructureTree[0].children[0].children[1].children.push(itemChildren);
+	// 			}
+	// 		}
+	// 	}
+	// };
+
+	// mapArrayToCustomGroupTree(newList);
+
+	// console.log(newStructureTree);
+
 	const layoutSearchDishes = () => (
 		<div className="layout-search__dishesContainer" ref={popupDishesEl}>
-			{/* <div className="layout-search__dishes">
-				{listSearchDishes.map((dishes, index) => (
-					<div
-						className="layout-search__item"
-						key={index}
-						onClick={() => handleChooseItem(dishes, choosePreference, setChoosePreference)}>
-						<img src={dishes.icon} alt={dishes.title} />
-						<p className="layout-search__title">{dishes.title}</p>
-					</div>
-				))}
-			</div> */}
 			{window.innerWidth > 300 && window.innerWidth < 420 && (
 				<>
 					<HighlightOffIcon
@@ -294,6 +431,50 @@ const SearchBar = ({ style, setShowSearchBar, searchBarItemRef, showSearchBar })
 			.catch((error) => console.error("Error", error));
 	};
 
+	const handleSearch = (e) => {
+		e.stopPropagation();
+		dispatch(loadingUI());
+		dispatch(
+			storeListKeyword(
+				[
+					searchAnyDishes,
+					...choosePreference,
+					peopleSearchText !== "" ? `${peopleSearchText} người` : "",
+					chooseTime !== "" ? chooseTime : "",
+				].filter((item) => item !== "")
+			)
+		);
+		dispatch(
+			searchRestaurantRequest(
+				[
+					searchAnyDishes,
+					...choosePreference,
+					peopleSearchText !== "" ? `${peopleSearchText} người` : "",
+					chooseTime !== "" ? chooseTime : "",
+				].filter((item) => item !== "")
+			)
+		);
+		if (setShowSearchBar !== undefined) setShowSearchBar(false);
+
+		history.push(
+			`/today-eat/${[
+				searchAnyDishes,
+				...choosePreference,
+				peopleSearchText !== "" ? `${peopleSearchText} người` : "",
+				chooseTime !== "" ? chooseTime : "",
+			]
+				.filter((item) => item !== "")
+				.join("+")}/page=1`
+		);
+	};
+
+	const handleCheckDisbleButton = () =>
+		choosePreference.length === 0 && searchAnyDishes === "" && peopleSearchText === "" && chooseTime === "";
+
+	useEffect(() => {
+		if (authenticated) getLocation(setSearchAdd);
+	}, []);
+
 	useEffect(() => {
 		document.addEventListener("mousedown", handleOutSideClick);
 
@@ -312,6 +493,11 @@ const SearchBar = ({ style, setShowSearchBar, searchBarItemRef, showSearchBar })
 					className="search-bar__containerBio search-bar__containerInput"
 					value={searchAnyDishes}
 					onChange={(e) => setSearchAnyDishes(e.target.value)}
+					onKeyDown={(e) => {
+						if (e.keyCode === 13) {
+							handleSearch(e);
+						}
+					}}
 					style={{ width: "max-content" }}
 				/>
 				{showSearchDishes && layoutSearchDishes()}
@@ -325,6 +511,11 @@ const SearchBar = ({ style, setShowSearchBar, searchBarItemRef, showSearchBar })
 					type="text"
 					className="layout-search__input"
 					onChange={(e) => setPeopleSearchText(e.target.value)}
+					onKeyDown={(e) => {
+						if (e.keyCode === 13) {
+							handleSearch(e);
+						}
+					}}
 					value={peopleSearchText}
 					placeholder="Thêm số người"
 				/>
@@ -392,48 +583,10 @@ const SearchBar = ({ style, setShowSearchBar, searchBarItemRef, showSearchBar })
 				]
 					.filter((item) => item !== "")
 					.join("+")}/page=1`}
-				onClick={(e) => {
-					e.stopPropagation();
-					dispatch(loadingUI());
-					dispatch(
-						storeListKeyword(
-							[
-								searchAnyDishes,
-								...choosePreference,
-								peopleSearchText !== "" ? `${peopleSearchText} người` : "",
-								chooseTime !== "" ? chooseTime : "",
-							].filter((item) => item !== "")
-						)
-					);
-					dispatch(
-						searchRestaurantRequest(
-							[
-								searchAnyDishes,
-								...choosePreference,
-								peopleSearchText !== "" ? `${peopleSearchText} người` : "",
-								chooseTime !== "" ? chooseTime : "",
-							].filter((item) => item !== "")
-						)
-					);
-					if (setShowSearchBar !== undefined) setShowSearchBar(false);
-				}}>
+				onClick={handleSearch}>
 				<button
-					className={`search-bar__searchButton ${
-						choosePreference.length === 0 &&
-						searchAnyDishes === "" &&
-						peopleSearchText === "" &&
-						chooseTime === ""
-							? "button--disable"
-							: ""
-					}`}
-					disable={
-						choosePreference.length === 0 &&
-						searchAnyDishes === "" &&
-						peopleSearchText === "" &&
-						chooseTime === ""
-							? true
-							: false
-					}>
+					className={`search-bar__searchButton ${handleCheckDisbleButton() ? "button--disable" : ""}`}
+					disable={handleCheckDisbleButton() ? true : false}>
 					<SearchIcon />
 					<span>Tìm kiếm</span>
 				</button>

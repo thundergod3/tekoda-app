@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 
-import logo from "../../assets/icons/logo.png";
+import logo from "../../assets/icons/logo_white.png";
 import facebookLogo from "../../assets/icons/facebook.png";
 import iconMap from "../../assets/icons/map_icon.png";
 import foodImage from "../../assets/utils/food_bg.png";
@@ -38,17 +38,17 @@ const RegisterPage = () => {
 		errorReducer: { errorMsg, errorActive },
 	} = useSelector((state) => state);
 	const dispatch = useDispatch();
-	const { getUserRequest, registerUserRequest } = authAction;
+	const { registerUserRequest } = authAction;
 	const { loadingUI } = utilAction;
 
 	const responseFacebook = (response) => {
 		FB.setAccessToken(response.accessToken);
 		FB.api("/me", "GET", { fields: "id,birthday,age_range,email,gender,location,name,short_name" }, (userData) => {
-			dispatch(getUserRequest(userData, response));
+			dispatch(registerUserRequest({ loginFb: true, ...userData }));
 		});
 	};
 
-	if (authenticated === true) return <Redirect to="/" />;
+	if (authenticated === true) return <Redirect to="/survey" />;
 
 	return (
 		<Formik
@@ -80,26 +80,32 @@ const RegisterPage = () => {
 														<img src={logo} alt="" className="auth-page__logo" />
 													</div>
 												</Link>
-												<div className="auth-page__info">
-													<div className="auth-page__infoIconMapWrapper">
-														<img src={iconMap} alt="" className="auth-page__infoIconMap" />
+												<Link to="/">
+													<div className="auth-page__info">
+														<div className="auth-page__infoIconMapWrapper">
+															<img
+																src={iconMap}
+																alt=""
+																className="auth-page__infoIconMap"
+															/>
+														</div>
+														<div className="auth-page__infoFoodImgWrapper">
+															<img
+																src={foodImage}
+																alt=""
+																className="auth-page__infoFoodImg"
+															/>
+														</div>
 													</div>
-													<div className="auth-page__infoFoodImgWrapper">
-														<img
-															src={foodImage}
-															alt=""
-															className="auth-page__infoFoodImg"
-														/>
-													</div>
-												</div>
+												</Link>
 											</div>
 											<div className="auth-page-right">
 												<p className="auth-page-right__titleLine1">
-													TRỞ THÀNH NGƯỜI <strong>SÀNH ĂN</strong>
+													trở thành người <strong>sành ăn</strong>
 												</p>
-												<p className="auth-page-right__titleLine2">CÙNG TEKODA</p>
+												<p className="auth-page-right__titleLine2">cùng tekoda</p>
 												<FacebookLogin
-													appId="370435007655920"
+													appId="910145446484180"
 													autoLoad={false}
 													callback={responseFacebook}
 													render={(renderProps) => (

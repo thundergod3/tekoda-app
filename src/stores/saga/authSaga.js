@@ -26,6 +26,8 @@ function* getUser({ token, userData, tokenInfo }) {
 			yield put(authAction.getUserDataSucceeded(response.data));
 			yield saveLocal.saveToLocal("user", response.data);
 		}
+
+		yield put(errorAction.clearError());
 	} catch (error) {
 		console.log(error);
 		return error.response.status;
@@ -33,8 +35,21 @@ function* getUser({ token, userData, tokenInfo }) {
 }
 
 function* loginUser({ userForm }) {
+	let response = {};
+
 	try {
-		const response = yield call(authService.loginUser, { userForm });
+		if (userForm.loginFb) {
+			response = yield call(authService.loginUser, {
+				userForm: {
+					name: userForm.name,
+					email: userForm.email,
+					password: userForm.id,
+					f_id: userForm.id,
+				},
+			});
+		} else {
+			response = yield call(authService.loginUser, { userForm });
+		}
 		yield put(authAction.loginUserSucceeded(response.data.jwt_token));
 		yield saveLocal.saveToLocal("token", response.data.jwt_token);
 		yield call(checkAuthenticated);
@@ -48,8 +63,21 @@ function* loginUser({ userForm }) {
 }
 
 function* registerUser({ userForm }) {
+	let response = {};
+
 	try {
-		const response = yield call(authService.registerUser, { userForm });
+		if (userForm.loginFb) {
+			response = yield call(authService.registerUser, {
+				userForm: {
+					name: userForm.name,
+					email: userForm.email,
+					password: userForm.id,
+					f_id: userForm.id,
+				},
+			});
+		} else {
+			response = yield call(authService.loginUser, { userForm });
+		}
 		yield call(loginUser, { userForm: { email: userForm.email, password: userForm.password } });
 		yield put(authAction.registerUserSucceeded(response.data));
 		yield saveLocal.saveToLocal("user", response.data);

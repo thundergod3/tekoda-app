@@ -1,13 +1,12 @@
 import React from "react";
 import { Link, Redirect } from "react-router-dom";
 
-import logo from "../../assets/icons/logo.png";
+import logo from "../../assets/icons/logo_white.png";
 import facebookLogo from "../../assets/icons/facebook.png";
 import iconMap from "../../assets/icons/map_icon.png";
 import foodImage from "../../assets/utils/food_bg.png";
 import iconUser from "../../assets/icons/user.png";
 import iconPassword from "../../assets/icons/password.png";
-import iconError from "../../assets/icons/error.png";
 import iconErrorRed from "../../assets/icons/error_red.png";
 
 import "./auths.scss";
@@ -35,17 +34,18 @@ const LoginPage = () => {
 		errorReducer: { errorMsg, errorActive },
 	} = useSelector((state) => state);
 	const dispatch = useDispatch();
-	const { getUserRequest, loginUserRequest, loginUserSucceeded } = authAction;
+	const { loginUserRequest } = authAction;
 	const { loadingUI } = utilAction;
 
 	const responseFacebook = (response) => {
 		FB.setAccessToken(response.accessToken);
-		FB.api("/me", "GET", { fields: "id,birthday,age_range,email,gender,location,name,short_name" }, (userData) => {
-			dispatch(getUserRequest(userData, response));
+		FB.api("/me", "GET", { fields: "id, email, name" }, (userData) => {
+			console.log(userData);
+			dispatch(loginUserRequest({ loginFb: true, ...userData }));
 		});
 	};
 
-	if (authenticated === true) return <Redirect to="/" />;
+	if (authenticated === true) return <Redirect to="/survey" />;
 
 	return (
 		<Formik
@@ -73,32 +73,33 @@ const LoginPage = () => {
 										}
 									}}>
 									<div className="auth-page" role="presentation">
-										<Link to="/">
-											<div className="auth-page__logoContainer">
-												<img src={logo} alt="" className="auth-page__logo" />
-											</div>
-										</Link>
 										<div className="auth-page-left">
-											{/* <Link to="/">
-											<div className="auth-page__leftContainer">
-												<img src={logoWhite} alt="TekodaApp" className="auth-page__logo" />
-												<p className="auth-page__appName">TekodaApp</p>
-											</div>
-										</Link> */}
-											<div className="auth-page__info">
-												<div className="auth-page__infoIconMapWrapper">
-													<img src={iconMap} alt="" className="auth-page__infoIconMap" />
+											<Link to="/">
+												<div className="auth-page__logoContainer">
+													<img src={logo} alt="" className="auth-page__logo" />
 												</div>
-												<div className="auth-page__infoFoodImgWrapper">
-													<img src={foodImage} alt="" className="auth-page__infoFoodImg" />
+											</Link>
+											<Link to="/">
+												<div className="auth-page__info">
+													<div className="auth-page__infoIconMapWrapper">
+														<img src={iconMap} alt="" className="auth-page__infoIconMap" />
+													</div>
+													<div className="auth-page__infoFoodImgWrapper">
+														<img
+															src={foodImage}
+															alt=""
+															className="auth-page__infoFoodImg"
+														/>
+													</div>
 												</div>
-											</div>
+											</Link>
 										</div>
 										<div className="auth-page-right">
 											<p className="auth-page-right__titleLine1">khám phá ẩm thực</p>
 											<p className="auth-page-right__titleLine2">cùng tekoda</p>
 											<FacebookLogin
-												appId="370435007655920"
+												disableMobileRedirect={true}
+												appId="910145446484180"
 												autoLoad={false}
 												callback={responseFacebook}
 												render={(renderProps) => (

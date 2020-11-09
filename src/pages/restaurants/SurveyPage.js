@@ -29,6 +29,7 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-au
 import Geocode from "react-geocode";
 import saveLocal from "../../helpers/saveLocal";
 import { handleCheckActiveItem, handleChooseItem } from "../../helpers/handleChangeActive";
+import getLocation from "../../helpers/getLocation";
 
 Geocode.setApiKey("AIzaSyAHF5sU-uXkvCZ6L1ieDNBwOhERg3moCkg");
 Geocode.enableDebug();
@@ -140,7 +141,10 @@ const surveyGenderList = [
 
 const SurveyPage = () => {
 	const {
-		authReducer: { authenticated },
+		authReducer: {
+			authenticated,
+			userData,
+		},
 		restaurantReducer: { statusSurvey },
 		errorReducer: { errorStatus },
 	} = useSelector((state) => state);
@@ -152,31 +156,6 @@ const SurveyPage = () => {
 	const [chooseAge, setChooseAge] = useState("");
 	const [chooseGender, setChooseGender] = useState("");
 	const [chooseRestaurant, setChooseRestaurant] = useState([]);
-
-	useEffect(() => {
-		if (currentDrawer === 2) {
-			navigator.geolocation.getCurrentPosition(
-				(position) => {
-					Geocode.fromLatLng(position.coords.latitude, position.coords.longitude).then(
-						(response) => {
-							if (response.status === "OK" && searchAdd === "") {
-								const address = response.results[0].formatted_address;
-								const streetName = response.results[0].address_components[2].short_name;
-								setSearchAdd(address);
-								saveLocal.saveToLocal("street", streetName);
-							}
-						},
-						(error) => {
-							console.error(error);
-						}
-					);
-				},
-				(err) => {
-					console.log(err);
-				}
-			);
-		}
-	}, [currentDrawer]);
 
 	const nextDrawer = () => {
 		if (currentDrawer >= 3) {
@@ -225,6 +204,16 @@ const SurveyPage = () => {
 		chooseGender === "" ||
 		chooseRestaurant.length === 0 ||
 		chooseRestaurant.length < 4;
+
+	useEffect(() => {
+		setUsername(userData.name || "");
+	}, [userData]);
+
+	useEffect(() => {
+		if (currentDrawer === 2) {
+			getLocation(setSearchAdd, true);
+		}
+	}, [currentDrawer]);
 
 	if (authenticated === false || errorStatus === 401) return <Redirect to="/login" />;
 

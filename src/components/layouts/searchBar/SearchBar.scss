@@ -21,7 +21,6 @@
 
 		input {
 			padding: 0;
-			padding-left: 10px;
 		}
 
 		&.search-bar__formSearch {
@@ -41,7 +40,7 @@
 		}
 
 		&.search-bar__people {
-			flex: 0.2;
+			flex: 0.15;
 
 			&:before {
 				content: "";
@@ -49,12 +48,12 @@
 				width: 1px;
 				border-right: solid 1px #dddddd;
 				position: absolute;
-				left: 92%;
+				left: 95%;
 			}
 		}
 
 		&.search-bar__location {
-			flex: 0.2;
+			flex: 0.25;
 			margin-top: 6px;
 
 			&:before {

@@ -87,7 +87,15 @@ const Navbar = ({
 							{(window.innerWidth > 300 && window.innerWidth < 420) ||
 							pathname.slice(1, 10) === "today-eat" ||
 							pathname.slice(1, 16) === "save-restaurant" ? (
-								<div className="search-bar__compactWrapper">
+								<div
+									className="search-bar__compactWrapper"
+									style={
+										window.innerWidth > 300 && window.innerWidth < 420
+											? authenticated
+												? { maxWidth: 180 }
+												: { maxWidth: 150 }
+											: {}
+									}>
 									<div className="search-bar__compact" onClick={(e) => setShowSearchBar(true)}>
 										<SearchIcon />
 										<input
