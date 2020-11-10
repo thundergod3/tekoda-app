@@ -1086,3 +1086,319 @@ body {
 		}
 	}
 }
+
+@media (max-width: 400px) and (max-height: 650px) {
+	.navbar {
+		.navbar__container {
+			.navbar__right {
+				a {
+					.navbar__logo {
+						img {
+							width: 40px;
+							height: 40px;
+						}
+					}
+				}
+
+				.search-bar__compactWrapper {
+					max-width: 120px !important;
+
+					.search-bar__compact {
+						input {
+							font-size: 10px;
+						}
+					}
+				}
+			}
+
+			.navbar__left {
+				.navbar__icon {
+					.MuiSvgIcon-root {
+						margin-right: 0 !important;
+					}
+				}
+			}
+		}
+	}
+
+	.auth-page {
+		.auth-page-right {
+			.auth-page-right__titleLine1,
+			.auth-page-right__titleLine2 {
+				font-size: 16px !important;
+			}
+
+			.auth-page-right__titleLine1 {
+				margin: 0 !important;
+			}
+
+			.auth-page-right__titleLine2 {
+				margin-top: 16px !important;
+			}
+
+			.facebook-form,
+			.input-field__form {
+				width: 250px;
+				height: 30px;
+				margin: 10px 0;
+
+				p,
+				input {
+					font-size: 12px;
+				}
+			}
+
+			p {
+				font-size: 12px;
+
+				&:nth-of-type(3) {
+					margin: 0;
+				}
+			}
+
+			.auth-page__login,
+			.auth-page__register {
+				margin-top: 5px;
+				font-size: 12px;
+				padding: 0 2rem !important;
+				height: 40px;
+			}
+
+			.auth-page__changePageContainer {
+				margin-top: 5px !important;
+			}
+		}
+
+		.auth-page-left {
+			a {
+				.auth-page__info {
+					.auth-page__infoIconMapWrapper {
+						right: 25% !important;
+
+						.auth-page__infoIconMap {
+							width: 180px;
+						}
+					}
+
+					.auth-page__infoFoodImgWrapper {
+						.auth-page__infoFoodImg {
+							width: 180px;
+							height: 105px;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.survey-page {
+		.survey-page__navbar {
+			max-height: 180px;
+
+			.survey-page__navbarRight {
+				.survey-page__navbarSlogan {
+					height: 40px;
+				}
+			}
+		}
+
+		.survey-page__container {
+			max-width: 300px;
+
+			.drawer-sidebar-right {
+				.drawer-sidebar-right__form {
+					margin-top: 15px;
+
+					.drawer-sidebar-right__formContainer {
+						margin-top: 5px;
+
+						input {
+							padding: 10px;
+							padding-left: 15px;
+							font-size: 12px;
+						}
+
+						.drawer-sidebar-right__formAge {
+							margin-top: 15px;
+						}
+
+						.drawer-sidebar-right__formGenderTitle {
+							margin-top: 5px;
+						}
+					}
+				}
+
+				.drawer-sidebar-right__listRestaurantContainer {
+					.drawer-sidebar-right__listRestaurant {
+						max-height: 300px;
+						padding: 0 5%;
+
+						.drawer-sidebar-right__itemRestaurant {
+							width: 80px;
+
+							.drawer-sidebar-right__itemRestaurantImg {
+								width: 80px;
+								height: 50px;
+							}
+
+							&::before {
+								left: 30%;
+								top: 10%;
+							}
+
+							&::after {
+								width: 80px;
+								height: 50px;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.wrapper-search-bar {
+		.wrapper-search-bar__container {
+			.filter-list {
+				max-width: 300px;
+
+				.filter-list__optionContainer {
+					margin-right: 0;
+					margin-left: 2px;
+
+					a {
+						.filter-option {
+							width: 54px;
+							height: 54px;
+
+							img {
+								width: 20px;
+								height: 20px;
+							}
+
+							p {
+								font-size: 8px;
+							}
+						}
+					}
+				}
+
+				.filter-list__welcome {
+					.filter-list__welcomeBio {
+						.filter-list__welcomeBioExpand {
+							top: 25%;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.search-page {
+		.search-restaurant-search {
+			height: calc(100vh - 150px) !important;
+			top: calc(100vh - 120px);
+
+			.search-restaurant-search__container {
+				.restaurant-filter-list {
+					.restaurant-filter-list__container {
+						.restaurant-filter-item {
+							max-width: 80px;
+							margin-right: 5px;
+
+							.restaurant-filter-item__image {
+								width: 80px;
+								height: 60px;
+								font-size: 10px;
+							}
+
+							.restaurant-filter-item__info {
+								.restaurant-filter-item__infoNavbar {
+									overflow: hidden;
+
+									.restaurant-filter-item__infoNavbarContainer {
+										.restaurant-filter-item__infoNavTitle,
+										.restaurant-filter-item__infoNavBio {
+											font-size: 10px;
+										}
+									}
+
+									.MuiSvgIcon-root {
+										width: 15px !important;
+										height: 15px !important;
+										left: 85% !important;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		.restaurant-search-detail {
+			max-width: 320px;
+
+			.restaurant-search-detail__container {
+				.restaurant-search-detail__imageContainer {
+					grid-template-columns: 49% 24% 24%;
+				}
+
+				.restaurant-search-detail__buttonContainer {
+					.restaurant-search-detail__button {
+						width: 130px;
+						bottom: -10px;
+
+						.MuiSvgIcon-root {
+							width: 0.7rem;
+							height: 0.7rem;
+						}
+
+						.restaurant-search-detail__buttonTitle {
+							font-size: 10px;
+						}
+
+						img {
+							width: 20px;
+							height: 15px;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.save-restaurant-page {
+		.save-restaurant-page__title {
+			margin-top: 15px;
+		}
+
+		.save-restaurant-list {
+			.save-restaurant-item {
+				max-width: 300px;
+				width: 100%;
+
+				.save-restaurant-item__rightContainer {
+					margin-left: 15px;
+					.save-restaurant-item__rightBio {
+						.save-restaurant-item__rightBioContainer {
+							p {
+								font-size: 10px;
+							}
+						}
+					}
+
+					.save-restaurant-item__Info {
+						.save-restaurant-item__Info {
+							.save-restaurant-item__rating {
+								span {
+									font-size: 10px;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
