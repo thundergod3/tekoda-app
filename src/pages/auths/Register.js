@@ -106,7 +106,7 @@ const RegisterPage = () => {
 												<p className="auth-page-right__titleLine2">cùng tekoda</p>
 												<FacebookLogin
 													disableMobileRedirect={true}
-													appId="910145446484180"
+													appId={process.env.REACT_APP_FACEBOOK_ID}
 													autoLoad={false}
 													callback={responseFacebook}
 													render={(renderProps) => (
@@ -179,9 +179,9 @@ const RegisterPage = () => {
 															: ""
 													}`}
 													disabled={
-														props.errors.name &&
-														props.errors.email &&
-														props.errors.password &&
+														props.errors.name ||
+														props.errors.email ||
+														props.errors.password ||
 														!privacyStatus
 															? true
 															: false
