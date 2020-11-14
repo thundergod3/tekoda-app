@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import restaurantAction from "../../../stores/redux/actions/restaurantAction";
@@ -18,22 +18,10 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 
 import PreferenceItem from "../../utils/preferenceItem/PreferenceItem";
 import PopupSearch from "../../utils/popupSearch/PopupSearch";
-import { handleChooseItem } from "../../../helpers/handleChangeActive";
 import getLocation from "../../../helpers/getLocation";
 
 Geocode.setApiKey("AIzaSyAHF5sU-uXkvCZ6L1ieDNBwOhERg3moCkg");
 Geocode.enableDebug();
-
-const listSearchDishes = [
-	{
-		title: "Hủ tiếu",
-		icon: RingIcon,
-	},
-	{
-		title: "Phở",
-		icon: RingIcon,
-	},
-];
 
 const listSearchPreference = [
 	{
@@ -180,146 +168,6 @@ const SearchBar = ({ style, setShowSearchBar, searchBarItemRef, showSearchBar })
 	const dispatch = useDispatch();
 	const { searchRestaurantRequest, storeListKeyword } = restaurantAction;
 	const { loadingUI } = utilAction;
-
-	// const testGroupTree = [
-	// 	{
-	// 		pharse: 1,
-	// 		attributes: {
-	// 			attributes1: "11",
-	// 			attributes2: "21",
-	// 			attributes3: "31",
-	// 		},
-	// 		children: [
-	// 			{
-	// 				pharse: 2,
-	// 				attributes: {
-	// 					attributes1: "12",
-	// 					attributes2: "22",
-	// 					attributes3: "32",
-	// 				},
-	// 				children: [
-	// 					{
-	// 						pharse: 3,
-	// 						attributes: {
-	// 							attributes1: "13",
-	// 							attributes2: "23",
-	// 							attributes3: "33",
-	// 						},
-	// 						children: [
-	// 							{
-	// 								pharse: 4,
-	// 								attributes: {
-	// 									attributes1: "14",
-	// 									attributes2: "24",
-	// 									attributes3: "34",
-	// 								},
-	// 								children: [],
-	// 							},
-	// 							{
-	// 								pharse: 4,
-	// 								attributes: {
-	// 									attributes1: "14",
-	// 									attributes2: "24",
-	// 									attributes3: "34",
-	// 								},
-	// 								children: [],
-	// 							},
-	// 							{
-	// 								pharse: 4,
-	// 								attributes: {
-	// 									attributes1: "14",
-	// 									attributes2: "24",
-	// 									attributes3: "34",
-	// 								},
-	// 								children: [],
-	// 							},
-	// 						],
-	// 					},
-	// 					{
-	// 						pharse: 3,
-	// 						attributes: {
-	// 							attributes1: "13",
-	// 							attributes2: "23",
-	// 							attributes3: "33",
-	// 						},
-	// 						children: [
-	// 							{
-	// 								pharse: 4,
-	// 								attributes: {
-	// 									attributes1: "14",
-	// 									attributes2: "24",
-	// 									attributes3: "34",
-	// 								},
-	// 								children: [],
-	// 							},
-	// 							{
-	// 								pharse: 4,
-	// 								attributes: {
-	// 									attributes1: "14",
-	// 									attributes2: "24",
-	// 									attributes3: "34",
-	// 								},
-	// 								children: [],
-	// 							},
-	// 						],
-	// 					},
-	// 				],
-	// 			},
-	// 		],
-	// 	},
-	// ];
-
-	// let newList = [];
-	// const mapGroupTreeToArray = (groupTree) => {
-	// 	let objectInChildren = {};
-
-	// 	for (let i = 0; i < groupTree.length; ++i) {
-	// 		objectInChildren = {
-	// 			pharse: groupTree[i].pharse,
-	// 			name: groupTree[i].attributes.attributes1,
-	// 			label: groupTree[i].attributes.attributes2,
-	// 		};
-
-	// 		newList.push(objectInChildren);
-	// 		mapGroupTreeToArray(groupTree[i].children);
-	// 	}
-	// };
-
-	// mapGroupTreeToArray(testGroupTree);
-
-	// console.log(newList);
-
-	// let newStructureTree = [];
-	// const mapArrayToCustomGroupTree = (list) => {
-	// 	let countCheck = 0;
-
-	// 	for (let i = 0; i < list.length; ++i) {
-	// 		let itemChildren = list[i];
-	// 		let pharseItem = list[i].pharse;
-
-	// 		itemChildren.children = [];
-
-	// 		if (pharseItem === 1) {
-	// 			newStructureTree.push(itemChildren);
-	// 		} else if (pharseItem === 2) {
-	// 			newStructureTree[0].children.push(itemChildren);
-	// 		} else if (pharseItem === 3) {
-	// 			newStructureTree[0].children[0].children.push(itemChildren);
-	// 		} else if (pharseItem === 4) {
-	// 			countCheck += 1;
-
-	// 			if (countCheck <= 3) {
-	// 				newStructureTree[0].children[0].children[0].children.push(itemChildren);
-	// 			} else {
-	// 				newStructureTree[0].children[0].children[1].children.push(itemChildren);
-	// 			}
-	// 		}
-	// 	}
-	// };
-
-	// mapArrayToCustomGroupTree(newList);
-
-	// console.log(newStructureTree);
 
 	const layoutSearchDishes = () => (
 		<div className="layout-search__dishesContainer" ref={popupDishesEl}>
@@ -499,6 +347,7 @@ const SearchBar = ({ style, setShowSearchBar, searchBarItemRef, showSearchBar })
 						}
 					}}
 					style={{ width: "max-content" }}
+					placeholder="Bạn muốn ăn gì?"
 				/>
 				{showSearchDishes && layoutSearchDishes()}
 			</div>
@@ -526,6 +375,7 @@ const SearchBar = ({ style, setShowSearchBar, searchBarItemRef, showSearchBar })
 					{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
 						<div>
 							<input
+								placeholder="Chọn địa điểm"
 								{...getInputProps({
 									className: "search-bar__containerBio",
 									style: { width: "calc(85%)", textTransform: "capitalize" },

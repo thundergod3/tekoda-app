@@ -29,11 +29,11 @@ const useStyles = makeStyles({
 
 const navbarOption = [
 	{
-		title: "tìm kiếm nhà hàng",
+		title: "Tìm kiếm nhà hàng",
 		url: "/",
 	},
 	{
-		title: "hôm nay ăn gì ?",
+		title: "Hôm nay ăn gì ?",
 		url: "/today-eat",
 	},
 ];
@@ -92,8 +92,8 @@ const Navbar = ({
 									style={
 										window.innerWidth > 300 && window.innerWidth < 420
 											? authenticated
-												? { maxWidth: 180 }
-												: { maxWidth: 150 }
+												? { maxWidth: 150 }
+												: { maxWidth: 120 }
 											: {}
 									}>
 									<div className="search-bar__compact" onClick={(e) => setShowSearchBar(true)}>

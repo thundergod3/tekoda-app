@@ -1,107 +1,102 @@
-.restaurant-recommend-item {
-	width: 100%;
-	height: 300px;
+a {
+	.restaurant-recommend-item {
+		width: 240px;
+		height: 400px;
 
-	img {
-		width: 200px;
-		object-fit: contain;
-		border-radius: 15px;
-	}
+		img {
+			width: 100%;
+			object-fit: contain;
+			border-radius: 15px;
+		}
 
-	.restaurant-recommend-item__info {
-		height: 100px;
-		width: 200px;
+		.restaurant-recommend-item__info {
+			.restaurant-recommend-item__rating {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				margin-top: 20px;
 
-		.restaurant-recommend-item__rating {
-			display: flex;
-			flex-direction: row;
-			align-items: center;
-			margin-top: 20px;
+				span {
+					font-style: normal;
+					font-weight: normal;
+					line-height: 18px;
+					color: #484848;
 
-			span {
+					&:last-child {
+						font-size: 10px;
+					}
+
+					&.restaurant-recommend-item__rateStar {
+						font-family: SVN-Circular-Normal;
+						font-size: 13px;
+						color: #222222 !important;
+						margin-left: 7px;
+					}
+
+					&.restaurant-recommend-item__comment {
+						font-family: SVN-Circular-Normal;
+						color: #717171;
+						font-size: 10px;
+						margin-left: 10px;
+					}
+				}
+
+				.restaurant-recommend-item__star {
+					width: 12px;
+					height: 12px;
+					object-fit: contain;
+				}
+			}
+
+			p {
 				font-style: normal;
-				font-weight: normal;
-				line-height: 18px;
-				color: #484848;
 
-				&:last-child {
-					font-size: 10px;
+				&.restaurant-recommend-item__location {
+					width: 100%;
+					font-family: SVN-Circular-Black;
+					font-size: 20px;
+					color: #222222;
+					margin-top: 10px;
 				}
 
-				&.restaurant-recommend-item__rateStar {
+				&.restaurant-recommend-item__desc {
 					font-family: SVN-Circular-Normal;
-					font-size: 13px;
-					color: #222222 !important;
-					margin-left: 7px;
-				}
-
-				&.restaurant-recommend-item__comment {
-					font-family: SVN-Circular-Normal;
+					font-size: 16px;
 					color: #717171;
-					font-size: 10px;
-					margin-left: 10px;
+					margin-top: 15px;
+				}
+
+				&.restaurant-recommend-item__price {
+					font-family: SVN-Circular-Normal;
+					font-size: 1 6px;
+					color: #222222;
+					margin-top: 12px;
 				}
 			}
-
-			.restaurant-recommend-item__star {
-				width: 12px;
-				height: 12px;
-				object-fit: contain;
-			}
-		}
-
-		p {
-			font-style: normal;
-
-			&.restaurant-recommend-item__location {
-				width: 100%;
-				font-family: SVN-Circular-Black;
-				font-size: 20px;
-				color: #222222;
-				margin-top: 10px;
-			}
-
-			&.restaurant-recommend-item__desc {
-				font-family: SVN-Circular-Normal;
-				font-size: 16px;
-				color: #717171;
-				margin-top: 15px;
-			}
-
-			&.restaurant-recommend-item__price {
-				font-family: SVN-Circular-Normal;
-				font-size: 16px;
-				color: #222222;
-				margin-top: 12px;
-			}
 		}
 	}
 }
 
-.BrainhubCarousel__custom-arrowLeft,
-.BrainhubCarousel__custom-arrowRight {
-	cursor: pointer;
-}
+// .BrainhubCarousel__custom-arrowLeft,
+// .BrainhubCarousel__custom-arrowRight {
+// 	cursor: pointer;
+// }
 
-.BrainhubCarousel__customArrows {
-	position: absolute;
-	z-index: 100;
-	width: 30px;
-	height: 30px;
-	object-fit: contain;
+// .BrainhubCarousel__customArrows {
+// 	position: absolute;
 
-	.icon-arrow {
-		width: 100%;
-		height: 100%;
-	}
+// 	.icon-arrow {
+// 		width: 100%;
+// 		height: 100%;
+// 	}
 
-	&.BrainhubCarousel__custom-arrowRight {
-		top: 15%;
-		left: 97%;
-	}
+// 	&.BrainhubCarousel__custom-arrowRight {
+// 		top: 15%;
+// 		left: 97%;
+// 	}
 
-	&.BrainhubCarousel__custom-arrowLeft {
-		top: 15%;
-		left: 94%;
-	}
-}
+// 	&.BrainhubCarousel__custom-arrowLeft {
+// 		top: 15%;
+// 		left: 94%;
+// 	}
+// }

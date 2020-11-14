@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import restaurantAction from "../../../stores/redux/actions/restaurantAction";
 
 import "./UserReviewList.scss";
-import ttiPolyfill from "tti-polyfill";
 import ReactGA from "react-ga";
 
 import UserReviewItem from "../userReviewItem/UserReviewItem";
@@ -25,7 +24,7 @@ const UserReviewList = () => {
 			root: null,
 			rootMargin: "0px",
 			threshold: 0,
-	};
+		};
 		const callback = (list) => {
 			list.forEach((entry) => {
 				if (entry.isIntersecting) {
@@ -43,15 +42,13 @@ const UserReviewList = () => {
 		observerScroll.observe(intersectTarget.current);
 	}, []);
 
-
 	return (
 		<>
 			<div
 				className="user-review-list"
 				ref={intersectTarget}
 				id="review"
-				// style={restaurantReviewList.length === 0 ? { display: "none", position: "absolute" } : {}}
-			>
+				style={restaurantReviewList.length === 0 ? { display: "none", position: "absolute" } : {}}>
 				{restaurantReviewList.length !== 0 &&
 					restaurantReviewList.map((userReview) => (
 						<>{userReview.Description && <UserReviewItem userReview={userReview} />}</>

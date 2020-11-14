@@ -21,9 +21,33 @@
 
 	.restaurant-recommend-list__container {
 		display: flex;
-		flex-direction: row;
-		align-items: center;
-		justify-content: space-between;
+		flex-direction: column;
 		margin-top: 30px;
+		overflow-x: scroll;
+
+		.icon-arrow__container {
+			align-self: flex-end;
+
+			.icon-arrow {
+				width: 100%;
+				height: 100%;
+				z-index: 100;
+				width: 30px;
+				height: 30px;
+				object-fit: contain;
+				cursor: pointer;
+
+				&.icon-arrow-left {
+					margin-right: 5px;
+				}
+			}
+		}
+
+		.restaurant-recommend-list__containerWrapper {
+			height: 100%;
+			display: flex;
+			gap: 10px;
+			transition: transform 0.5s ease-in-out;
+		}
 	}
 }

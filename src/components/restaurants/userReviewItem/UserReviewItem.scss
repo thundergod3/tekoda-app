@@ -1,6 +1,8 @@
 .user-review-item {
 	.user-review-item__info {
 		display: flex;
+		gap: 10px;
+		margin-bottom: 10px;
 
 		.user-review-item__avatar {
 			width: 56px;

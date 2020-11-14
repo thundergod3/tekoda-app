@@ -37,7 +37,7 @@ class restaurantService {
 		});
 
 	getRestaurantReview = ({ restaurantId, count, headers }) =>
-		HTTPMethod.get(`/api/v1/review?resId=${restaurantId}&count=${count}`, {
+		HTTPMethod.get(`/api/v1/review/get?resId=${restaurantId}&count=${count}`, {
 			headers,
 		});
 

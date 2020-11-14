@@ -6,6 +6,7 @@ import utilAction from "../../../stores/redux/actions/utilAction";
 
 import "./RestaurantRecommendItem.scss";
 import numeral from "numeral";
+import recommendRestaurant from "../../../assets/restaurants/restaurant2.png";
 
 import star from "../../../assets/icons/star.png";
 
@@ -21,7 +22,7 @@ const RestaurantRecommendItem = ({ restaurant: { Name, AvgRatingText, comments, 
 				dispatch(loadingUI());
 				dispatch(getRestaurantSearchDetailRequest(id));
 			}}>
-			<img src={PhotoUrl} alt={Name} />
+			<img src={recommendRestaurant} alt={Name} />
 			<div className="restaurant-recommend-item__info">
 				<div className="restaurant-recommend-item__rating">
 					<img src={star} alt={star} className="restaurant-recommend-item__star" />

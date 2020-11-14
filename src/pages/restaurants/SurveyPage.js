@@ -104,15 +104,15 @@ const listRestaurant = [
 const surveyAgeList = [
 	{
 		id: 1,
-		age: "0 - 13",
+		age: "<= 18",
 	},
 	{
 		id: 2,
-		age: "13 - 18",
+		age: "19 - 24",
 	},
 	{
 		id: 3,
-		age: "19 - 29",
+		age: "25 - 29",
 	},
 	{
 		id: 4,
@@ -141,10 +141,7 @@ const surveyGenderList = [
 
 const SurveyPage = () => {
 	const {
-		authReducer: {
-			authenticated,
-			userData,
-		},
+		authReducer: { authenticated, userData },
 		restaurantReducer: { statusSurvey },
 		errorReducer: { errorStatus },
 	} = useSelector((state) => state);

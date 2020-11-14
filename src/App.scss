@@ -245,7 +245,7 @@ body {
 
 					.navbar__logo {
 						img {
-							width: 50px;
+							width: 60px;
 							height: 50px;
 						}
 
@@ -386,7 +386,7 @@ body {
 				display: block;
 				top: 350%;
 				border: none;
-				width: 100vw;
+				width: calc(100vw - 5%);
 				height: calc(100vh - 50px);
 				padding: 20px;
 
@@ -618,7 +618,8 @@ body {
 
 					.drawer-sidebar-right__listRestaurant {
 						gap: 15px;
-						max-height: 440px;
+						// max-height: 440px;
+						max-height: 55vh !important;
 
 						.drawer-sidebar-right__itemRestaurant {
 							width: 100px;
@@ -843,6 +844,15 @@ body {
 						}
 					}
 				}
+
+				.user-review-list {
+					grid-template-columns: repeat(1, 1fr);
+
+					.user-review-item {
+						display: flex;
+						gap: 10px;
+					}
+				}
 			}
 
 			.restaurant-search-detail__buttonContainer {
@@ -916,6 +926,61 @@ body {
 							span,
 							p {
 								font-size: 12px;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.homepage {
+		max-width: 320px;
+
+		.restaurant-recommend-list {
+			margin-top: 20px;
+
+			.restaurant-recommend-list__title {
+				font-size: 12px;
+			}
+
+			.restaurant-recommend-list__bio {
+				font-size: 10px;
+				margin-top: 10px;
+			}
+
+			.restaurant-recommend-list__container {
+				margin-top: 5px;
+
+				.icon-arrow__container {
+					img {
+						width: 13px;
+						height: 13px;
+					}
+				}
+
+				.restaurant-recommend-list__containerWrapper {
+					a {
+						.restaurant-recommend-item {
+							width: 100px;
+							height: 210px;
+
+							.restaurant-recommend-item__info {
+								.restaurant-recommend-item__rating {
+									.restaurant-recommend-item__rateStar,
+									.restaurant-recommend-item__comment {
+										font-size: 8px;
+									}
+								}
+
+								.restaurant-recommend-item__location {
+									font-size: 10px;
+								}
+
+								.restaurant-recommend-item__desc,
+								.restaurant-recommend-item__price {
+									font-size: 8px;
+								}
 							}
 						}
 					}
@@ -1094,14 +1159,14 @@ body {
 				a {
 					.navbar__logo {
 						img {
-							width: 40px;
+							width: 50px;
 							height: 40px;
 						}
 					}
 				}
 
 				.search-bar__compactWrapper {
-					max-width: 120px !important;
+					max-width: 90px !important;
 
 					.search-bar__compact {
 						input {
@@ -1226,6 +1291,12 @@ body {
 							margin-top: 5px;
 						}
 					}
+
+					div {
+						.location-search-input {
+							font-size: 12px;
+						}
+					}
 				}
 
 				.drawer-sidebar-right__listRestaurantContainer {
@@ -1243,7 +1314,7 @@ body {
 
 							&::before {
 								left: 30%;
-								top: 10%;
+								top: 8%;
 							}
 
 							&::after {

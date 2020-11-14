@@ -54,7 +54,6 @@
 
 		&.search-bar__location {
 			flex: 0.25;
-			margin-top: 6px;
 
 			&:before {
 				content: "";
@@ -84,6 +83,7 @@
 					font-style: normal;
 					font-size: 13px;
 					color: #717171;
+					font-family: SVN-Circular-Normal;
 				}
 			}
 		}
