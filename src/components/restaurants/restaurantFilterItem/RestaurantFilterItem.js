@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { useSelector } from "react-redux";
 
@@ -18,7 +18,12 @@ const RestaurantFilterItem = ({ restaurant, scrollTopRestaurantDetail }) => {
 		restaurantReducer: { saveRestaurantList },
 	} = useSelector((state) => state);
 	const [like, setLike] = useState(false);
-	const { Name, AvgRatingText, comments, Address, PhotoUrl } = restaurant;
+	const [minPrice, setMinPrice] = useState(0);
+	const [maxPrice, setMaxPrice] = useState(0);
+	const {
+		detail: { ResId, Name, AvgRatingText, comments, Address, PriceRange },
+		image_link,
+	} = restaurant;
 	const dispatch = useDispatch();
 	const { getRestaurantSearchDetailRequest, saveRestaurantRequest } = restaurantAction;
 	const { showActive } = utilAction;
@@ -26,20 +31,29 @@ const RestaurantFilterItem = ({ restaurant, scrollTopRestaurantDetail }) => {
 	let checkLike = false;
 
 	for (let i = 0; i < saveRestaurantList.length; i++) {
-		if (saveRestaurantList[i].ResId && (restaurant.ResId === saveRestaurantList[i].ResId)) checkLike = true;
+		if (saveRestaurantList[i]?.ResId && ResId === saveRestaurantList[i]?.ResId) checkLike = true;
 	}
+
+	useEffect(() => {
+		const splitPrice = PriceRange?.split("-");
+		const tempMinPrice = splitPrice ? splitPrice[0]?.split("đ")[0].split(".")[0] : 0;
+		const tempMaxPrice = splitPrice ? splitPrice[1]?.split("đ")[0].split(".")[0] : 0;
+
+		setMinPrice(tempMinPrice);
+		setMaxPrice(tempMaxPrice);
+	}, restaurant);
 
 	return (
 		<div
 			className="restaurant-filter-item"
 			onClick={() => {
 				dispatch(showActive());
-				dispatch(getRestaurantSearchDetailRequest(restaurant?.ResId));
+				dispatch(getRestaurantSearchDetailRequest(ResId));
 				setTimeout(() => {
 					scrollTopRestaurantDetail();
 				}, 200);
 			}}>
-			<img src={PhotoUrl} alt={Name} className="restaurant-filter-item__image" />
+			<img src={image_link && image_link[0]} alt={Name} className="restaurant-filter-item__image" />
 			<div className="restaurant-filter-item__info">
 				<div className="restaurant-filter-item__infoNavbar">
 					<div className="restaurant-filter-item__infoNavbarContainer">
@@ -82,7 +96,9 @@ const RestaurantFilterItem = ({ restaurant, scrollTopRestaurantDetail }) => {
 						<span className="restaurant-filter-item__rateStar">{Math.floor(AvgRatingText)}</span>
 						<span className="restaurant-filter-item__comment">(110 đánh giá)</span>
 					</div>
-					<p className="restaurant-filter-item__price">Giá: vnd 100-400k</p>
+					<p className="restaurant-filter-item__price">
+						Giá: vnd {minPrice}k-{maxPrice}k
+					</p>
 				</div>
 			</div>
 		</div>

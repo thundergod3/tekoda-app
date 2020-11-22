@@ -275,7 +275,6 @@ const SearchBar = ({ style, setShowSearchBar, searchBarItemRef, showSearchBar })
 		setSearchAdd(address);
 		geocodeByAddress(address)
 			.then((results) => getLatLng(results[0]))
-			.then((latLng) => console.log("Success", latLng))
 			.catch((error) => console.error("Error", error));
 	};
 
@@ -436,7 +435,7 @@ const SearchBar = ({ style, setShowSearchBar, searchBarItemRef, showSearchBar })
 				onClick={handleSearch}>
 				<button
 					className={`search-bar__searchButton ${handleCheckDisbleButton() ? "button--disable" : ""}`}
-					disable={handleCheckDisbleButton() ? true : false}>
+					disabled={handleCheckDisbleButton() ? true : false}>
 					<SearchIcon />
 					<span>Tìm kiếm</span>
 				</button>

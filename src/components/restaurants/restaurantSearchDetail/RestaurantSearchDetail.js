@@ -22,6 +22,8 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 		restaurantReducer: { restaurantSearchDetail, restaurantReviewList, saveRestaurantList },
 		utilReducer: { active },
 	} = useSelector((state) => state);
+	const [minPrice, setMinPrice] = useState(0);
+	const [maxPrice, setMaxPrice] = useState(0);
 	const [save, setSave] = useState(false);
 	const [checkSave, setCheckSave] = useState(false);
 	const dispatch = useDispatch();
@@ -29,7 +31,10 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 	const { loadingUI } = utilAction;
 
 	useEffect(() => {
-		const findIndex = saveRestaurantList.findIndex((item) => item.ResId === restaurantSearchDetail.ResId);
+		const findIndex = saveRestaurantList.findIndex((item) => item.ResId === restaurantSearchDetail?.detail?.ResId);
+		const splitPrice = restaurantSearchDetail?.detail?.PriceRange?.split("-");
+		const tempMinPrice = splitPrice ? splitPrice[0]?.split("đ")[0] : 0;
+		const tempMaxPrice = splitPrice ? splitPrice[1]?.split("đ")[0] : 0;
 
 		if (findIndex !== -1) {
 			setSave(true);
@@ -38,6 +43,9 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 			setCheckSave(false);
 			setSave(false);
 		}
+
+		setMinPrice(tempMinPrice);
+		setMaxPrice(tempMaxPrice);
 	}, [saveRestaurantList, restaurantSearchDetail]);
 
 	return (
@@ -46,39 +54,39 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 				<div
 					className={`restaurant-search-detail ${active === true ? "restaurant-search-detail--active" : ""}`}>
 					<div className="restaurant-search-detail__container" ref={searchPageRef}>
-						<p className="restaurant-search-detail__title">{restaurantSearchDetail?.Name}</p>
-						<p className="restaurant-search-detail__bio">{restaurantSearchDetail?.Address}</p>
+						<p className="restaurant-search-detail__title">{restaurantSearchDetail?.detail?.Name}</p>
+						<p className="restaurant-search-detail__bio">{restaurantSearchDetail?.detail?.Address}</p>
 						<div className="restaurant-search-detail__info">
 							<div className="restaurant-search-detail__price">
 								<img src={MoneyIcon} alt="money" className="restaurant-search-detail__priceIcon" />
 								<span className="restaurant-search-detail__priceMin">
-									{numeral(100000).format("0,0")}đ
+									{numeral(minPrice * 1000).format("0,0")}đ
 								</span>
 								<span>-</span>
 								<span className="restaurant-search-detail__priceMax">
-									{numeral(400000).format("0,0")}đ
+									{numeral(maxPrice * 1000).format("0,0")}đ
 								</span>
 							</div>
 						</div>
 						<div className="restaurant-search-detail__imageContainer">
 							<img
-								src={restaurantSearchDetail?.image}
-								alt={restaurantSearchDetail?.Name}
+								src={restaurantSearchDetail?.image_link[0]}
+								alt={restaurantSearchDetail?.detail?.Name}
 								className="restaurant-search-detail__image"
 							/>
 							<img
-								src={restaurantSearchDetail?.image}
-								alt={restaurantSearchDetail?.Name}
+								src={restaurantSearchDetail?.image_link[1]}
+								alt={restaurantSearchDetail?.detail?.Name}
 								className="restaurant-search-detail__image"
 							/>
 							<img
-								src={restaurantSearchDetail?.image}
-								alt={restaurantSearchDetail?.Name}
+								src={restaurantSearchDetail?.image_link[2]}
+								alt={restaurantSearchDetail?.detail?.Name}
 								className="restaurant-search-detail__image"
 							/>
 							<img
-								src={restaurantSearchDetail?.image}
-								alt={restaurantSearchDetail?.Name}
+								src={restaurantSearchDetail?.image_link[3]}
+								alt={restaurantSearchDetail?.detail?.Name}
 								className="restaurant-search-detail__image"
 							/>
 						</div>
@@ -87,8 +95,8 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 								className="restaurant-search-detail__button"
 								onClick={() => {
 									dispatch(loadingUI());
-									dispatch(searchRestaurantRequest([restaurantSearchDetail?.Name]));
-									dispatch(getAllSearchRestaurantRequest([restaurantSearchDetail?.Name]));
+									dispatch(searchRestaurantRequest([restaurantSearchDetail?.detail?.Name]));
+									dispatch(getAllSearchRestaurantRequest([restaurantSearchDetail?.detail?.Name]));
 								}}>
 								<SearchIcon />
 								<p className="restaurant-search-detail__buttonTitle">Tìm nhà hàng tương tự</p>
@@ -112,9 +120,7 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 										) : (
 											<>
 												<img src={CheckIcon} alt="check" />
-												<p
-													className="restaurant-search-detail__buttonTitle"
-													style={{ width: "204px", height: "36px" }}>
+												<p className="restaurant-search-detail__buttonTitle">
 													Đã lưu thành công, xem{" "}
 													<Link to="/save-restaurant" onClick={(e) => e.stopPropagation()}>
 														danh sách
@@ -133,7 +139,7 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 						</div>
 						<div className="restaurant-search-detail__reviewContainer">
 							<p className="restaurant-search-detail__reviewRate">
-								{restaurantSearchDetail?.AvgRatingText} out of 10 stars from{" "}
+								{restaurantSearchDetail?.detail?.AvgRatingText} out of 10 stars from{" "}
 								{restaurantReviewList.length} reviews
 							</p>
 							<div className="restaurant-search-detail__reviewListRate">

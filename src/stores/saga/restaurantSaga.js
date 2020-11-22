@@ -72,13 +72,7 @@ function* fetchTrendingRestaurant() {
 	} = yield select((state) => state);
 
 	try {
-		// const response = yield call(restaurantService.fetchTrendingRestaurant, {
-		// 	headers: {
-		// 		Authorization: `Bearer ${token}`,
-		// 	},
-		// });
-		const response = yield call(restaurantService.fetchRestaurantPerPage, {
-			page: 1,
+		const response = yield call(restaurantService.fetchTrendingRestaurant, {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},

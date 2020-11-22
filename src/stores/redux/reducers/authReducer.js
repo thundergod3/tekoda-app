@@ -17,8 +17,14 @@ const authReducer = (state = initialState, action) =>
 			}
 
 			case types.REGISTER_USER_SUCCEEDED: {
-				console.log(action.userData);
 				draft.userData = action.userData;
+				break;
+			}
+
+			case types.LOGOUT_USER_SUCCEEDED: {
+				draft.userData = {};
+				draft.authenticated = false;
+				draft.token = "";
 				break;
 			}
 
@@ -35,6 +41,7 @@ const authReducer = (state = initialState, action) =>
 			case types.CHECK_AUTHENTICATED_FAILED: {
 				draft.authenticated = false;
 				draft.userData = {};
+				draft.token = "";
 				break;
 			}
 

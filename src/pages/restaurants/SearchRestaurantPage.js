@@ -11,7 +11,11 @@ import ResultRestaurantSearch from "../../components/restaurants/resultRestauran
 import RestaurantSearchDetail from "../../components/restaurants/restaurantSearchDetail/RestaurantSearchDetail";
 import Loading from "../../components/utils/loading/Loading";
 
-const SearchRestaurantPage = ({ match }) => {
+const SearchRestaurantPage = ({
+	match: {
+		params: { params, pageNumber },
+	},
+}) => {
 	const {
 		utilReducer: { loading },
 		authReducer: { authenticated },
@@ -38,24 +42,24 @@ const SearchRestaurantPage = ({ match }) => {
 	useEffect(() => {
 		dispatch(utilAction.loadingUI());
 		dispatch(fetchSaveRestaurantRequest());
-		if (match.params.params && match.params.params.slice(0, 4) === "page") {
-			dispatch(fetchListRestaurantPerPageRequest(match.params.params.slice(5, match.params.params.length)));
+		if (params && params.slice(0, 4) === "page") {
+			dispatch(fetchListRestaurantPerPageRequest(params.slice(5, params.length)));
 			dispatch(fetchListRestaurantRequest());
-		} else if (match.params.params && isNaN(parseInt(match.params.params))) {
-			dispatch(getAllSearchRestaurantRequest([match.params.params]));
-			dispatch(getSearchRestaurantPerPageRequest([match.params.params], match.params.pageNumber));
-			dispatch(searchRestaurantRequest([match.params.params]));
-			dispatch(storeListKeyword(match.params.params.split("+").filter((item) => item !== "")));
-		} else if (match.params.params && !isNaN(parseInt(match.params.params))) {
-			if (Number.isInteger(parseInt(match.params.params))) {
-				dispatch(getRestaurantSearchDetailRequest(match.params.params));
+		} else if (params && isNaN(parseInt(params))) {
+			dispatch(getAllSearchRestaurantRequest([params]));
+			dispatch(getSearchRestaurantPerPageRequest([params], pageNumber));
+			dispatch(searchRestaurantRequest([params]));
+			dispatch(storeListKeyword(params.split("+").filter((item) => item !== "")));
+		} else if (params && !isNaN(parseInt(params))) {
+			if (Number.isInteger(parseInt(params))) {
+				dispatch(getRestaurantSearchDetailRequest(params));
 				dispatch(fetchListRestaurantPerPageRequest());
 				dispatch(fetchListRestaurantRequest());
 			} else {
-				dispatch(getAllSearchRestaurantRequest([match.params.params]));
-				dispatch(searchRestaurantRequest([match.params.params]));
-				dispatch(storeListKeyword(match.params.params.split("+").filter((item) => item !== "")));
-				dispatch(getSearchRestaurantPerPageRequest([match.params.params], match.params.pageNumber));
+				dispatch(getAllSearchRestaurantRequest([params]));
+				dispatch(searchRestaurantRequest([params]));
+				dispatch(storeListKeyword(params.split("+").filter((item) => item !== "")));
+				dispatch(getSearchRestaurantPerPageRequest([params], pageNumber));
 			}
 		} else {
 			dispatch(fetchListRestaurantRequest());

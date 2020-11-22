@@ -80,6 +80,7 @@
 				width: 100%;
 				height: 100%;
 				background-repeat: no-repeat;
+				border-radius: 15px;
 
 				&:first-child {
 					grid-column: 1/ 2;
@@ -170,15 +171,17 @@
 			background: #c4c4c4;
 			border-radius: 28px;
 			display: flex;
+			gap: 10px;
 			align-items: center;
 			justify-content: center;
-			left: 102px;
+			left: 10%;
 
-			.MuiSvgIcon-root {
-				margin-right: 10px;
+			img {
+				flex: 0.1;
 			}
 
 			.restaurant-search-detail__buttonTitle {
+				flex: 0.9;
 				font-size: 16px;
 				line-height: 18px;
 				color: #222222;
@@ -191,7 +194,7 @@
 			}
 
 			&:nth-child(2) {
-				left: 392px;
+				left: 50%;
 			}
 		}
 	}

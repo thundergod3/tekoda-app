@@ -46,6 +46,7 @@
 			justify-content: space-between;
 			align-items: center;
 			max-width: 300px;
+			position: relative;
 
 			.navbar__icon {
 				color: #fff;
@@ -67,6 +68,7 @@
 				box-sizing: border-box;
 				border-radius: 21px;
 				padding: 13px;
+				position: relative;
 
 				&:hover {
 					cursor: pointer;
@@ -90,6 +92,39 @@
 
 						&:last-child {
 							margin-left: 5px;
+						}
+					}
+				}
+			}
+
+			.show-option__container {
+				position: absolute;
+				height: 80px;
+				width: max-content;
+				top: 120%;
+				right: 0%;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				background: #ffff;
+				padding: 20px;
+				border-radius: 15px;
+
+				.show-option__containerButton {
+					display: flex;
+					width: max-content;
+					align-items: center;
+
+					p {
+						font-size: 16px;
+						font-family: SVN-Circular-Normal;
+					}
+				}
+
+				a {
+					.show-option__containerButton {
+						p {
+							margin-top: 5px;
 						}
 					}
 				}

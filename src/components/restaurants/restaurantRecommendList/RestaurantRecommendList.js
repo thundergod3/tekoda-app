@@ -16,33 +16,28 @@ const RestaurantRecommendList = ({ restaurantRecommendList, title, bio, style })
 	const [statusSlide, setStatusSlide] = useState(false);
 
 	const handleNextSlide = () => {
-		let tempSlide = slide;
-
-		console.log(tempSlide);
-		if (tempSlide === 1) {
+		if ((slide === 1 && window.innerWidth > 420) || (window.innerWidth <= 420 && slide === 3)) {
 			return;
 		} else {
-			setSlide(tempSlide + 1);
+			setSlide(slide + 1);
 			setStatusSlide(true);
-			setPixelTranform(pixelTransform + (tempSlide + 1) * width);
+			setPixelTranform(pixelTransform + width);
 		}
 	};
 
 	const handlePreviousSlide = () => {
-		let tempSlide = slide;
-
-		if (tempSlide === 0) {
+		if (slide === 0) {
 			return;
 		} else {
-			setSlide(tempSlide - 1);
+			setSlide(slide - 1);
 			setStatusSlide(false);
-			setPixelTranform(pixelTransform - tempSlide * width);
+			setPixelTranform(pixelTransform - width);
 		}
 	};
 
 	useEffect(() => {
 		if (window.innerWidth >= 300 && window.innerWidth <= 420) {
-			setWidth(5 * 100 + 50);
+			setWidth(3 * 100 + 30);
 		} else {
 			setWidth(5 * 240 + 50);
 		}
@@ -54,8 +49,20 @@ const RestaurantRecommendList = ({ restaurantRecommendList, title, bio, style })
 			<p className="restaurant-recommend-list__bio">{bio}</p>
 			<div className="restaurant-recommend-list__container">
 				<div className="icon-arrow__container">
-					<img src={IconArrowLeft} className="icon-arrow icon-arrow-left" onClick={handlePreviousSlide} />
-					<img src={IconArrowRight} className="icon-arrow icon-arrow-right" onClick={handleNextSlide} />
+					<img
+						src={IconArrowLeft}
+						className={`icon-arrow icon-arrow-left ${slide === 0 ? "icon-arrow--disable" : ""}`}
+						onClick={handlePreviousSlide}
+					/>
+					<img
+						src={IconArrowRight}
+						className={`icon-arrow icon-arrow-right ${
+							(slide === 1 && window.innerWidth > 420) || (window.innerWidth <= 420 && slide === 3)
+								? "icon-arrow--disable"
+								: ""
+						}`}
+						onClick={handleNextSlide}
+					/>
 				</div>
 				<div
 					className="restaurant-recommend-list__containerWrapper"
@@ -69,22 +76,6 @@ const RestaurantRecommendList = ({ restaurantRecommendList, title, bio, style })
 						</Link>
 					))}
 				</div>
-				{/* <Carousel
-					className={"restaurant-social-recommend-list__container"}
-					addArrowClickHandler
-					arrows
-					slidesPerScroll={5}
-					animationSpeed={500}
-					arrowLeft={}
-					arrowRight={}
-					itemWidth={240}
-					offset={8}>
-					{restaurantRecommendList.slice(0, 10).map((restaurant, index) => (
-						<Link to={`/today-eat/${restaurant.ResId}/page=1`} key={index}>
-							<RestaurantRecommendItem restaurant={restaurant} id={restaurant.ResId} />
-						</Link>
-					))}
-				</Carousel> */}
 			</div>
 		</div>
 	);

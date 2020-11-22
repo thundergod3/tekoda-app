@@ -1,12 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import logo from "../../../assets/icons/logo.png";
 import "./Navbar.scss";
-import { makeStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
 
 import NavbarOption from "../navbarOption/NavbarOption";
 
@@ -15,17 +13,11 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import SearchIcon from "@material-ui/icons/Search";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 
 import SearchBar from "../searchBar/SearchBar";
-
-const useStyles = makeStyles({
-	list: {
-		width: "1200px",
-	},
-	fullList: {
-		width: "auto",
-	},
-});
+import authAction from "../../../stores/redux/actions/authAction";
 
 const navbarOption = [
 	{
@@ -48,12 +40,41 @@ const Navbar = ({
 	} = useSelector((state) => state);
 	const searchBarRef = useRef(null);
 	const searchBarItemRef = useRef(null);
+	const showOptionContainerRef = useRef(null);
+	const showOptionRef = useRef(null);
 	const [showSearchBar, setShowSearchBar] = useState(false);
+	const [showOption, setShowOption] = useState(false);
+	const dispatch = useDispatch();
+	const { logoutUserRequest } = authAction;
+
+	const renderLayoutShowOption = () => (
+		<div className="show-option__container" ref={showOptionRef}>
+			<div
+				className="show-option__containerButton"
+				onClick={(e) => {
+					dispatch(logoutUserRequest());
+					setShowOption(false);
+				}}>
+				<p>Đăng xuất</p>
+			</div>
+			<Link to="/save-restaurant">
+				<div className="show-option__containerButton" onClick={() => setShowOption(false)}>
+					<p>Nhà hàng ưu thích</p>
+				</div>
+			</Link>
+		</div>
+	);
 
 	const handleOutSideClick = (e) => {
-		if (searchBarRef.current && searchBarRef.current.contains(e.target)) return;
+		if (
+			(searchBarRef.current && searchBarRef.current.contains(e.target)) ||
+			(showOptionRef.current && showOptionRef.current.contains(e.target)) ||
+			(showOptionContainerRef.current && showOptionContainerRef.current.contains(e.target))
+		)
+			return;
 		else {
 			setShowSearchBar(false);
+			setShowOption(false);
 		}
 	};
 
@@ -148,12 +169,15 @@ const Navbar = ({
 									</Link>
 								</>
 							) : (
-								<div className="navbar__button">
-									<div className="navbar__buttonDrawerContainer">
-										<MenuIcon />
-										<AccountCircleIcon />
+								<>
+									<div className="navbar__button" ref={showOptionContainerRef}>
+										<div className="navbar__buttonDrawerContainer">
+											<MenuIcon onClick={() => setShowOption(!showOption)} />
+											<AccountCircleIcon />
+										</div>
 									</div>
-								</div>
+									{showOption && renderLayoutShowOption()}
+								</>
 							)}
 						</div>
 					</div>

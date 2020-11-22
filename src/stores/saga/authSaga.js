@@ -7,8 +7,9 @@ import errorAction from "../redux/actions/errorAction";
 
 import authService from "../../services/authService";
 
-import saveLocal from "../../helpers/saveLocal";
 import history from "../../constants/history";
+import saveLocal from "../../helpers/saveLocal";
+import removeDataFromLocal from "../../helpers/removeDataFromLocal";
 
 function* getUser({ token, userData, tokenInfo }) {
 	try {
@@ -91,6 +92,11 @@ function* registerUser({ userForm }) {
 	}
 }
 
+function* logOutUser() {
+	yield call(removeDataFromLocal);
+	yield put(authAction.logoutUserSucceeded());
+}
+
 function* checkAuthenticated() {
 	const token = yield saveLocal.getFromLocal("token");
 	const response = yield call(getUser, { token });
@@ -99,10 +105,7 @@ function* checkAuthenticated() {
 		yield put(authAction.checkAuthenticatedSucceeded());
 	} else {
 		yield put(authAction.checkAuthenticatedFailed());
-		yield saveLocal.removeFromLocal("token");
-		yield saveLocal.removeFromLocal("expired-token");
-		yield saveLocal.removeFromLocal("user");
-		yield saveLocal.removeFromLocal("statusSurvey");
+		yield call(removeDataFromLocal);
 	}
 }
 
@@ -111,4 +114,5 @@ export default function* authSaga() {
 	yield takeLatest(types.GET_USER_REQUEST, getUser);
 	yield takeLatest(types.LOGIN_USER_REQUEST, loginUser);
 	yield takeLatest(types.REGISTER_USER_REQUEST, registerUser);
+	yield takeLatest(types.LOGOUT_USER_REQUEST, logOutUser);
 }

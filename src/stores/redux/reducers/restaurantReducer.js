@@ -2,11 +2,6 @@ import * as types from "../../../constants/types";
 import produce from "immer";
 import saveLocal from "../../../helpers/saveLocal";
 
-import restaurant from "../../../assets/restaurants/restaurant1.png";
-import restaurant2 from "../../../assets/restaurants/restaurant2.png";
-import restaurant3 from "../../../assets/restaurants/restaurant3.png";
-import home from "../../../assets/icons/home.png";
-
 const initialState = {
 	restaurantList: [],
 	restaurantListEachPage: [],
@@ -50,27 +45,26 @@ const restaurantReducer = (state = initialState, action) =>
 			case types.GET_RESTAURANT_SEARCH_DETAIL_SUCCEEDED: {
 				draft.restaurantSearchDetail = {
 					...action.restaurantSearchDetail,
-					image: restaurant,
 					listRating: [
 						{
 							title: "Đồ ăn",
-							rate: action.restaurantSearchDetail?.QualityScore,
+							rate: action.restaurantSearchDetail?.detail?.QualityScore,
 						},
 						{
 							title: "Dịch vụ",
-							rate: action.restaurantSearchDetail?.ServiceScore,
+							rate: action.restaurantSearchDetail?.detail?.ServiceScore,
 						},
 						{
 							title: "Vị trí",
-							rate: action.restaurantSearchDetail?.LocationScore,
+							rate: action.restaurantSearchDetail?.detail?.LocationScore,
 						},
 						{
 							title: "Không gian",
-							rate: action.restaurantSearchDetail?.SpaceScore,
+							rate: action.restaurantSearchDetail?.detail?.SpaceScore,
 						},
 						{
 							title: "Giá cả",
-							rate: action.restaurantSearchDetail?.PriceScore,
+							rate: action.restaurantSearchDetail?.detail?.PriceScore,
 						},
 					],
 				};
@@ -91,27 +85,26 @@ const restaurantReducer = (state = initialState, action) =>
 			case types.SEARCH_RESTAURANT_SUCCEEDED: {
 				draft.restaurantSearchDetail = {
 					...action.restaurantSearchList[0],
-					image: restaurant,
 					listRating: [
 						{
 							title: "Đồ ăn",
-							rate: action.restaurantSearchList[0]?.QualityScore,
+							rate: action.restaurantSearchList[0]?.detail?.QualityScore,
 						},
 						{
 							title: "Dịch vụ",
-							rate: action.restaurantSearchList[0]?.ServiceScore,
+							rate: action.restaurantSearchList[0]?.detail?.ServiceScore,
 						},
 						{
 							title: "Vị trí",
-							rate: action.restaurantSearchList[0]?.LocationScore,
+							rate: action.restaurantSearchList[0]?.detail?.LocationScore,
 						},
 						{
 							title: "Không gian",
-							rate: action.restaurantSearchList[0]?.SpaceScore,
+							rate: action.restaurantSearchList[0]?.detail?.SpaceScore,
 						},
 						{
 							title: "Giá cả",
-							rate: action.restaurantSearchList[0]?.PriceScore,
+							rate: action.restaurantSearchList[0]?.detail?.PriceScore,
 						},
 					],
 				};

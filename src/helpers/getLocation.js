@@ -24,8 +24,8 @@ const getLocation = (saveAddress, statusSaveStreet) => {
 				}
 			);
 		},
-		(err) => {
-			console.log(err);
+		(error) => {
+			console.log(error);
 		}
 	);
 };

@@ -42,6 +42,17 @@ class authdaAction {
 		};
 	}
 
+	logoutUserRequest() {
+		return {
+			type: types.LOGOUT_USER_REQUEST,
+		};
+	}
+	logoutUserSucceeded() {
+		return {
+			type: types.LOGOUT_USER_SUCCEEDED,
+		};
+	}
+
 	getUserDataRequest() {
 		return {
 			type: types.GET_USER_REQUEST,

@@ -107,6 +107,11 @@ body {
 	}
 }
 
+.icon-arrow--disable {
+	cursor: none;
+	color: #eee;
+}
+
 @media (max-width: 1920px) and (min-width: 1550px) {
 	.survey-page {
 		.survey-page__container {
@@ -851,6 +856,16 @@ body {
 					.user-review-item {
 						display: flex;
 						gap: 10px;
+
+						.user-review-item__info {
+							.user-review-item__bio {
+								justify-content: flex-start;
+							}
+						}
+
+						.user-review-item__review {
+							margin-top: 0;
+						}
 					}
 				}
 			}
@@ -1168,6 +1183,34 @@ body {
 				.search-bar__compactWrapper {
 					max-width: 90px !important;
 
+					.search-bar__container {
+						.layout-search__dishesContainer {
+							width: calc(100vw - 20%);
+
+							.search-bar__locationMobile {
+								div {
+									.search-address__container {
+										width: 95% !important;
+
+										.location-search-input {
+											padding-left: 0;
+										}
+									}
+								}
+							}
+
+							.layout-search__perference {
+								.layout-search__perferenceWrapper {
+									.layout-search__perfenceList {
+										.preference-item {
+											margin-right: 5px;
+										}
+									}
+								}
+							}
+						}
+					}
+
 					.search-bar__compact {
 						input {
 							font-size: 10px;
@@ -1417,7 +1460,7 @@ body {
 
 				.restaurant-search-detail__buttonContainer {
 					.restaurant-search-detail__button {
-						width: 130px;
+						width: 140px;
 						bottom: -10px;
 
 						.MuiSvgIcon-root {
@@ -1426,7 +1469,7 @@ body {
 						}
 
 						.restaurant-search-detail__buttonTitle {
-							font-size: 10px;
+							font-size: 9px;
 						}
 
 						img {
@@ -1466,6 +1509,22 @@ body {
 									font-size: 10px;
 								}
 							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.homepage {
+		max-width: 95vw;
+
+		.restaurant-recommend-list {
+			.restaurant-recommend-list__container {
+				.restaurant-recommend-list__containerWrapper {
+					a {
+						.restaurant-recommend-item {
+							width: 95px !important;
 						}
 					}
 				}
