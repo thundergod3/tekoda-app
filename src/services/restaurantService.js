@@ -11,6 +11,8 @@ class restaurantService {
 			headers,
 		});
 
+	fetchTrendingRestaurantGuess = () => HTTPMethod.get("/api/v1/restaurant/guess");
+
 	fetchRestaurantPerPage = ({ page, headers }) =>
 		HTTPMethod.get(`/api/v1/restaurant/paging?page=${page}&limit=10`, {
 			headers,
@@ -66,6 +68,15 @@ class restaurantService {
 		HTTPMethod.get("/api/v1/user_behavior/get_save", {
 			headers,
 		});
+
+	sendSurveyForm = ({ surveyForm, headers }) =>
+		HTTPMethod.post(
+			"/api/v1/user/update",
+			{
+				...surveyForm,
+			},
+			{ headers }
+		);
 }
 
 export default new restaurantService();

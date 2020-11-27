@@ -80,9 +80,25 @@ function* fetchTrendingRestaurant() {
 		yield put(restaurantAction.fetchListRestaurantPerPageSucceeded(response.data));
 		console.log(response);
 		yield put(restaurantAction.fetchRecommendRestaurantSucceeded(response.data));
+		yield put(utilAction.loadedUI());
 		yield put(errorAction.clearError());
 	} catch (error) {
 		console.log(error);
+		yield put(utilAction.loadedUI());
+		yield put(errorAction.getError(error.response));
+	}
+}
+
+function* fetchTrendingGuessRestaurant() {
+	try {
+		const response = yield call(restaurantService.fetchTrendingRestaurantGuess);
+		console.log(response);
+		yield put(restaurantAction.fetchRecommendRestaurantGuessSucceeded(response.data));
+		yield put(utilAction.loadedUI());
+		yield put(errorAction.clearError());
+	} catch (error) {
+		console.log(error);
+		yield put(utilAction.loadedUI());
 		yield put(errorAction.getError(error.response));
 	}
 }
@@ -179,9 +195,18 @@ function* getRestaurantDetail({ id }) {
 }
 
 function* sendSurveyForm({ surveyForm }) {
+	const {
+		authReducer: { token },
+	} = yield select((state) => state);
+
 	try {
 		yield saveLocal.saveToLocal("statusSurvey", true);
-		yield saveLocal.saveToLocal("surveyForm", surveyForm);
+		yield call(restaurantService.sendSurveyForm, {
+			surveyForm,
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
 		yield history.push("/");
 		yield put(restaurantAction.sendSurveyFormSucceeded());
 		yield put(errorAction.clearError());
@@ -355,6 +380,7 @@ function* saveRestaurant({ restaurant }) {
 export default function* restaurantSaga() {
 	yield takeLatest(types.FETCH_LIST_RESTAURANT_REQUEST, fetchListRestaurant);
 	yield takeLatest(types.FETCH_RECOMMEND_TRENDING_RESTAURANT_REQUEST, fetchTrendingRestaurant);
+	yield takeLatest(types.FETCH_RECOMMEND_TRENDING_RESTAURANT_GUESS_REQUEST, fetchTrendingGuessRestaurant);
 	yield takeLatest(types.FETCH_SAVE_LIST_RESTAURANT_REQUEST, fetchSaveRestaurant);
 	yield takeLatest(types.FETCH_LIST_RESTAURANT_PER_PAGE_REQUEST, fetchListRestaurantPerPage);
 	yield takeLatest(types.GET_RESTAURANT_SEARCH_DETAIL_REQUEST, getRestaurantDetail);

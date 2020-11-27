@@ -214,7 +214,7 @@ const SurveyPage = () => {
 
 	if (authenticated === false || errorStatus === 401) return <Redirect to="/login" />;
 
-	if (authenticated === true && statusSurvey === true) return <Redirect to="/" />;
+	if (authenticated === true && statusSurvey) return <Redirect to="/" />;
 
 	return (
 		<>
@@ -445,10 +445,11 @@ const SurveyPage = () => {
 										onClick={() =>
 											dispatch(
 												sendSurveyFormRequest({
-													username,
+													name: username,
 													address: searchAdd,
-													age: chooseAge,
-													gender: chooseGender,
+													age_range: chooseAge.age,
+													gender: chooseGender.gender,
+													is_survey: true,
 												})
 											)
 										}>

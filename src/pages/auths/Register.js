@@ -19,6 +19,7 @@ import FB from "fb";
 import { useSelector, useDispatch } from "react-redux";
 import authAction from "../../stores/redux/actions/authAction";
 import utilAction from "../../stores/redux/actions/utilAction";
+import errorAction from "../../stores/redux/actions/errorAction";
 
 import Loading from "../../components/utils/loading/Loading";
 import InputField from "../../components/utils/inputField/InputField";
@@ -40,6 +41,7 @@ const RegisterPage = () => {
 	const dispatch = useDispatch();
 	const { registerUserRequest } = authAction;
 	const { loadingUI } = utilAction;
+	const { clearError } = errorAction;
 
 	const responseFacebook = (response) => {
 		FB.setAccessToken(response.accessToken);
@@ -193,7 +195,10 @@ const RegisterPage = () => {
 														Bạn đã có tài khoản Tekoda ?
 													</span>
 													<span>
-														<Link to="/login"> Đăng nhập</Link>
+														<Link to="/login" onClick={() => dispatch(clearError())}>
+															{" "}
+															Đăng nhập
+														</Link>
 													</span>
 												</div>
 											</div>

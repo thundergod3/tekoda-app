@@ -38,6 +38,18 @@ class restaurantAction {
 		};
 	}
 
+	fetchRecommendRestaurantGuessRequest() {
+		return {
+			type: types.FETCH_RECOMMEND_TRENDING_RESTAURANT_GUESS_REQUEST,
+		};
+	}
+	fetchRecommendRestaurantGuessSucceeded(trendingRestaurantList) {
+		return {
+			type: types.FETCH_RECOMMEND_TRENDING_RESTAURANT_GUESS_SUCCEEDED,
+			trendingRestaurantList,
+		};
+	}
+
 	fetchSaveRestaurantRequest() {
 		return {
 			type: types.FETCH_SAVE_LIST_RESTAURANT_REQUEST,
@@ -164,8 +176,8 @@ class restaurantAction {
 	}
 	deleteStoreListKeyWord() {
 		return {
-			type: types.DELETE_STORE_LIST_KEYWORD
-		}
+			type: types.DELETE_STORE_LIST_KEYWORD,
+		};
 	}
 	deleleItemStoreListKeyword(keyword) {
 		return {
@@ -173,7 +185,6 @@ class restaurantAction {
 			keyword,
 		};
 	}
-
 
 	trackingUserScrollReviewList(restaurantId) {
 		return {

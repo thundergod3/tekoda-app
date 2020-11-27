@@ -170,9 +170,12 @@ const Navbar = ({
 								</>
 							) : (
 								<>
-									<div className="navbar__button" ref={showOptionContainerRef}>
+									<div
+										className="navbar__button"
+										ref={showOptionContainerRef}
+										onClick={() => setShowOption(!showOption)}>
 										<div className="navbar__buttonDrawerContainer">
-											<MenuIcon onClick={() => setShowOption(!showOption)} />
+											<MenuIcon />
 											<AccountCircleIcon />
 										</div>
 									</div>

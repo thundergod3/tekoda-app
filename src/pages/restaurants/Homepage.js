@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -13,6 +13,7 @@ import RestaurantRecommendList from "../../components/restaurants/restaurantReco
 import WrapperSearchBar from "../../components/layouts/wrapperSearchBar/WrapperSearchBar";
 
 const Homepage = () => {
+	const [tempRandomList, setTempRandomList] = useState([]);
 	const {
 		restaurantReducer: { trendingRestaurantList, statusSurvey },
 		authReducer: { authenticated },
@@ -20,19 +21,30 @@ const Homepage = () => {
 	} = useSelector((state) => state);
 	const dispatch = useDispatch();
 	const {
-		fetchListRestaurantRequest,
 		removeListRestaurantPerPage,
 		fetchRecommendRestaurantRequest,
+		fetchRecommendRestaurantGuessRequest,
 		deleteStoreListKeyWord,
 	} = restaurantAction;
 	const { loadingUI } = utilAction;
 
 	useEffect(() => {
 		dispatch(loadingUI());
-		dispatch(fetchListRestaurantRequest());
 		dispatch(removeListRestaurantPerPage());
 		dispatch(deleteStoreListKeyWord());
-		dispatch(fetchRecommendRestaurantRequest());
+	}, []);
+
+	useEffect(() => {
+		// if (authenticated !== undefined) {
+		// 	if (authenticated === true) {
+		// 		dispatch(fetchRecommendRestaurantRequest());
+		// 	} else {
+		// 		dispatch(fetchRecommendRestaurantGuessRequest());
+		// 	}
+		// }
+
+		setTempRandomList([0, 0, 0].map((item) => Math.floor(Math.random() * 91)));
+		dispatch(fetchRecommendRestaurantGuessRequest());
 	}, []);
 
 	if (statusSurvey === undefined || (!statusSurvey && authenticated === true)) {
@@ -50,18 +62,27 @@ const Homepage = () => {
 							<WrapperSearchBar />
 							<div className="homepage">
 								<RestaurantRecommendList
-									restaurantRecommendList={trendingRestaurantList}
+									restaurantRecommendList={trendingRestaurantList.slice(
+										tempRandomList[0],
+										tempRandomList[0] + 10
+									)}
 									title="Top nhà hàng nổi bật trên mạng xã hội"
 									bio="Take a fresh view an span our top visited places"
 									style={{ marginTop: 0 }}
 								/>
 								<RestaurantRecommendList
-									restaurantRecommendList={trendingRestaurantList}
+									restaurantRecommendList={trendingRestaurantList.slice(
+										tempRandomList[1],
+										tempRandomList[1] + 10
+									)}
 									title="Top ăn trưa gần Hoàng Đạo Thúy gợi ý cho riêng bạn"
 									bio="Take a fresh view an span our top visited places"
 								/>
 								<RestaurantRecommendList
-									restaurantRecommendList={trendingRestaurantList}
+									restaurantRecommendList={trendingRestaurantList.slice(
+										tempRandomList[2],
+										tempRandomList[2] + 10
+									)}
 									title="Top nhà hàng nổi bật trên mạng xã hội"
 									bio="Take a fresh view an span our top visited places"
 								/>

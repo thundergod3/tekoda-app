@@ -19,7 +19,7 @@ const SearchRestaurantPage = ({
 	const {
 		utilReducer: { loading },
 		authReducer: { authenticated },
-		restaurantReducer: { statusSurvey },
+		restaurantReducer: { statusSurvey, restaurantList },
 		errorReducer: { errorStatus },
 	} = useSelector((state) => state);
 	const searchPageRef = useRef(null);
@@ -64,6 +64,7 @@ const SearchRestaurantPage = ({
 		} else {
 			dispatch(fetchListRestaurantRequest());
 			dispatch(fetchListRestaurantPerPageRequest());
+			dispatch(getRestaurantSearchDetailRequest(1076));
 		}
 	}, []);
 

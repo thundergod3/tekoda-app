@@ -8,7 +8,7 @@ const initialState = {
 	restaurantSearchDetail: {},
 	saveRestaurantList: [],
 	trendingRestaurantList: [],
-	statusSurvey: saveLocal.getFromLocal("statusSurvey") ? JSON.parse(saveLocal.getFromLocal("statusSurvey")) : false,
+	statusSurvey: false,
 	restaurantReviewList: [],
 	listKeyWord: [],
 };
@@ -22,6 +22,7 @@ const restaurantReducer = (state = initialState, action) =>
 				break;
 			}
 
+			case types.FETCH_RECOMMEND_TRENDING_RESTAURANT_GUESS_SUCCEEDED:
 			case types.FETCH_RECOMMEND_TRENDING_RESTAURANT_SUCCEEDED: {
 				draft.trendingRestaurantList = action.trendingRestaurantList;
 				break;

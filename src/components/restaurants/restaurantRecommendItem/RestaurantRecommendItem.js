@@ -6,11 +6,15 @@ import utilAction from "../../../stores/redux/actions/utilAction";
 
 import "./RestaurantRecommendItem.scss";
 import numeral from "numeral";
-import recommendRestaurant from "../../../assets/restaurants/restaurant2.png";
 
 import star from "../../../assets/icons/star.png";
 
-const RestaurantRecommendItem = ({ restaurant: { Name, AvgRatingText, comments, Address, PhotoUrl }, id }) => {
+const RestaurantRecommendItem = ({
+	restaurant: {
+		detail: { Name, AvgRatingText, comments, Address, ResId },
+		image_link,
+	},
+}) => {
 	const dispatch = useDispatch();
 	const { getRestaurantSearchDetailRequest } = restaurantAction;
 	const { loadingUI } = utilAction;
@@ -20,9 +24,9 @@ const RestaurantRecommendItem = ({ restaurant: { Name, AvgRatingText, comments, 
 			className="restaurant-recommend-item"
 			onClick={() => {
 				dispatch(loadingUI());
-				dispatch(getRestaurantSearchDetailRequest(id));
+				dispatch(getRestaurantSearchDetailRequest(ResId));
 			}}>
-			<img src={recommendRestaurant} alt={Name} />
+			<img src={image_link[0]} alt={Name} />
 			<div className="restaurant-recommend-item__info">
 				<div className="restaurant-recommend-item__rating">
 					<img src={star} alt={star} className="restaurant-recommend-item__star" />

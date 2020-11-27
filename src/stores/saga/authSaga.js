@@ -4,6 +4,7 @@ import * as types from "../../constants/types";
 import authAction from "../redux/actions/authAction";
 import utilAction from "../redux/actions/utilAction";
 import errorAction from "../redux/actions/errorAction";
+import restaurantAction from "../redux/actions/restaurantAction";
 
 import authService from "../../services/authService";
 
@@ -24,6 +25,9 @@ function* getUser({ token, userData, tokenInfo }) {
 			yield history.push("/survey");
 		} else {
 			const response = yield call(authService.getUserData, { token });
+			if (response?.data?.is_survey) {
+				yield put(restaurantAction.sendSurveyFormSucceeded());
+			}
 			yield put(authAction.getUserDataSucceeded(response.data));
 			yield saveLocal.saveToLocal("user", response.data);
 		}
@@ -44,7 +48,7 @@ function* loginUser({ userForm }) {
 				userForm: {
 					name: userForm.name,
 					email: userForm.email,
-					password: userForm.id,
+					password: "123456789abcdef",
 					f_id: userForm.id,
 				},
 			});
@@ -65,21 +69,29 @@ function* loginUser({ userForm }) {
 
 function* registerUser({ userForm }) {
 	let response = {};
-
 	try {
 		if (userForm.loginFb) {
 			response = yield call(authService.registerUser, {
 				userForm: {
 					name: userForm.name,
 					email: userForm.email,
-					password: userForm.id,
+					password: "123456789abcdef",
 					f_id: userForm.id,
 				},
 			});
+			yield call(loginUser, {
+				userForm: { email: userForm.email, password: "123456789abcdef" },
+			});
 		} else {
-			response = yield call(authService.loginUser, { userForm });
+			response = yield call(authService.registerUser, {
+				userForm: {
+					name: userForm.name,
+					email: userForm.email,
+					password: userForm.password,
+				},
+			});
+			yield call(loginUser, { userForm: { email: userForm.email, password: userForm.password } });
 		}
-		yield call(loginUser, { userForm: { email: userForm.email, password: userForm.password } });
 		yield put(authAction.registerUserSucceeded(response.data));
 		yield saveLocal.saveToLocal("user", response.data);
 		yield call(checkAuthenticated);

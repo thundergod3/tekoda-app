@@ -18,8 +18,9 @@ import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import authAction from "../../stores/redux/actions/authAction";
 import utilAction from "../../stores/redux/actions/utilAction";
-import Loading from "../../components/utils/loading/Loading";
+import errorAction from "../../stores/redux/actions/errorAction";
 
+import Loading from "../../components/utils/loading/Loading";
 import InputField from "../../components/utils/inputField/InputField";
 
 const YupSchema = Yup.object({
@@ -36,6 +37,7 @@ const LoginPage = () => {
 	const dispatch = useDispatch();
 	const { loginUserRequest } = authAction;
 	const { loadingUI } = utilAction;
+	const { clearError } = errorAction;
 
 	const responseFacebook = (response) => {
 		FB.setAccessToken(response.accessToken);
@@ -142,7 +144,9 @@ const LoginPage = () => {
 													Bạn chưa có tài khoản Tekoda ?
 												</span>
 												<span>
-													<Link to="/register">Đăng ký</Link>
+													<Link to="/register" onClick={() => dispatch(clearError())}>
+														Đăng ký
+													</Link>
 												</span>
 											</div>
 										</div>
