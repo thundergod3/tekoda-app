@@ -71,7 +71,7 @@ const RestaurantRecommendList = ({ restaurantRecommendList, title, bio, style })
 						transform: `translateX(${!statusSlide ? pixelTransform * -1 : pixelTransform * -1}px)`,
 					}}>
 					{restaurantRecommendList.slice(0, 10).map((restaurant, index) => (
-						<Link to={`/today-eat/${restaurant.ResId}/page=1`} key={index}>
+						<Link to={`/today-eat/${restaurant.detail.ResId}/page=1`} key={index}>
 							<RestaurantRecommendItem restaurant={restaurant} id={restaurant.ResId} />
 						</Link>
 					))}

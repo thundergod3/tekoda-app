@@ -49,14 +49,14 @@ function* fetchListRestaurantPerPage({ page }) {
 		const {
 			restaurantReducer: { restaurantSearchDetail },
 		} = yield select((state) => state);
-		if (
-			Object.keys(restaurantSearchDetail).length === 0 &&
-			(isNaN(history.location.pathname.substring(11, 13)) || history.location.pathname.substring(11, 13) === "")
-		) {
-			yield call(getRestaurantDetail, { id: response.data[0].ResId });
-		} else {
-			yield call(getRestaurantDetail, { id: response.data[0].ResId });
-		}
+		// if (
+		// 	Object.keys(restaurantSearchDetail).length === 0 &&
+		// 	(isNaN(history.location.pathname.substring(11, 13)) || history.location.pathname.substring(11, 13) === "")
+		// ) {
+		// 	yield call(getRestaurantDetail, { id: response.data[0].detail.ResId });
+		// } else {
+		// 	yield call(getRestaurantDetail, { id: response.data[0].detail.ResId });
+		// }
 		yield put(utilAction.loadedUI());
 		yield put(errorAction.clearError());
 	} catch (error) {
@@ -125,6 +125,7 @@ function* fetchSaveRestaurant() {
 }
 
 function* getRestaurantDetail({ id }) {
+	console.log(id);
 	const {
 		authReducer: { token },
 	} = yield select((state) => state);
@@ -149,7 +150,7 @@ function* getRestaurantDetail({ id }) {
 				restaurantReducer: { restaurantSearchDetail },
 			} = yield select((state) => state);
 			yield call(getRestaurantReview, {
-				restaurantId: restaurantSearchDetail.ResId,
+				restaurantId: restaurantSearchDetail.detail.ResId,
 				count: 1,
 				headers: {
 					Authorization: `Bearer ${token}`,
@@ -179,7 +180,7 @@ function* getRestaurantDetail({ id }) {
 				restaurantReducer: { restaurantSearchDetail },
 			} = yield select((state) => state);
 			yield call(getRestaurantReview, {
-				restaurantId: restaurantSearchDetail.ResId,
+				restaurantId: restaurantSearchDetail.detail.ResId,
 				count: 1,
 				headers: {
 					Authorization: `Bearer ${token}`,
@@ -257,7 +258,7 @@ function* searchRestaurant({ listKeyWord, page }) {
 			restaurantReducer: { restaurantSearchDetail },
 		} = yield select((state) => state);
 		yield call(getRestaurantReview, {
-			restaurantId: restaurantSearchDetail.ResId,
+			restaurantId: restaurantSearchDetail.detail.ResId,
 			count: 1,
 			headers: {
 				Authorization: `Bearer ${token}`,

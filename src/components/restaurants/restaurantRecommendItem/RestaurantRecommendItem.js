@@ -8,6 +8,7 @@ import "./RestaurantRecommendItem.scss";
 import numeral from "numeral";
 
 import star from "../../../assets/icons/star.png";
+import defaultImage from "../../../assets/restaurants/restaurant1.png";
 
 const RestaurantRecommendItem = ({
 	restaurant: {
@@ -26,7 +27,7 @@ const RestaurantRecommendItem = ({
 				dispatch(loadingUI());
 				dispatch(getRestaurantSearchDetailRequest(ResId));
 			}}>
-			<img src={image_link[0]} alt={Name} />
+			<img src={!image_link ? defaultImage : image_link[0]} alt={Name} />
 			<div className="restaurant-recommend-item__info">
 				<div className="restaurant-recommend-item__rating">
 					<img src={star} alt={star} className="restaurant-recommend-item__star" />

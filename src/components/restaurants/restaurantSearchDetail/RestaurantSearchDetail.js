@@ -4,6 +4,7 @@ import "./RestaurantSearchDetail.scss";
 import MoneyIcon from "../../../assets/icons/money.png";
 import CheckIcon from "../../../assets/icons/check.png";
 import numeral from "numeral";
+import defaultImage from "../../../assets/restaurants/restaurant1.png";
 
 import { useSelector, useDispatch } from "react-redux";
 import restaurantAction from "../../../stores/redux/actions/restaurantAction";
@@ -11,8 +12,6 @@ import utilAction from "../../../stores/redux/actions/utilAction";
 
 import SearchIcon from "@material-ui/icons/Search";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
-
-import { withStyles } from "@material-ui/core/styles";
 
 import UserReviewList from "../userReviewList/UserReviewList";
 import { Link } from "react-router-dom";
@@ -50,7 +49,7 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 
 	return (
 		<>
-			{Object.keys(restaurantSearchDetail).length !== 0 && (
+			{Object.keys(restaurantSearchDetail).length !== 0 && restaurantSearchDetail?.detail ? (
 				<div
 					className={`restaurant-search-detail ${active === true ? "restaurant-search-detail--active" : ""}`}>
 					<div className="restaurant-search-detail__container" ref={searchPageRef}>
@@ -70,22 +69,38 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 						</div>
 						<div className="restaurant-search-detail__imageContainer">
 							<img
-								src={restaurantSearchDetail?.image_link[0]}
+								src={
+									!restaurantSearchDetail.image_link
+										? defaultImage
+										: restaurantSearchDetail?.image_link[0]
+								}
 								alt={restaurantSearchDetail?.detail?.Name}
 								className="restaurant-search-detail__image"
 							/>
 							<img
-								src={restaurantSearchDetail?.image_link[1]}
+								src={
+									!restaurantSearchDetail.image_link
+										? defaultImage
+										: restaurantSearchDetail?.image_link[1]
+								}
 								alt={restaurantSearchDetail?.detail?.Name}
 								className="restaurant-search-detail__image"
 							/>
 							<img
-								src={restaurantSearchDetail?.image_link[2]}
+								src={
+									!restaurantSearchDetail.image_link
+										? defaultImage
+										: restaurantSearchDetail?.image_link[2]
+								}
 								alt={restaurantSearchDetail?.detail?.Name}
 								className="restaurant-search-detail__image"
 							/>
 							<img
-								src={restaurantSearchDetail?.image_link[3]}
+								src={
+									!restaurantSearchDetail.image_link
+										? defaultImage
+										: restaurantSearchDetail?.image_link[3]
+								}
 								alt={restaurantSearchDetail?.detail?.Name}
 								className="restaurant-search-detail__image"
 							/>
@@ -163,6 +178,10 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 						</div>
 						<UserReviewList />
 					</div>
+				</div>
+			) : (
+				<div className="restaurant-search-detail__notFound">
+					Rất tiếc, nhà hàng bạn muốn không nằm trong danh sách.
 				</div>
 			)}
 		</>

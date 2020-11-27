@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import "./RestaurantFilterItem.scss";
 import star from "../../../assets/icons/star.png";
 import numeral from "numeral";
+import defaultImage from "../../../assets/restaurants/restaurant1.png";
 
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteIcon from "@material-ui/icons/Favorite";
@@ -53,7 +54,11 @@ const RestaurantFilterItem = ({ restaurant, scrollTopRestaurantDetail }) => {
 					scrollTopRestaurantDetail();
 				}, 200);
 			}}>
-			<img src={image_link && image_link[0]} alt={Name} className="restaurant-filter-item__image" />
+			<img
+				src={!image_link ? defaultImage : image_link[0]}
+				alt={Name}
+				className="restaurant-filter-item__image"
+			/>
 			<div className="restaurant-filter-item__info">
 				<div className="restaurant-filter-item__infoNavbar">
 					<div className="restaurant-filter-item__infoNavbarContainer">
