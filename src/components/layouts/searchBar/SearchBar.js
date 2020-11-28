@@ -150,8 +150,6 @@ const listSearchTime = [
 	},
 ];
 
-const checkFormat = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-
 const SearchBar = ({ style, setShowSearchBar, searchBarItemRef, showSearchBar }) => {
 	const {
 		authReducer: { authenticated },
@@ -281,50 +279,44 @@ const SearchBar = ({ style, setShowSearchBar, searchBarItemRef, showSearchBar })
 	};
 
 	const handleSearch = (e) => {
-		if (!checkFormat.test(searchAnyDishes) && !checkFormat.test(peopleSearchText)) {
-			e.stopPropagation();
-			dispatch(loadingUI());
-			dispatch(
-				storeListKeyword(
-					[
-						searchAnyDishes,
-						...choosePreference,
-						peopleSearchText !== "" ? `${peopleSearchText} người` : "",
-						chooseTime !== "" ? chooseTime : "",
-					].filter((item) => item !== "")
-				)
-			);
-			dispatch(
-				searchRestaurantRequest(
-					[
-						searchAnyDishes,
-						...choosePreference,
-						peopleSearchText !== "" ? `${peopleSearchText} người` : "",
-						chooseTime !== "" ? chooseTime : "",
-					].filter((item) => item !== "")
-				)
-			);
-
-			if (setShowSearchBar !== undefined) setShowSearchBar(false);
-
-			history.push(
-				`/today-eat/${[
+		e.stopPropagation();
+		dispatch(loadingUI());
+		dispatch(
+			storeListKeyword(
+				[
 					searchAnyDishes,
 					...choosePreference,
 					peopleSearchText !== "" ? `${peopleSearchText} người` : "",
 					chooseTime !== "" ? chooseTime : "",
-				]
-					.filter((item) => item !== "")
-					.join("+")}/page=1`
-			);
-		}
+				].filter((item) => item !== "")
+			)
+		);
+		dispatch(
+			searchRestaurantRequest(
+				[
+					searchAnyDishes.split("?").join(""),
+					...choosePreference,
+					peopleSearchText !== "" ? `${peopleSearchText} người` : "",
+					chooseTime !== "" ? chooseTime : "",
+				].filter((item) => item !== "")
+			)
+		);
+		if (setShowSearchBar !== undefined) setShowSearchBar(false);
+
+		history.push(
+			`/today-eat/${[
+				searchAnyDishes.split("?").join(""),
+				...choosePreference,
+				peopleSearchText !== "" ? `${peopleSearchText} người` : "",
+				chooseTime !== "" ? chooseTime : "",
+			]
+				.filter((item) => item !== "")
+				.join("+")}/page=1`
+		);
 	};
 
-	const handleCheckDisabledButton = () =>
-		choosePreference.length === 0 &&
-		chooseTime === "" &&
-		checkFormat.test(searchAnyDishes === "" ? " " : searchAnyDishes) &&
-		checkFormat.test(peopleSearchText === "" ? " " : peopleSearchText);
+	const handleCheckDisbleButton = () =>
+		choosePreference.length === 0 && searchAnyDishes === "" && peopleSearchText === "" && chooseTime === "";
 
 	useEffect(() => {
 		if (authenticated) getLocation(setSearchAdd);
@@ -442,8 +434,8 @@ const SearchBar = ({ style, setShowSearchBar, searchBarItemRef, showSearchBar })
 					.join("+")}/page=1`}
 				onClick={handleSearch}>
 				<button
-					className={`search-bar__searchButton ${handleCheckDisabledButton() ? "button--disable" : ""}`}
-					disabled={handleCheckDisabledButton() ? true : false}>
+					className={`search-bar__searchButton ${handleCheckDisbleButton() ? "button--disable" : ""}`}
+					disabled={handleCheckDisbleButton() ? true : false}>
 					<SearchIcon />
 					<span>Tìm kiếm</span>
 				</button>
