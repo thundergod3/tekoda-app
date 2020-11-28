@@ -1,4 +1,4 @@
-import { takeEvery, takeLatest, call, put, select } from "redux-saga/effects";
+import { takeEvery, takeLatest, call, put, select, delay } from "redux-saga/effects";
 
 import * as types from "../../constants/types";
 import authAction from "../redux/actions/authAction";
@@ -107,6 +107,9 @@ function* registerUser({ userForm }) {
 function* logOutUser() {
 	yield call(removeDataFromLocal);
 	yield put(authAction.logoutUserSucceeded());
+	yield put(restaurantAction.sendSurveyFormFailed());
+	yield delay(1000);
+	yield put(utilAction.loadedUI());
 }
 
 function* checkAuthenticated() {
@@ -118,6 +121,7 @@ function* checkAuthenticated() {
 	} else {
 		yield put(authAction.checkAuthenticatedFailed());
 		yield call(removeDataFromLocal);
+		yield put(restaurantAction.sendSurveyFormFailed());
 	}
 }
 

@@ -42,7 +42,6 @@ const LoginPage = () => {
 	const responseFacebook = (response) => {
 		FB.setAccessToken(response.accessToken);
 		FB.api("/me", "GET", { fields: "id, email, name" }, (userData) => {
-			console.log(userData);
 			dispatch(loginUserRequest({ loginFb: true, ...userData }));
 		});
 	};

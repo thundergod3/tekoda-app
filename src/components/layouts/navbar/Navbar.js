@@ -2,22 +2,20 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
+import authAction from "../../../stores/redux/actions/authAction";
+import utilAction from "../../../stores/redux/actions/utilAction";
 
 import logo from "../../../assets/icons/logo.png";
 import "./Navbar.scss";
 
 import NavbarOption from "../navbarOption/NavbarOption";
+import SearchBar from "../searchBar/SearchBar";
 
 import LanguageIcon from "@material-ui/icons/Language";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import SearchIcon from "@material-ui/icons/Search";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
-
-import SearchBar from "../searchBar/SearchBar";
-import authAction from "../../../stores/redux/actions/authAction";
 
 const navbarOption = [
 	{
@@ -46,19 +44,26 @@ const Navbar = ({
 	const [showOption, setShowOption] = useState(false);
 	const dispatch = useDispatch();
 	const { logoutUserRequest } = authAction;
+	const { loadingUI } = utilAction;
 
 	const renderLayoutShowOption = () => (
 		<div className="show-option__container" ref={showOptionRef}>
 			<div
 				className="show-option__containerButton"
 				onClick={(e) => {
+					dispatch(loadingUI());
 					dispatch(logoutUserRequest());
 					setShowOption(false);
 				}}>
 				<p>Đăng xuất</p>
 			</div>
 			<Link to="/save-restaurant">
-				<div className="show-option__containerButton" onClick={() => setShowOption(false)}>
+				<div
+					className="show-option__containerButton"
+					onClick={() => {
+						dispatch(loadingUI());
+						setShowOption(false);
+					}}>
 					<p>Nhà hàng ưu thích</p>
 				</div>
 			</Link>

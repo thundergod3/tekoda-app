@@ -150,6 +150,8 @@ const listSearchTime = [
 	},
 ];
 
+const checkFormat = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+
 const SearchBar = ({ style, setShowSearchBar, searchBarItemRef, showSearchBar }) => {
 	const {
 		authReducer: { authenticated },
@@ -279,44 +281,50 @@ const SearchBar = ({ style, setShowSearchBar, searchBarItemRef, showSearchBar })
 	};
 
 	const handleSearch = (e) => {
-		e.stopPropagation();
-		dispatch(loadingUI());
-		dispatch(
-			storeListKeyword(
-				[
-					searchAnyDishes,
-					...choosePreference,
-					peopleSearchText !== "" ? `${peopleSearchText} người` : "",
-					chooseTime !== "" ? chooseTime : "",
-				].filter((item) => item !== "")
-			)
-		);
-		dispatch(
-			searchRestaurantRequest(
-				[
-					searchAnyDishes,
-					...choosePreference,
-					peopleSearchText !== "" ? `${peopleSearchText} người` : "",
-					chooseTime !== "" ? chooseTime : "",
-				].filter((item) => item !== "")
-			)
-		);
-		if (setShowSearchBar !== undefined) setShowSearchBar(false);
+		if (!checkFormat.test(searchAnyDishes) && !checkFormat.test(peopleSearchText)) {
+			e.stopPropagation();
+			dispatch(loadingUI());
+			dispatch(
+				storeListKeyword(
+					[
+						searchAnyDishes,
+						...choosePreference,
+						peopleSearchText !== "" ? `${peopleSearchText} người` : "",
+						chooseTime !== "" ? chooseTime : "",
+					].filter((item) => item !== "")
+				)
+			);
+			dispatch(
+				searchRestaurantRequest(
+					[
+						searchAnyDishes,
+						...choosePreference,
+						peopleSearchText !== "" ? `${peopleSearchText} người` : "",
+						chooseTime !== "" ? chooseTime : "",
+					].filter((item) => item !== "")
+				)
+			);
 
-		history.push(
-			`/today-eat/${[
-				searchAnyDishes,
-				...choosePreference,
-				peopleSearchText !== "" ? `${peopleSearchText} người` : "",
-				chooseTime !== "" ? chooseTime : "",
-			]
-				.filter((item) => item !== "")
-				.join("+")}/page=1`
-		);
+			if (setShowSearchBar !== undefined) setShowSearchBar(false);
+
+			history.push(
+				`/today-eat/${[
+					searchAnyDishes,
+					...choosePreference,
+					peopleSearchText !== "" ? `${peopleSearchText} người` : "",
+					chooseTime !== "" ? chooseTime : "",
+				]
+					.filter((item) => item !== "")
+					.join("+")}/page=1`
+			);
+		}
 	};
 
-	const handleCheckDisbleButton = () =>
-		choosePreference.length === 0 && searchAnyDishes === "" && peopleSearchText === "" && chooseTime === "";
+	const handleCheckDisabledButton = () =>
+		choosePreference.length === 0 &&
+		chooseTime === "" &&
+		checkFormat.test(searchAnyDishes === "" ? " " : searchAnyDishes) &&
+		checkFormat.test(peopleSearchText === "" ? " " : peopleSearchText);
 
 	useEffect(() => {
 		if (authenticated) getLocation(setSearchAdd);
@@ -434,8 +442,8 @@ const SearchBar = ({ style, setShowSearchBar, searchBarItemRef, showSearchBar })
 					.join("+")}/page=1`}
 				onClick={handleSearch}>
 				<button
-					className={`search-bar__searchButton ${handleCheckDisbleButton() ? "button--disable" : ""}`}
-					disabled={handleCheckDisbleButton() ? true : false}>
+					className={`search-bar__searchButton ${handleCheckDisabledButton() ? "button--disable" : ""}`}
+					disabled={handleCheckDisabledButton() ? true : false}>
 					<SearchIcon />
 					<span>Tìm kiếm</span>
 				</button>

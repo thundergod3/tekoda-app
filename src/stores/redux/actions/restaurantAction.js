@@ -94,6 +94,11 @@ class restaurantAction {
 			surveyForm,
 		};
 	}
+	sendSurveyFormFailed() {
+		return {
+			type: types.SEND_SURVEY_FORM_FAILED,
+		};
+	}
 
 	getAllSearchRestaurantRequest(listKeyword) {
 		return {
