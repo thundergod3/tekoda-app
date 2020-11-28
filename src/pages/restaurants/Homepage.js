@@ -75,7 +75,7 @@ const Homepage = () => {
 										tempRandomList[1],
 										tempRandomList[1] + 10
 									)}
-									title="Top ăn trưa gần Hoàng Đạo Thúy gợi ý cho riêng bạn"
+									title="Top ăn trưa gần địa điểm gợi ý cho riêng bạn"
 									bio="Take a fresh view an span our top visited places"
 								/>
 								<RestaurantRecommendList
