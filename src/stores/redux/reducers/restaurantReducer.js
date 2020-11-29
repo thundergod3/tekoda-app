@@ -77,6 +77,10 @@ const restaurantReducer = (state = initialState, action) =>
 				draft.statusSurvey = true;
 				break;
 			}
+			case types.SEND_SURVEY_FORM_FAILED: {
+				draft.statusSurvey = false;
+				break;
+			}
 
 			case types.GET_ALL_SEARCH_RESTAURANT_SUCCEEDED: {
 				draft.restaurantList = action.allSearchRestaurant;
