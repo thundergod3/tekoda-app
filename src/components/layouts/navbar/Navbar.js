@@ -64,7 +64,7 @@ const Navbar = ({
 						dispatch(loadingUI());
 						setShowOption(false);
 					}}>
-					<p>Nhà hàng ưu thích</p>
+					<p>Nhà hàng yêu thích</p>
 				</div>
 			</Link>
 		</div>
