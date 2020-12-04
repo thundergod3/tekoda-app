@@ -38,6 +38,26 @@ class restaurantAction {
 		};
 	}
 
+	fetchRecommendRestaurantLocationRequest(location) {
+		return {
+			type: types.FETCH_RECOMMEND_LOCATION_RESTAURANT_REQUEST,
+			location,
+		};
+	}
+	fetchRecommendRestaurantLocationSucceeded(locationRestaurantList) {
+		return {
+			type: types.FETCH_RECOMMEND_LOCATION_RESTAURANT_SUCCEEDED,
+			locationRestaurantList,
+		};
+	}
+
+	fetchListCollectionRestaurant(collectionId) {
+		return {
+			type: types.FETCH_LIST_COLLECTION_RESTAURANT,
+			collectionId,
+		};
+	}
+
 	fetchRecommendRestaurantGuessRequest() {
 		return {
 			type: types.FETCH_RECOMMEND_TRENDING_RESTAURANT_GUESS_REQUEST,
@@ -225,6 +245,25 @@ class restaurantAction {
 		return {
 			type: types.GET_SAVE_RESTAURANT_LIST_SUCCEEDED,
 			restaurantSaveList,
+		};
+	}
+
+	sendInfoRecommendRestaurant(listTypeRestaurant) {
+		return {
+			type: types.SEND_INFO_RECOMMNED_RESTAURANT,
+			listTypeRestaurant,
+		};
+	}
+
+	getListCollectionRequest() {
+		return {
+			type: types.GET_LIST_COLLECTION_REQUESt,
+		};
+	}
+	getListCollectionSucceeded(collectionList) {
+		return {
+			type: types.GET_LIST_COLLECTION_SUCCEEDED,
+			collectionList,
 		};
 	}
 }

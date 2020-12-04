@@ -21,16 +21,18 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 		restaurantReducer: { restaurantSearchDetail, restaurantReviewList, saveRestaurantList },
 		utilReducer: { active },
 	} = useSelector((state) => state);
+	const dispatch = useDispatch();
+	const { saveRestaurantRequest, searchRestaurantRequest, getAllSearchRestaurantRequest } = restaurantAction;
+	const { loadingUI } = utilAction;
 	const [minPrice, setMinPrice] = useState(0);
 	const [maxPrice, setMaxPrice] = useState(0);
 	const [save, setSave] = useState(false);
 	const [checkSave, setCheckSave] = useState(false);
-	const dispatch = useDispatch();
-	const { saveRestaurantRequest, searchRestaurantRequest, getAllSearchRestaurantRequest } = restaurantAction;
-	const { loadingUI } = utilAction;
 
 	useEffect(() => {
-		const findIndex = saveRestaurantList.findIndex((item) => item.ResId === restaurantSearchDetail?.detail?.ResId);
+		const findIndex = saveRestaurantList.findIndex(
+			(item) => item?.detail?.ResId === restaurantSearchDetail?.detail?.ResId
+		);
 		const splitPrice = restaurantSearchDetail?.detail?.PriceRange?.split("-");
 		const tempMinPrice = splitPrice ? splitPrice[0]?.split("đ")[0] : 0;
 		const tempMaxPrice = splitPrice ? splitPrice[1]?.split("đ")[0] : 0;

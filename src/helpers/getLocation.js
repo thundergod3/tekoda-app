@@ -4,7 +4,7 @@ import saveLocal from "./saveLocal";
 Geocode.setApiKey("AIzaSyAHF5sU-uXkvCZ6L1ieDNBwOhERg3moCkg");
 Geocode.enableDebug();
 
-const getLocation = (saveAddress, statusSaveStreet) => {
+const getLocation = (saveAddress, statusSaveStreet, customSaveAddress) => {
 	navigator.geolocation.getCurrentPosition(
 		(position) => {
 			Geocode.fromLatLng(position.coords.latitude, position.coords.longitude).then(
@@ -16,7 +16,12 @@ const getLocation = (saveAddress, statusSaveStreet) => {
 							const streetName = response.results[0].address_components[2].short_name;
 							saveLocal.saveToLocal("street", streetName);
 						}
-						saveAddress(address);
+
+						if (customSaveAddress) {
+							saveAddress(response.results);
+						} else {
+							saveAddress(address);
+						}
 					}
 				},
 				(error) => {

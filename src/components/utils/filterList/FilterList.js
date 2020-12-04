@@ -25,11 +25,11 @@ const filterList = [
 		icon: NoodleBlackImg,
 	},
 	{
-		title: "Bún/Phở",
+		title: "Phở/Bún",
 		icon: NoodleWhiteImg,
 	},
 	{
-		title: "Bánh mì",
+		title: "Bánh mỳ",
 		icon: BankMiImg,
 	},
 	{
@@ -41,7 +41,7 @@ const filterList = [
 		icon: MilkTeaImg,
 	},
 	{
-		title: "Vỉa hè",
+		title: "Ăn vặt",
 		icon: StreetFoodImg,
 	},
 	{
@@ -69,12 +69,8 @@ const FilterList = () => {
 					<div className="filter-list__welcomeBio">
 						<p className="filter-list__welcomeText">
 							Chào buổi sáng{userData.name ? `, ${userData.name}!` : ""}{" "}
-							<strong>Khám phá ẩm thực cùng Tekoda!</strong>
+							<strong>Cùng Tekoda khám phá ẩm thực nhé!</strong>
 						</p>
-						<div className="filter-list__welcomeBioExpand">
-							<p className="filter-list__welcomeBioExpandText">Xem thêm gợi ý</p>
-							<ExpandMoreIcon />
-						</div>
 					</div>
 				</div>
 			)}

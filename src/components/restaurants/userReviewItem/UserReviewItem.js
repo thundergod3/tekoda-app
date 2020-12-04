@@ -4,15 +4,66 @@ import "./UserReviewItem.scss";
 import moment from "moment";
 import "moment/locale/vi";
 
-import user1 from "../../../assets/users/user1.png";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+
+const userNameList = [
+	{
+		name: "Ngọc Hưng",
+	},
+	{
+		name: "Việt Anh",
+	},
+	{
+		name: "Đức Duy",
+	},
+	{
+		name: "Ngọc Bá",
+	},
+	{
+		name: "Văn Minh",
+	},
+	{
+		name: "Trung Dũng",
+	},
+	{
+		name: "Văn Đạt",
+	},
+	{
+		name: "Ngọc Hà",
+	},
+	{
+		name: "Thu Hiền",
+	},
+	{
+		name: "Thu Hà",
+	},
+	{
+		name: "Thu Diệu",
+	},
+	{
+		name: "Kiều Anh",
+	},
+	{
+		name: "Ngọc Mỹ",
+	},
+	{
+		name: "Thị Phương",
+	},
+	{
+		name: "Minh Thu",
+	},
+	{
+		name: "Ngọc Mai",
+	},
+];
 
 const UserReviewItem = ({ userReview: { CreatedDate, Description, Id } }) => {
 	return (
 		<div className="user-review-item" key={Id}>
 			<div className="user-review-item__info">
-				<img src={user1} alt="Cong" className="user-review-item__avatar" />
+				<AccountCircleIcon className="user-review-item__avatar" />
 				<div className="user-review-item__bio">
-					<p className="user-review-item__username">Cong</p>
+					<p className="user-review-item__username">{userNameList[Math.floor(Math.random() * 15)].name}</p>
 					<p className="user-review-item__time">
 						{moment(CreatedDate)
 							.format("MMMM YYYY")

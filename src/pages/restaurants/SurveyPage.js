@@ -36,66 +36,82 @@ Geocode.enableDebug();
 
 const listRestaurant = [
 	{
+		id: 1,
 		title: "món âu",
 		img: monAuImg,
 	},
 	{
+		id: 2,
 		title: "món á",
 		img: monAImg,
 	},
 	{
+		id: 3,
 		title: "Sang trọng",
 		img: nhaHangSangTrongImg,
 	},
 	{
+		id: 4,
 		title: "Đặc sản vùng miền",
 		img: doChayImg,
 	},
 	{
+		id: 5,
 		title: "Quán nhậu",
 		img: quanNhauImg,
 	},
 	{
+		id: 6,
 		title: "Cơm văn phòng",
 		img: comVanPhongImg,
 	},
 	{
+		id: 7,
 		title: "Quán bình dân",
 		img: quanBinhDanImg,
 	},
 	{
+		id: 8,
 		title: "Quán vỉa hè",
 		img: quanVieHeImg,
 	},
 	{
+		id: 10,
 		title: "Buffet",
 		img: buffetImg,
 	},
 	{
+		id: 11,
 		title: "Fast-food",
 		img: fastFoodImg,
 	},
 	{
+		id: 12,
 		title: "Lẩu & Nướng",
 		img: lauNuongImg,
 	},
 	{
+		id: 13,
 		title: "Đồ chay & Healthy",
 		img: doChayImg,
 	},
 	{
+		id: 14,
 		title: "Coffee",
 		img: coffeeImg,
 	},
 	{
+		id: 15,
 		title: "Trà & Bánh",
 		img: traBanhImg,
 	},
 	{
+		id: 16,
 		title: "Bar & Pub",
 		img: barPubImg,
 	},
 	{
+		id: 17,
 		title: "Xu hướng",
 		img: xuHuongImg,
 	},
@@ -146,7 +162,7 @@ const SurveyPage = () => {
 		errorReducer: { errorStatus },
 	} = useSelector((state) => state);
 	const dispatch = useDispatch();
-	const { sendSurveyFormRequest } = restaurantAction;
+	const { sendSurveyFormRequest, sendInfoRecommendRestaurant } = restaurantAction;
 	const [username, setUsername] = useState("");
 	const [searchAdd, setSearchAdd] = useState("");
 	const [currentDrawer, setCurrentDrawer] = useState(1);
@@ -200,7 +216,7 @@ const SurveyPage = () => {
 		chooseAge === "" ||
 		chooseGender === "" ||
 		chooseRestaurant.length === 0 ||
-		chooseRestaurant.length < 4;
+		chooseRestaurant.length < 5;
 
 	useEffect(() => {
 		setUsername(userData.name || "");
@@ -353,7 +369,7 @@ const SurveyPage = () => {
 										value={searchAdd}
 										onChange={handleChange}
 										onSelect={handleSelect}>
-										{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+										{({ getInputProps, suggestions, getSuggestionItemProps }) => (
 											<div>
 												<input
 													id="address"
@@ -419,7 +435,7 @@ const SurveyPage = () => {
 														restaurant,
 														chooseRestaurant,
 														setChooseRestaurant,
-														5
+														true
 													)
 												}
 												style={{ position: "relative" }}>
@@ -442,7 +458,7 @@ const SurveyPage = () => {
 											checkValidateFinishBtn() ? "button--disable" : ""
 										}`}
 										disabled={checkValidateFinishBtn() ? true : false}
-										onClick={() =>
+										onClick={() => {
 											dispatch(
 												sendSurveyFormRequest({
 													name: username,
@@ -451,8 +467,11 @@ const SurveyPage = () => {
 													gender: chooseGender.gender,
 													is_survey: true,
 												})
-											)
-										}>
+											);
+											dispatch(
+												sendInfoRecommendRestaurant(chooseRestaurant.map((item) => item.id))
+											);
+										}}>
 										Hoàn thành
 									</button>
 								) : (

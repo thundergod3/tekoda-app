@@ -7,9 +7,22 @@ class restaurantService {
 		});
 
 	fetchTrendingRestaurant = ({ headers }) =>
-		HTTPMethod.get("/api/v1/restaurant/recommend", {
+		HTTPMethod.get("/api/v1/restaurant/recommendX", {
 			headers,
 		});
+
+	fetchLocationRestaurantRecommend = ({ location, headers }) =>
+		HTTPMethod.post(
+			"/api/v1/restaurant/recommend_by_distance",
+			{
+				latitude: location.latitude,
+				longitude: location.longitude,
+			},
+			{ headers }
+		);
+
+	fetchListCollectionRestaurant = ({ collectionId, headers }) =>
+		HTTPMethod.post("/api/v1/restaurant/get_by_category", { category_id: collectionId }, { headers });
 
 	fetchTrendingRestaurantGuess = () => HTTPMethod.get("/api/v1/restaurant/guess");
 
@@ -34,9 +47,7 @@ class restaurantService {
 		});
 
 	getSearchRestaurantPePage = ({ listKeyWord, page, headers }) =>
-		HTTPMethod.get(`/api/v1/restaurant/search?q=${listKeyWord.join("+")}&limit=10&page=${page}`, {
-			headers,
-		});
+		HTTPMethod.get(`/api/v1/restaurant/search?q=${listKeyWord.join("+")}&limit=10&page=${page}`, { headers });
 
 	getRestaurantReview = ({ restaurantId, count, headers }) =>
 		HTTPMethod.get(`/api/v1/review/get?resId=${restaurantId}&count=${count}`, {
@@ -77,6 +88,17 @@ class restaurantService {
 			},
 			{ headers }
 		);
+
+	sendInfoRecommendRestaurant = ({ listTypeRestaurant, headers }) =>
+		HTTPMethod.post(
+			"/api/v1/fuitable/saveto_uf",
+			{
+				fuitable_id: listTypeRestaurant,
+			},
+			{ headers }
+		);
+
+	getListCollection = ({ headers }) => HTTPMethod.get("/api/v1/fuitable/get_by_user", { headers });
 }
 
 export default new restaurantService();

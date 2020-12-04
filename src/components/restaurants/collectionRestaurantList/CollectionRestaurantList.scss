@@ -1,0 +1,19 @@
+.collection-restaurant-list {
+	margin-bottom: 50px;
+
+	.collection-restaurant-list__container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 10px;
+		width: 100%;
+	}
+
+	.collection-restaurant-list__title {
+		font-family: SVN-Circular-Normal;
+		font-weight: bold;
+		font-size: 30px;
+		color: #000000;
+		margin-bottom: 30px;
+	}
+}

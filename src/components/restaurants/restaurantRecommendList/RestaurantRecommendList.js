@@ -16,7 +16,7 @@ const RestaurantRecommendList = ({ restaurantRecommendList, title, bio, style })
 	const [statusSlide, setStatusSlide] = useState(false);
 
 	const handleNextSlide = () => {
-		if ((slide === 1 && window.innerWidth > 420) || (window.innerWidth <= 420 && slide === 3)) {
+		if (slide === 1 && window.innerWidth > 420) {
 			return;
 		} else {
 			setSlide(slide + 1);
@@ -46,7 +46,6 @@ const RestaurantRecommendList = ({ restaurantRecommendList, title, bio, style })
 	return (
 		<div className="restaurant-recommend-list" style={style}>
 			<p className="restaurant-recommend-list__title">{title}</p>
-			<p className="restaurant-recommend-list__bio">{bio}</p>
 			<div className="restaurant-recommend-list__container">
 				<div className="icon-arrow__container">
 					<img

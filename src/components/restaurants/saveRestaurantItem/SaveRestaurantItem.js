@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import restaurantAction from "../../../stores/redux/actions/restaurantAction";
 import { useSelector, useDispatch } from "react-redux";
@@ -13,20 +13,34 @@ const SaveRestaurantItem = ({ restaurant }) => {
 	const {
 		restaurantReducer: { saveRestaurantList },
 	} = useSelector((state) => state);
-	const [like, setLike] = useState(false);
 	const dispatch = useDispatch();
 	const { saveRestaurantRequest } = restaurantAction;
-	const { Name, PhotoUrl, Address, AvgRatingText } = restaurant;
+	const [like, setLike] = useState(false);
+	const [minPrice, setMinPrice] = useState(0);
+	const [maxPrice, setMaxPrice] = useState(0);
+	const {
+		detail: { Name, Address, AvgRatingText, PriceRange },
+		image_link,
+	} = restaurant;
 
 	let checkLike = false;
 
 	for (let i = 0; i < saveRestaurantList.length; i++) {
-		if (restaurant._id === saveRestaurantList[i]?._id) checkLike = true;
+		if (restaurant?.detail?.ResId === saveRestaurantList[i]?.detail?.ResId) checkLike = true;
 	}
+
+	useEffect(() => {
+		const splitPrice = PriceRange?.split("-");
+		const tempMinPrice = splitPrice ? splitPrice[0]?.split("đ")[0].split(".")[0] : 0;
+		const tempMaxPrice = splitPrice ? splitPrice[1]?.split("đ")[0].split(".")[0] : 0;
+
+		setMinPrice(tempMinPrice);
+		setMaxPrice(tempMaxPrice);
+	}, [restaurant]);
 
 	return (
 		<div className="save-restaurant-item">
-			<img src={PhotoUrl} alt={Name} className="save-restaurant-item__image" />
+			<img src={image_link[0]} alt={Name} className="save-restaurant-item__image" />
 			<div className="save-restaurant-item__rightContainer">
 				<div className="save-restaurant-item__rightBio">
 					<div className="save-restaurant-item__rightBioContainer">
@@ -66,11 +80,15 @@ const SaveRestaurantItem = ({ restaurant }) => {
 				<div className="save-restaurant-item__Info">
 					<div className="save-restaurant-item__rating">
 						<img src={StartIcon} alt={AvgRatingText} className="save-restaurant-item__ratingImage" />
-						<span className="save-restaurant-item__ratingStart">{7}</span>
-						<span className="save-restaurant-item__ratingComment">(110 đánh giá)</span>
+						<span className="save-restaurant-item__ratingStart">{Math.floor(AvgRatingText)}</span>
+						<span className="save-restaurant-item__ratingComment">
+							({Math.floor(Math.random() * 100)} đánh giá)
+						</span>
 					</div>
 					<div className="save-restaurant-item__price">
-						<p>Giá: 100-400k</p>
+						<p>
+							Giá: vnd {minPrice}k-{maxPrice}k
+						</p>
 					</div>
 				</div>
 			</div>

@@ -77,7 +77,6 @@ function* fetchTrendingRestaurant() {
 				Authorization: `Bearer ${token}`,
 			},
 		});
-		yield put(restaurantAction.fetchListRestaurantPerPageSucceeded(response.data));
 		console.log(response);
 		yield put(restaurantAction.fetchRecommendRestaurantSucceeded(response.data));
 		yield put(utilAction.loadedUI());
@@ -85,6 +84,51 @@ function* fetchTrendingRestaurant() {
 	} catch (error) {
 		console.log(error);
 		yield put(utilAction.loadedUI());
+		yield put(errorAction.getError(error.response));
+	}
+}
+
+function* fetchLocationRestaurant({ location }) {
+	const {
+		authReducer: { token },
+	} = yield select((state) => state);
+
+	try {
+		const response = yield call(restaurantService.fetchLocationRestaurantRecommend, {
+			location,
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(response);
+		yield put(restaurantAction.fetchRecommendRestaurantLocationSucceeded(response.data));
+		yield put(errorAction.clearError());
+	} catch (error) {
+		console.log(error);
+		yield put(utilAction.loadedUI());
+		yield put(errorAction.getError(error.response));
+	}
+}
+
+function* fetchListCollectionRestaurant({ collectionId }) {
+	const {
+		authReducer: { token },
+	} = yield select((state) => state);
+
+	try {
+		const response = yield call(restaurantService.fetchListCollectionRestaurant, {
+			collectionId,
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(response);
+		yield put(restaurantAction.fetchListRestaurantPerPageSucceeded(response.data));
+		yield put(restaurantAction.fetchListRestaurantSucceeded(response.data));
+		yield call(getRestaurantDetail, { id: response.data[0].detail.ResId });
+		yield put(errorAction.clearError());
+	} catch (error) {
+		console.log(error);
 		yield put(errorAction.getError(error.response));
 	}
 }
@@ -124,8 +168,39 @@ function* fetchSaveRestaurant() {
 	}
 }
 
+function* saveRestaurant({ restaurant }) {
+	const {
+		authReducer: { token },
+	} = yield select((state) => state);
+
+	try {
+		const response = yield call(restaurantService.likeRestaurant, {
+			restaurantId: restaurant?.detail?.ResId,
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(response.data);
+		if (response.data.enjoy === 1) {
+			yield put(restaurantAction.saveRestaurantSucceeded(restaurant));
+		} else {
+			yield put(restaurantAction.removeSaveRestaurant(restaurant));
+		}
+
+		yield call(restaurantService.saveRestaurant, {
+			restaurantId: restaurant?.detail?.ResId,
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		yield put(errorAction.clearError());
+	} catch (error) {
+		console.log(error);
+		yield put(errorAction.getError(error.response));
+	}
+}
+
 function* getRestaurantDetail({ id }) {
-	console.log(id);
 	const {
 		authReducer: { token },
 	} = yield select((state) => state);
@@ -346,32 +421,37 @@ function* trackingUserIntersection({ restaurantId }) {
 	}
 }
 
-function* saveRestaurant({ restaurant }) {
+function* sendInfoRecommendRestaurant({ listTypeRestaurant }) {
 	const {
 		authReducer: { token },
 	} = yield select((state) => state);
 
 	try {
-		const response = yield call(restaurantService.likeRestaurant, {
-			restaurantId: restaurant?.ResId,
+		yield call(restaurantService.sendInfoRecommendRestaurant, {
+			listTypeRestaurant,
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},
 		});
-		console.log(response.data);
-		if (response.data.enjoy === 1) {
-			yield put(restaurantAction.saveRestaurantSucceeded(restaurant));
-		} else {
-			yield put(restaurantAction.removeSaveRestaurant(restaurant));
-		}
+	} catch (error) {
+		console.log(error);
+		yield put(errorAction.getError(error.response));
+	}
+}
 
-		yield call(restaurantService.saveRestaurant, {
-			restaurantId: restaurant?.ResId,
+function* getListCollection() {
+	const {
+		authReducer: { token },
+	} = yield select((state) => state);
+
+	try {
+		const response = yield call(restaurantService.getListCollection, {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},
 		});
-		yield put(errorAction.clearError());
+
+		yield put(restaurantAction.getListCollectionSucceeded(response.data));
 	} catch (error) {
 		console.log(error);
 		yield put(errorAction.getError(error.response));
@@ -381,6 +461,8 @@ function* saveRestaurant({ restaurant }) {
 export default function* restaurantSaga() {
 	yield takeLatest(types.FETCH_LIST_RESTAURANT_REQUEST, fetchListRestaurant);
 	yield takeLatest(types.FETCH_RECOMMEND_TRENDING_RESTAURANT_REQUEST, fetchTrendingRestaurant);
+	yield takeLatest(types.FETCH_RECOMMEND_LOCATION_RESTAURANT_REQUEST, fetchLocationRestaurant);
+	yield takeLatest(types.FETCH_LIST_COLLECTION_RESTAURANT, fetchListCollectionRestaurant);
 	yield takeLatest(types.FETCH_RECOMMEND_TRENDING_RESTAURANT_GUESS_REQUEST, fetchTrendingGuessRestaurant);
 	yield takeLatest(types.FETCH_SAVE_LIST_RESTAURANT_REQUEST, fetchSaveRestaurant);
 	yield takeLatest(types.FETCH_LIST_RESTAURANT_PER_PAGE_REQUEST, fetchListRestaurantPerPage);
@@ -392,4 +474,6 @@ export default function* restaurantSaga() {
 	yield takeLatest(types.TRACKING_USER_SCROLL_REVIEW_LIST, trackingUserIntersection);
 	yield takeLatest(types.GET_RESTAURANT_REVIEW_LIST_REQUEST, getRestaurantReview);
 	yield takeLatest(types.SAVE_RESTAURANT_REQUEST, saveRestaurant);
+	yield takeLatest(types.SEND_INFO_RECOMMNED_RESTAURANT, sendInfoRecommendRestaurant);
+	yield takeLatest(types.GET_LIST_COLLECTION_REQUESt, getListCollection);
 }

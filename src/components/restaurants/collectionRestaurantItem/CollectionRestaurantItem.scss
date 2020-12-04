@@ -1,0 +1,33 @@
+.collection-restaurant-item {
+	width: 250px;
+	height: 250px;
+	background: url("../../../assets/utils/collection_bg.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+
+	.collection-restaurant-item__container {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+
+		.collection-restaurant-item__image,
+		.collection-restaurant-item__bio {
+			margin-top: 15px;
+			margin-left: 10px;
+		}
+
+		.collection-restaurant-item__image {
+			width: 130px;
+			height: 130px;
+		}
+
+		.collection-restaurant-item__bio {
+			color: #fff;
+			font-family: SVN-Circular-Normal;
+			font-size: 20px;
+		}
+	}
+}

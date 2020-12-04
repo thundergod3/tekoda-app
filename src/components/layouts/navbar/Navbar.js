@@ -104,7 +104,7 @@ const Navbar = ({
 			{authenticated !== undefined && (
 				<div className="navbar">
 					<div className="navbar__container">
-						<div className="navbar__right" style={authenticated ? { flex: 0.85 } : { flex: 0.8 }}>
+						<div className="navbar__right" style={authenticated ? { flex: 0.9 } : { flex: 0.85 }}>
 							<Link to="/">
 								<div className="navbar__logo">
 									<img src={logo} alt="Logo" />
@@ -155,11 +155,7 @@ const Navbar = ({
 								</div>
 							)}
 						</div>
-						<div className="navbar__left" style={authenticated ? { flex: 0.13 } : { flex: 0.2 }}>
-							<div className="navbar__icon">
-								<LanguageIcon />
-								<ExpandMoreIcon />
-							</div>
+						<div className="navbar__left" style={authenticated ? { flex: 0.1 } : { flex: 0.15 }}>
 							{!authenticated ? (
 								<>
 									<Link to="/login">

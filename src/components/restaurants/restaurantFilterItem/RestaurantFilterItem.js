@@ -1,18 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import restaurantAction from "../../../stores/redux/actions/restaurantAction";
+import utilAction from "../../../stores/redux/actions/utilAction";
 
 import "./RestaurantFilterItem.scss";
-import star from "../../../assets/icons/star.png";
-import numeral from "numeral";
 import defaultImage from "../../../assets/restaurants/restaurant1.png";
+import star from "../../../assets/icons/star.png";
 
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-
-import { useDispatch } from "react-redux";
-import restaurantAction from "../../../stores/redux/actions/restaurantAction";
-import utilAction from "../../../stores/redux/actions/utilAction";
 
 const RestaurantFilterItem = ({ restaurant, scrollTopRestaurantDetail }) => {
 	const {
@@ -22,7 +19,7 @@ const RestaurantFilterItem = ({ restaurant, scrollTopRestaurantDetail }) => {
 	const [minPrice, setMinPrice] = useState(0);
 	const [maxPrice, setMaxPrice] = useState(0);
 	const {
-		detail: { ResId, Name, AvgRatingText, comments, Address, PriceRange },
+		detail: { ResId, Name, AvgRatingText, Address, PriceRange },
 		image_link,
 	} = restaurant;
 	const dispatch = useDispatch();
@@ -32,7 +29,7 @@ const RestaurantFilterItem = ({ restaurant, scrollTopRestaurantDetail }) => {
 	let checkLike = false;
 
 	for (let i = 0; i < saveRestaurantList.length; i++) {
-		if (saveRestaurantList[i]?.ResId && ResId === saveRestaurantList[i]?.ResId) checkLike = true;
+		if (saveRestaurantList[i]?.detail?.ResId && ResId === saveRestaurantList[i]?.detail?.ResId) checkLike = true;
 	}
 
 	useEffect(() => {
@@ -42,7 +39,7 @@ const RestaurantFilterItem = ({ restaurant, scrollTopRestaurantDetail }) => {
 
 		setMinPrice(tempMinPrice);
 		setMaxPrice(tempMaxPrice);
-	}, restaurant);
+	}, [restaurant]);
 
 	return (
 		<div
@@ -99,10 +96,12 @@ const RestaurantFilterItem = ({ restaurant, scrollTopRestaurantDetail }) => {
 					<div className="restaurant-filter-item__rating">
 						<img src={star} alt={star} className="restaurant-filter-item__star" />
 						<span className="restaurant-filter-item__rateStar">{Math.floor(AvgRatingText)}</span>
-						<span className="restaurant-filter-item__comment">(110 đánh giá)</span>
+						<span className="restaurant-filter-item__comment">
+							({Math.floor(Math.random() * 100)} đánh giá)
+						</span>
 					</div>
 					<p className="restaurant-filter-item__price">
-						Giá: vnd {minPrice}k-{maxPrice}k
+						Giá: {minPrice}k-{maxPrice}k
 					</p>
 				</div>
 			</div>

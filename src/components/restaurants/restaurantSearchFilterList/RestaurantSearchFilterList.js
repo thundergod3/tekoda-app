@@ -238,7 +238,7 @@ const RestaurantSearchFilterList = () => {
 					className="search-restaurant-search__buttonAdd"
 					onClick={() => handleShowSearchPerference()}
 					ref={closePreferenceEl}>
-					<span>Thêm filters</span>
+					<span>Thêm filter</span>
 					<AddBoxIcon />
 				</div>
 			</div>

@@ -1,6 +1,13 @@
 import * as types from "../../../constants/types";
 import produce from "immer";
-import saveLocal from "../../../helpers/saveLocal";
+
+import collectionImage1 from "../../../assets/utils/collection_image1.png";
+import collectionImage2 from "../../../assets/utils/collection_image2.png";
+import collectionImage3 from "../../../assets/utils/collection_image3.png";
+import collectionImage4 from "../../../assets/utils/collection_image4.png";
+import collectionImage5 from "../../../assets/utils/collection_image5.png";
+
+const listCollectionImage = [collectionImage1, collectionImage2, collectionImage3, collectionImage4, collectionImage5];
 
 const initialState = {
 	restaurantList: [],
@@ -8,6 +15,9 @@ const initialState = {
 	restaurantSearchDetail: {},
 	saveRestaurantList: [],
 	trendingRestaurantList: [],
+	locationRestaurantList: [],
+	collectionRestaurantList: [],
+	collectionList: [],
 	statusSurvey: false,
 	restaurantReviewList: [],
 	listKeyWord: [],
@@ -17,6 +27,8 @@ const restaurantReducer = (state = initialState, action) =>
 	produce(state, (draft) => {
 		switch (action.type) {
 			case types.FETCH_LIST_RESTAURANT_SUCCEEDED: {
+				console.log(action.restaurantList);
+
 				draft.restaurantList = action.restaurantList;
 				draft.listKeyWord = [];
 				break;
@@ -24,12 +36,27 @@ const restaurantReducer = (state = initialState, action) =>
 
 			case types.FETCH_RECOMMEND_TRENDING_RESTAURANT_GUESS_SUCCEEDED:
 			case types.FETCH_RECOMMEND_TRENDING_RESTAURANT_SUCCEEDED: {
-				draft.trendingRestaurantList = action.trendingRestaurantList;
+				draft.trendingRestaurantList = [...action.trendingRestaurantList, ...action.trendingRestaurantList];
+				break;
+			}
+
+			case types.FETCH_RECOMMEND_LOCATION_RESTAURANT_SUCCEEDED: {
+				draft.locationRestaurantList = action.locationRestaurantList;
 				break;
 			}
 
 			case types.FETCH_LIST_RESTAURANT_PER_PAGE_SUCCEEDED: {
 				draft.restaurantListEachPage = action.restaurantListEachPage;
+				break;
+			}
+
+			case types.GET_LIST_COLLECTION_SUCCEEDED: {
+				draft.collectionList = action.collectionList.map((item, index) => {
+					return {
+						...item,
+						collection_image: listCollectionImage[index],
+					};
+				});
 				break;
 			}
 

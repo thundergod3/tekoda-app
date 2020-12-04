@@ -13,13 +13,13 @@ import Loading from "../../components/utils/loading/Loading";
 
 const SearchRestaurantPage = ({
 	match: {
-		params: { params, pageNumber },
+		params: { params, pageNumber, collectionId },
 	},
 }) => {
 	const {
 		utilReducer: { loading },
 		authReducer: { authenticated },
-		restaurantReducer: { statusSurvey, restaurantList },
+		restaurantReducer: { statusSurvey },
 		errorReducer: { errorStatus },
 	} = useSelector((state) => state);
 	const searchPageRef = useRef(null);
@@ -33,11 +33,14 @@ const SearchRestaurantPage = ({
 		getAllSearchRestaurantRequest,
 		getSearchRestaurantPerPageRequest,
 		fetchSaveRestaurantRequest,
+		fetchListCollectionRestaurant,
 	} = restaurantAction;
 
 	const scrollTopRestaurantDetail = () => {
 		if (searchPageRef.current) searchPageRef.current.scrollTop = 0;
 	};
+
+	console.log(collectionId);
 
 	useEffect(() => {
 		dispatch(utilAction.loadingUI());
@@ -61,6 +64,8 @@ const SearchRestaurantPage = ({
 				dispatch(storeListKeyword(params.split("+").filter((item) => item !== "")));
 				dispatch(getSearchRestaurantPerPageRequest([params], pageNumber));
 			}
+		} else if (collectionId) {
+			dispatch(fetchListCollectionRestaurant(parseInt(collectionId)));
 		} else {
 			dispatch(fetchListRestaurantRequest());
 			dispatch(fetchListRestaurantPerPageRequest());

@@ -3,19 +3,19 @@ import { Redirect } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import restaurantAction from "../../stores/redux/actions/restaurantAction";
-import authAction from "../../stores/redux/actions/authAction";
 import utilAction from "../../stores/redux/actions/utilAction";
 
 import "./restaurants.scss";
+import getLocation from "../../helpers/getLocation";
 
 import Loading from "../../components/utils/loading/Loading";
 import RestaurantRecommendList from "../../components/restaurants/restaurantRecommendList/RestaurantRecommendList";
 import WrapperSearchBar from "../../components/layouts/wrapperSearchBar/WrapperSearchBar";
+import CollectionRestaurantList from "../../components/restaurants/collectionRestaurantList/CollectionRestaurantList";
 
 const Homepage = () => {
-	const [tempRandomList, setTempRandomList] = useState([]);
 	const {
-		restaurantReducer: { trendingRestaurantList, statusSurvey },
+		restaurantReducer: { trendingRestaurantList, locationRestaurantList, statusSurvey },
 		authReducer: { authenticated },
 		utilReducer: { loading },
 	} = useSelector((state) => state);
@@ -25,27 +25,35 @@ const Homepage = () => {
 		fetchRecommendRestaurantRequest,
 		fetchRecommendRestaurantGuessRequest,
 		deleteStoreListKeyWord,
+		fetchRecommendRestaurantLocationRequest,
 	} = restaurantAction;
 	const { loadingUI } = utilAction;
+	const [address, setAddress] = useState(null);
 
 	useEffect(() => {
+		getLocation(setAddress, false, true);
 		dispatch(loadingUI());
 		dispatch(removeListRestaurantPerPage());
 		dispatch(deleteStoreListKeyWord());
 	}, []);
 
 	useEffect(() => {
-		// if (authenticated !== undefined) {
-		// 	if (authenticated === true) {
-		// 		dispatch(fetchRecommendRestaurantRequest());
-		// 	} else {
-		// 		dispatch(fetchRecommendRestaurantGuessRequest());
-		// 	}
-		// }
-
-		setTempRandomList([0, 0, 0].map((item) => Math.floor(Math.random() * 91)));
-		dispatch(fetchRecommendRestaurantGuessRequest());
-	}, []);
+		if (authenticated !== undefined) {
+			if (authenticated === true) {
+				dispatch(fetchRecommendRestaurantRequest());
+				if (address) {
+					dispatch(
+						fetchRecommendRestaurantLocationRequest({
+							latitude: address[0].geometry.location.lat,
+							longitude: address[0].geometry.location.lng,
+						})
+					);
+				}
+			} else {
+				dispatch(fetchRecommendRestaurantGuessRequest());
+			}
+		}
+	}, [authenticated, address]);
 
 	if (statusSurvey === undefined || (!statusSurvey && authenticated === true)) {
 		return <Redirect to="/survey" />;
@@ -61,30 +69,43 @@ const Homepage = () => {
 						<>
 							<WrapperSearchBar />
 							<div className="homepage">
+								{authenticated === true && <CollectionRestaurantList />}
 								<RestaurantRecommendList
-									restaurantRecommendList={trendingRestaurantList.slice(
-										tempRandomList[0],
-										tempRandomList[0] + 10
-									)}
-									title="Top nhà hàng nổi bật trên mạng xã hội"
-									bio="Take a fresh view an span our top visited places"
+									restaurantRecommendList={
+										authenticated === true
+											? trendingRestaurantList
+													.slice(0, 10)
+													.sort((a, b) => b.detail.AvgRatingText - a.detail.AvgRatingText)
+											: trendingRestaurantList
+													.slice(0, 10)
+													.sort((a, b) => b.detail.AvgRatingText - a.detail.AvgRatingText)
+									}
+									title="Nhà hàng nổi bật nhất trên mạng xã hội"
 									style={{ marginTop: 0 }}
 								/>
 								<RestaurantRecommendList
-									restaurantRecommendList={trendingRestaurantList.slice(
-										tempRandomList[1],
-										tempRandomList[1] + 10
-									)}
-									title="Top ăn gần địa điểm gợi ý cho riêng bạn"
-									bio="Take a fresh view an span our top visited places"
+									restaurantRecommendList={
+										authenticated === true
+											? locationRestaurantList
+													.slice(0, 10)
+													.sort((a, b) => b.detail.AvgRatingText - a.detail.AvgRatingText)
+											: trendingRestaurantList
+													.slice(10, 20)
+													.sort((a, b) => b.detail.AvgRatingText - a.detail.AvgRatingText)
+									}
+									title={`Quán ngon gần bạn`}
 								/>
 								<RestaurantRecommendList
-									restaurantRecommendList={trendingRestaurantList.slice(
-										tempRandomList[2],
-										tempRandomList[2] + 10
-									)}
-									title="Top nhà hàng nổi bật trên mạng xã hội"
-									bio="Take a fresh view an span our top visited places"
+									restaurantRecommendList={
+										authenticated === true
+											? trendingRestaurantList
+													.slice(0, 10)
+													.sort((a, b) => b.detail.AvgRatingText - a.detail.AvgRatingText)
+											: trendingRestaurantList
+													.slice(20, 30)
+													.sort((a, b) => b.detail.AvgRatingText - a.detail.AvgRatingText)
+									}
+									title="Nhà hàng được xem nhiều nhất"
 								/>
 							</div>
 						</>
