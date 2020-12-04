@@ -1144,6 +1144,25 @@ body {
 	}
 
 	.homepage {
+		.collection-restaurant-list {
+			.collection-restaurant-list__container {
+				a {
+					.collection-restaurant-item {
+						width: 60px;
+						height: 60px;
+						margin-right: 5px;
+
+						.collection-restaurant-item__container {
+							.collection-restaurant-item__image {
+								width: 40px;
+								height: 40px;
+							}
+						}
+					}
+				}
+			}
+		}
+
 		.restaurant-recommend-list {
 			.restaurant-recommend-list__container {
 				.restaurant-recommend-list__containerWrapper {
