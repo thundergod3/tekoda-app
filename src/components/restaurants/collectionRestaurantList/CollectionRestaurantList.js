@@ -20,7 +20,7 @@ const CollectionRestaurantList = () => {
 
 	return (
 		<div className="collection-restaurant-list">
-			<p className="collection-restaurant-list__title">Mix riêng cho bạn</p>
+			<p className="collection-restaurant-list__title">Chọn riêng cho bạn</p>
 			<div className="collection-restaurant-list__container">
 				{collectionList.map((collection) => (
 					<CollectionRestaurantItem collection={collection} />
