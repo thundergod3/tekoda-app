@@ -57,6 +57,23 @@ const FilterList = () => {
 	const dispatch = useDispatch();
 	const { loadingUI } = utilAction;
 
+	const today = new Date();
+	const curHr = today.getHours();
+
+	let tempTime = "";
+
+	if (curHr >= 4 && curHr < 11) {
+		tempTime = "Chào buổi sáng";
+	} else if (curHr >= 11 && curHr < 14) {
+		tempTime = "Chào buổi trưa";
+	} else if (curHr >= 14 && curHr < 18) {
+		tempTime = "Chào buổi chiều";
+	} else if (curHr >= 18 && curHr < 21) {
+		tempTime = "Chào buổi tối";
+	} else {
+		tempTime = "Chào buổi đêm";
+	}
+
 	return (
 		<div
 			className="filter-list"
@@ -68,7 +85,8 @@ const FilterList = () => {
 					<img src={SunImg} className="filter-list__welcomeImg" />
 					<div className="filter-list__welcomeBio">
 						<p className="filter-list__welcomeText">
-							Chào buổi sáng{userData.name ? `, ${userData.name}!` : ""}{" "}
+							{tempTime}
+							{userData.name ? `, ${userData.name}!` : ""}{" "}
 							<strong>Cùng Tekoda khám phá ẩm thực nhé!</strong>
 						</p>
 					</div>
