@@ -15,7 +15,13 @@ import CollectionRestaurantList from "../../components/restaurants/collectionRes
 
 const Homepage = () => {
 	const {
-		restaurantReducer: { trendingRestaurantList, locationRestaurantList, statusSurvey },
+		restaurantReducer: {
+			restaurantList,
+			trendingRestaurantList,
+			locationRestaurantList,
+			behaviorRestaurantList,
+			statusSurvey,
+		},
 		authReducer: { authenticated },
 		utilReducer: { loading },
 	} = useSelector((state) => state);
@@ -26,6 +32,8 @@ const Homepage = () => {
 		fetchRecommendRestaurantGuessRequest,
 		deleteStoreListKeyWord,
 		fetchRecommendRestaurantLocationRequest,
+		fetchRecommendBehaviorRestaurantRequest,
+		fetchListRestaurantRequest,
 	} = restaurantAction;
 	const { loadingUI } = utilAction;
 	const [address, setAddress] = useState(null);
@@ -40,7 +48,9 @@ const Homepage = () => {
 	useEffect(() => {
 		if (authenticated !== undefined) {
 			if (authenticated === true) {
+				dispatch(fetchListRestaurantRequest());
 				dispatch(fetchRecommendRestaurantRequest());
+				dispatch(fetchRecommendBehaviorRestaurantRequest());
 				if (address) {
 					dispatch(
 						fetchRecommendRestaurantLocationRequest({
@@ -73,14 +83,27 @@ const Homepage = () => {
 								<RestaurantRecommendList
 									restaurantRecommendList={
 										authenticated === true
-											? trendingRestaurantList
+											? restaurantList
 													.slice(0, 10)
 													.sort((a, b) => b.detail.AvgRatingText - a.detail.AvgRatingText)
 											: trendingRestaurantList
 													.slice(0, 10)
 													.sort((a, b) => b.detail.AvgRatingText - a.detail.AvgRatingText)
 									}
-									title="Nhà hàng nổi bật trên mạng xã hội"
+									title="Nhà hàng được xem nhiều"
+									style={{ marginTop: 0 }}
+								/>
+								<RestaurantRecommendList
+									restaurantRecommendList={
+										authenticated === true
+											? trendingRestaurantList
+													.slice(0, 10)
+													.sort((a, b) => b.detail.AvgRatingText - a.detail.AvgRatingText)
+											: trendingRestaurantList
+													.slice(10, 20)
+													.sort((a, b) => b.detail.AvgRatingText - a.detail.AvgRatingText)
+									}
+									title="Những người giống bạn thích"
 									style={{ marginTop: 0 }}
 								/>
 								<RestaurantRecommendList
@@ -90,7 +113,7 @@ const Homepage = () => {
 													.slice(0, 10)
 													.sort((a, b) => b.detail.AvgRatingText - a.detail.AvgRatingText)
 											: trendingRestaurantList
-													.slice(10, 20)
+													.slice(20, 30)
 													.sort((a, b) => b.detail.AvgRatingText - a.detail.AvgRatingText)
 									}
 									title={`Quán ngon gần bạn`}
@@ -98,14 +121,14 @@ const Homepage = () => {
 								<RestaurantRecommendList
 									restaurantRecommendList={
 										authenticated === true
-											? trendingRestaurantList
+											? behaviorRestaurantList
 													.slice(0, 10)
 													.sort((a, b) => b.detail.AvgRatingText - a.detail.AvgRatingText)
 											: trendingRestaurantList
-													.slice(20, 30)
+													.slice(30, 40)
 													.sort((a, b) => b.detail.AvgRatingText - a.detail.AvgRatingText)
 									}
-									title="Nhà hàng được xem nhiều"
+									title="Có thể bạn sẽ thích"
 								/>
 							</div>
 						</>

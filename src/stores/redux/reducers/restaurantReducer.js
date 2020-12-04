@@ -16,6 +16,7 @@ const initialState = {
 	saveRestaurantList: [],
 	trendingRestaurantList: [],
 	locationRestaurantList: [],
+	behaviorRestaurantList: [],
 	collectionRestaurantList: [],
 	collectionList: [],
 	statusSurvey: false,
@@ -40,6 +41,11 @@ const restaurantReducer = (state = initialState, action) =>
 
 			case types.FETCH_RECOMMEND_LOCATION_RESTAURANT_SUCCEEDED: {
 				draft.locationRestaurantList = action.locationRestaurantList;
+				break;
+			}
+
+			case types.FETCH_RECOMMEND_BEHAVIOR_RESTAURANT_SUCCEEDED: {
+				draft.behaviorRestaurantList = action.behaviorRestaurantList;
 				break;
 			}
 

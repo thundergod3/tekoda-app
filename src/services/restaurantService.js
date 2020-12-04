@@ -21,6 +21,8 @@ class restaurantService {
 			{ headers }
 		);
 
+	fetchBehaviorRestaurantRecommend = ({ headers }) => HTTPMethod.get("/api/v1/restaurant/recommend", { headers });
+
 	fetchListCollectionRestaurant = ({ collectionId, headers }) =>
 		HTTPMethod.post("/api/v1/restaurant/get_by_category", { category_id: collectionId }, { headers });
 

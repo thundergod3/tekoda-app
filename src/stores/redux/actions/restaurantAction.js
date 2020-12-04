@@ -51,6 +51,18 @@ class restaurantAction {
 		};
 	}
 
+	fetchRecommendBehaviorRestaurantRequest() {
+		return {
+			type: types.FETCH_RECOMMEND_BEHAVIOR_RESTAURANT_REQUEST,
+		};
+	}
+	fetchRecommnedBehaviorRestaurantSucceeded(behaviorRestaurantList) {
+		return {
+			type: types.FETCH_RECOMMEND_BEHAVIOR_RESTAURANT_SUCCEEDED,
+			behaviorRestaurantList,
+		};
+	}
+
 	fetchListCollectionRestaurant(collectionId) {
 		return {
 			type: types.FETCH_LIST_COLLECTION_RESTAURANT,
