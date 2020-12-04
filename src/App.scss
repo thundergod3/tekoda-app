@@ -955,6 +955,38 @@ body {
 	.homepage {
 		max-width: 320px;
 
+		.collection-restaurant-list {
+			margin-bottom: 20px;
+
+			.collection-restaurant-list__title {
+				font-size: 12px;
+				margin-bottom: 10px;
+			}
+
+			.collection-restaurant-list__container {
+				a {
+					.collection-restaurant-item {
+						width: 55px;
+						height: 55px;
+
+						.collection-restaurant-item__container {
+							.collection-restaurant-item__image {
+								width: 25px;
+								height: 25px;
+								margin-top: 8px;
+								margin-left: 0px;
+							}
+
+							.collection-restaurant-item__bio {
+								font-size: 5px;
+								margin-top: 8px;
+							}
+						}
+					}
+				}
+			}
+		}
+
 		.restaurant-recommend-list {
 			margin-top: 20px;
 
@@ -982,8 +1014,19 @@ body {
 						.restaurant-recommend-item {
 							width: 100px;
 
+							img {
+								height: 100px !important;
+							}
+
 							.restaurant-recommend-item__info {
 								.restaurant-recommend-item__rating {
+									align-items: flex-start;
+									margin-top: 0;
+
+									.restaurant-recommend-item__star {
+										height: max-content !important;
+									}
+
 									.restaurant-recommend-item__rateStar,
 									.restaurant-recommend-item__comment {
 										font-size: 8px;
@@ -1106,7 +1149,7 @@ body {
 				.restaurant-recommend-list__containerWrapper {
 					a {
 						.restaurant-recommend-item {
-							margin-right: 8px;
+							margin-right: 0px;
 						}
 					}
 				}
