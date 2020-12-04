@@ -27,8 +27,6 @@ const restaurantReducer = (state = initialState, action) =>
 	produce(state, (draft) => {
 		switch (action.type) {
 			case types.FETCH_LIST_RESTAURANT_SUCCEEDED: {
-				console.log(action.restaurantList);
-
 				draft.restaurantList = action.restaurantList;
 				draft.listKeyWord = [];
 				break;

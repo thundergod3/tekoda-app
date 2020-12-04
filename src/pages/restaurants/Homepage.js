@@ -80,7 +80,7 @@ const Homepage = () => {
 													.slice(0, 10)
 													.sort((a, b) => b.detail.AvgRatingText - a.detail.AvgRatingText)
 									}
-									title="Nhà hàng nổi bật nhất trên mạng xã hội"
+									title="Nhà hàng nổi bật trên mạng xã hội"
 									style={{ marginTop: 0 }}
 								/>
 								<RestaurantRecommendList
@@ -105,7 +105,7 @@ const Homepage = () => {
 													.slice(20, 30)
 													.sort((a, b) => b.detail.AvgRatingText - a.detail.AvgRatingText)
 									}
-									title="Nhà hàng được xem nhiều nhất"
+									title="Nhà hàng được xem nhiều"
 								/>
 							</div>
 						</>

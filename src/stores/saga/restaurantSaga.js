@@ -159,6 +159,7 @@ function* fetchSaveRestaurant() {
 			},
 		});
 		yield put(restaurantAction.fetchSaveRestaurantSucceeded(response.data));
+		yield delay(2000);
 		yield put(utilAction.loadedUI());
 		yield put(errorAction.clearError());
 	} catch (error) {
@@ -261,6 +262,7 @@ function* getRestaurantDetail({ id }) {
 					Authorization: `Bearer ${token}`,
 				},
 			});
+			yield delay(1000);
 			yield put(utilAction.loadedUI());
 			yield put(errorAction.clearError());
 		} catch (error) {

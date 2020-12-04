@@ -10,7 +10,7 @@ import Navbar from "./components/layouts/navbar/Navbar";
 import Homepage from "./pages/restaurants/Homepage";
 import SearchRestaurantPage from "./pages/restaurants/SearchRestaurantPage";
 import LoginPage from "./pages/auths/LoginPage";
-import RegisterPage from "./pages/auths/Register";
+import RegisterPage from "./pages/auths/RegisterPage";
 import SurveyPage from "./pages/restaurants/SurveyPage";
 import SaveRestaurantPage from "./pages/restaurants/SaveRestaurantPage";
 

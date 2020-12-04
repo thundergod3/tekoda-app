@@ -40,8 +40,6 @@ const SearchRestaurantPage = ({
 		if (searchPageRef.current) searchPageRef.current.scrollTop = 0;
 	};
 
-	console.log(collectionId);
-
 	useEffect(() => {
 		dispatch(utilAction.loadingUI());
 		dispatch(fetchSaveRestaurantRequest());
