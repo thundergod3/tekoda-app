@@ -24,12 +24,7 @@ const RestaurantFilterList = ({ match: { params }, history, scrollTopRestaurantD
 
 	const renderLayoutRestaurant = (list) =>
 		list.map((restaurant) => (
-			<RestaurantFilterItem
-				key={restaurant?._id}
-				restaurant={restaurant}
-				id={restaurant?._id}
-				scrollTopRestaurantDetail={scrollTopRestaurantDetail}
-			/>
+			<RestaurantFilterItem restaurant={restaurant} scrollTopRestaurantDetail={scrollTopRestaurantDetail} />
 		));
 
 	if (window.innerWidth > 300 && window.innerWidth < 420) {

@@ -43,6 +43,7 @@ const RestaurantFilterItem = ({ restaurant, scrollTopRestaurantDetail }) => {
 
 	return (
 		<div
+			key={ResId}
 			className="restaurant-filter-item"
 			onClick={() => {
 				dispatch(showActive());

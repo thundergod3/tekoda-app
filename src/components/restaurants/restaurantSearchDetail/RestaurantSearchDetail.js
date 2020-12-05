@@ -28,6 +28,7 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 	const [maxPrice, setMaxPrice] = useState(0);
 	const [save, setSave] = useState(false);
 	const [checkSave, setCheckSave] = useState(false);
+	const [searchKeywordSimilar, setSearchKeywordSimilar] = useState("");
 
 	useEffect(() => {
 		const findIndex = saveRestaurantList.findIndex(
@@ -48,6 +49,18 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 		setMinPrice(tempMinPrice);
 		setMaxPrice(tempMaxPrice);
 	}, [saveRestaurantList, restaurantSearchDetail]);
+
+	useEffect(() => {
+		let tempRestaurantSearchDetail = restaurantSearchDetail?.detail?.Category.split("'");
+
+		if (tempRestaurantSearchDetail) {
+			tempRestaurantSearchDetail.shift();
+			tempRestaurantSearchDetail.pop();
+			setSearchKeywordSimilar(tempRestaurantSearchDetail);
+		}
+	}, [restaurantSearchDetail]);
+
+	console.log(searchKeywordSimilar);
 
 	return (
 		<>
@@ -112,8 +125,8 @@ const RestaurantSearchDetail = ({ searchPageRef }) => {
 								className="restaurant-search-detail__button"
 								onClick={() => {
 									dispatch(loadingUI());
-									dispatch(searchRestaurantRequest([restaurantSearchDetail?.detail?.Name]));
-									dispatch(getAllSearchRestaurantRequest([restaurantSearchDetail?.detail?.Name]));
+									dispatch(searchRestaurantRequest(searchKeywordSimilar));
+									dispatch(getAllSearchRestaurantRequest(searchKeywordSimilar));
 								}}>
 								<SearchIcon />
 								<p className="restaurant-search-detail__buttonTitle">Tìm nhà hàng tương tự</p>
