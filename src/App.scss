@@ -988,8 +988,8 @@ body {
 							}
 
 							.collection-restaurant-item__bio {
-								font-size: 5px;
-								margin-top: 8px;
+								font-size: 6px;
+								margin-top: 6px;
 							}
 						}
 					}
@@ -1137,7 +1137,7 @@ body {
 						.filter-option {
 							width: 60px;
 							height: 60px;
-							margin-right: 5px;
+							margin-right: 10px;
 						}
 					}
 				}
@@ -1158,9 +1158,9 @@ body {
 			.collection-restaurant-list__container {
 				a {
 					.collection-restaurant-item {
-						width: 50px;
-						height: 50px;
-						margin-right: 5px;
+						width: 55px;
+						height: 55px;
+						margin-right: 10px;
 
 						.collection-restaurant-item__container {
 							.collection-restaurant-item__image {
@@ -1243,6 +1243,14 @@ body {
 		}
 	}
 
+	.navbar {
+		.navbar__container {
+			.navbar__left {
+				flex: 0
+			}
+		}
+	}
+
 	.wrapper-search-bar {
 		.wrapper-search-bar__container {
 			.filter-list {
@@ -1261,6 +1269,7 @@ body {
 						.filter-option {
 							width: 50px;
 							height: 50px;
+							margin-right: 6px;
 
 							img {
 								width: 20px;
@@ -1279,20 +1288,27 @@ body {
 
 	.homepage {
 		.collection-restaurant-list {
+			.collection-restaurant-list__title {
+			margin-left: 20px;
+			}
 			.collection-restaurant-list__container {
 				a {
 					.collection-restaurant-item {
+						width: 60px;
+						height: 60px;
+						margin-right: 5px;
 					}
 				}
 			}
 		}
 
 		.restaurant-recommend-list {
+			margin-left: 20px;
 			.restaurant-recommend-list__container {
 				.restaurant-recommend-list__containerWrapper {
 					a {
 						.restaurant-recommend-item {
-							margin-right: 10px;
+							margin-right: 15px;
 						}
 					}
 				}
