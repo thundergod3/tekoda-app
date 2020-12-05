@@ -395,6 +395,16 @@ body {
 				height: calc(100vh - 50px);
 				padding: 20px;
 
+				.search-bar__formSearch {
+					height: max-content;
+					margin-top: 0;
+					margin-bottom: 10px;
+
+					&::before {
+						height: 0
+					}
+				}
+
 				.MuiSvgIcon-root {
 					width: 20px;
 					height: 20px;
