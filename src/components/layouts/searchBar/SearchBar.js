@@ -179,7 +179,25 @@ const SearchBar = ({ style, setShowSearchBar, searchBarItemRef, showSearchBar })
 							setShowSearchDishes(false);
 						}}
 					/>
+					<div className="search-bar__container search-bar__formSearch" onClick={() => setShowSearchDishes(true)}>
+				<p className="search-bar__containerTitle">Tìm món</p>
+				<input
+					ref={searchBarItemRef}
+					type="text"
+					className="search-bar__containerBio search-bar__containerInput"
+					value={searchAnyDishes}
+					onChange={(e) => setSearchAnyDishes(e.target.value)}
+					onKeyDown={(e) => {
+						if (e.keyCode === 13) {
+							handleSearch(e);
+						}
+					}}
+					style={{ width: "max-content" }}
+					placeholder="Bạn muốn ăn gì?"
+				/>
+			</div>
 					<div className="search-bar__locationMobile">
+
 						<p className="search-bar__containerTitle">địa điểm</p>
 						<PlacesAutocomplete value={searchAdd} onChange={handleChange} onSelect={handleSelect}>
 							{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
