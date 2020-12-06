@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 import Carousel from "@brainhubeu/react-carousel";
 import IconArrowLeft from "../../../assets/icons/arrow_left.png";
@@ -70,9 +69,7 @@ const RestaurantRecommendList = ({ restaurantRecommendList, title, bio, style })
 						transform: `translateX(${!statusSlide ? pixelTransform * -1 : pixelTransform * -1}px)`,
 					}}>
 					{restaurantRecommendList.slice(0, 10).map((restaurant, index) => (
-						<Link to={`/today-eat/${restaurant.detail.ResId}/page=1`} key={index}>
-							<RestaurantRecommendItem restaurant={restaurant} id={restaurant.ResId} />
-						</Link>
+						<RestaurantRecommendItem restaurant={restaurant} id={restaurant.ResId} />
 					))}
 				</div>
 			</div>
