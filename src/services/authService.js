@@ -5,12 +5,7 @@ class authService {
 
 	registerUser = ({ userForm }) => HTTPMethod.post("/api/v1/signup", userForm);
 
-	getUserData = ({ token }) =>
-		HTTPMethod.get("/api/v1/user/get", {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
+	getUserData = () => HTTPMethod.get("/api/v1/user/get");
 }
 
 export default new authService();

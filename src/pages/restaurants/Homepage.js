@@ -106,18 +106,14 @@ const Homepage = () => {
 									title="Những người giống bạn thích"
 									style={{ marginTop: 0 }}
 								/>
-								<RestaurantRecommendList
-									restaurantRecommendList={
-										authenticated === true
-											? locationRestaurantList
-													.slice(0, 10)
-													.sort((a, b) => b.detail.AvgRatingText - a.detail.AvgRatingText)
-											: trendingRestaurantList
-													.slice(20, 30)
-													.sort((a, b) => b.detail.AvgRatingText - a.detail.AvgRatingText)
-									}
-									title={`Quán ngon gần bạn`}
-								/>
+								{authenticated === true && address && (
+									<RestaurantRecommendList
+										restaurantRecommendList={locationRestaurantList
+											.slice(0, 10)
+											.sort((a, b) => b.detail.AvgRatingText - a.detail.AvgRatingText)}
+										title={`Quán ngon gần bạn`}
+									/>
+								)}
 								<RestaurantRecommendList
 									restaurantRecommendList={
 										authenticated === true
@@ -125,7 +121,7 @@ const Homepage = () => {
 													.slice(0, 10)
 													.sort((a, b) => b.detail.AvgRatingText - a.detail.AvgRatingText)
 											: trendingRestaurantList
-													.slice(30, 40)
+													.slice(20, 30)
 													.sort((a, b) => b.detail.AvgRatingText - a.detail.AvgRatingText)
 									}
 									title="Có thể bạn sẽ thích"

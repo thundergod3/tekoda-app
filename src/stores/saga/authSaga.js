@@ -7,6 +7,7 @@ import errorAction from "../redux/actions/errorAction";
 import restaurantAction from "../redux/actions/restaurantAction";
 
 import authService from "../../services/authService";
+import HTTPMethod from "../../services/index";
 
 import history from "../../constants/history";
 import saveLocal from "../../helpers/saveLocal";
@@ -24,7 +25,8 @@ function* getUser({ token, userData, tokenInfo }) {
 			yield call(checkAuthenticated);
 			yield history.push("/survey");
 		} else {
-			const response = yield call(authService.getUserData, { token });
+			yield call(HTTPMethod.attachTokenToHeader, { token });
+			const response = yield call(authService.getUserData);
 			if (response?.data?.is_survey) {
 				yield put(restaurantAction.sendSurveyFormSucceeded());
 			}

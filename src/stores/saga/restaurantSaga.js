@@ -6,6 +6,7 @@ import utilAction from "../redux/actions/utilAction";
 import errorAction from "../redux/actions/errorAction";
 
 import restaurantService from "../../services/restaurantService";
+import HTTPMethod from "../../services/index";
 
 import saveLocal from "../../helpers/saveLocal";
 import history from "../../constants/history";
@@ -16,11 +17,8 @@ function* fetchListRestaurant() {
 	} = yield select((state) => state);
 
 	try {
-		const response = yield call(restaurantService.fetchAllRestaurant, {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
+		yield call(HTTPMethod.attachTokenToHeader, { token });
+		const response = yield call(restaurantService.fetchAllRestaurant);
 		yield put(restaurantAction.fetchListRestaurantSucceeded(response.data));
 		yield put(utilAction.loadedUI());
 		yield put(errorAction.clearError());
@@ -39,24 +37,11 @@ function* fetchListRestaurantPerPage({ page }) {
 	try {
 		if (!page) page = 1;
 		yield put(restaurantAction.removeRestaurantReviewList());
+		yield call(HTTPMethod.attachTokenToHeader, { token });
 		const response = yield call(restaurantService.fetchRestaurantPerPage, {
 			page,
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
 		});
 		yield put(restaurantAction.fetchListRestaurantPerPageSucceeded(response.data));
-		const {
-			restaurantReducer: { restaurantSearchDetail },
-		} = yield select((state) => state);
-		// if (
-		// 	Object.keys(restaurantSearchDetail).length === 0 &&
-		// 	(isNaN(history.location.pathname.substring(11, 13)) || history.location.pathname.substring(11, 13) === "")
-		// ) {
-		// 	yield call(getRestaurantDetail, { id: response.data[0].detail.ResId });
-		// } else {
-		// 	yield call(getRestaurantDetail, { id: response.data[0].detail.ResId });
-		// }
 		yield put(utilAction.loadedUI());
 		yield put(errorAction.clearError());
 	} catch (error) {
@@ -72,11 +57,8 @@ function* fetchTrendingRestaurant() {
 	} = yield select((state) => state);
 
 	try {
-		const response = yield call(restaurantService.fetchTrendingRestaurant, {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
+		yield call(HTTPMethod.attachTokenToHeader, { token });
+		const response = yield call(restaurantService.fetchTrendingRestaurant);
 		console.log(response);
 		yield put(restaurantAction.fetchRecommendRestaurantSucceeded(response.data));
 		yield put(utilAction.loadedUI());
@@ -94,11 +76,9 @@ function* fetchLocationRestaurant({ location }) {
 	} = yield select((state) => state);
 
 	try {
+		yield call(HTTPMethod.attachTokenToHeader, { token });
 		const response = yield call(restaurantService.fetchLocationRestaurantRecommend, {
 			location,
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
 		});
 		console.log(response);
 		yield put(restaurantAction.fetchRecommendRestaurantLocationSucceeded(response.data));
@@ -115,11 +95,8 @@ function* fetchBehaviorRestaurant() {
 	} = yield select((state) => state);
 
 	try {
-		const response = yield call(restaurantService.fetchBehaviorRestaurantRecommend, {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
+		yield call(HTTPMethod.attachTokenToHeader, { token });
+		const response = yield call(restaurantService.fetchBehaviorRestaurantRecommend);
 		console.log(response);
 		yield put(restaurantAction.fetchRecommnedBehaviorRestaurantSucceeded(response.data));
 		yield put(errorAction.clearError());
@@ -135,11 +112,9 @@ function* fetchListCollectionRestaurant({ collectionId }) {
 	} = yield select((state) => state);
 
 	try {
+		yield call(HTTPMethod.attachTokenToHeader, { token });
 		const response = yield call(restaurantService.fetchListCollectionRestaurant, {
 			collectionId,
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
 		});
 		console.log(response);
 		yield put(restaurantAction.fetchListRestaurantPerPageSucceeded(response.data));
@@ -172,11 +147,8 @@ function* fetchSaveRestaurant() {
 	} = yield select((state) => state);
 
 	try {
-		const response = yield call(restaurantService.fetchSaveRestaurant, {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
+		yield call(HTTPMethod.attachTokenToHeader, { token });
+		const response = yield call(restaurantService.fetchSaveRestaurant);
 		yield put(restaurantAction.fetchSaveRestaurantSucceeded(response.data));
 		yield delay(2000);
 		yield put(utilAction.loadedUI());
@@ -194,11 +166,9 @@ function* saveRestaurant({ restaurant }) {
 	} = yield select((state) => state);
 
 	try {
+		yield call(HTTPMethod.attachTokenToHeader, { token });
 		const response = yield call(restaurantService.likeRestaurant, {
 			restaurantId: restaurant?.detail?.ResId,
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
 		});
 		console.log(response.data);
 		if (response.data.enjoy === 1) {
@@ -209,9 +179,6 @@ function* saveRestaurant({ restaurant }) {
 
 		yield call(restaurantService.saveRestaurant, {
 			restaurantId: restaurant?.detail?.ResId,
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
 		});
 		yield put(errorAction.clearError());
 	} catch (error) {
@@ -234,11 +201,9 @@ function* getRestaurantDetail({ id }) {
 		yield put(restaurantAction.removeRestaurantReviewList());
 
 		try {
+			yield call(HTTPMethod.attachTokenToHeader, { token });
 			const response = yield call(restaurantService.fetchDetailRestaurant, {
 				id,
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
 			});
 			yield put(restaurantAction.getRestaurantSearchDetailSucceeded(response?.data));
 			const {
@@ -247,9 +212,6 @@ function* getRestaurantDetail({ id }) {
 			yield call(getRestaurantReview, {
 				restaurantId: restaurantSearchDetail.detail.ResId,
 				count: 1,
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
 			});
 			yield delay(100);
 			yield put(utilAction.endActive());
@@ -263,11 +225,9 @@ function* getRestaurantDetail({ id }) {
 		yield put(utilAction.loadingUI());
 
 		try {
+			yield call(HTTPMethod.attachTokenToHeader, { token });
 			const response = yield call(restaurantService.fetchDetailRestaurant, {
 				id,
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
 			});
 			yield put(restaurantAction.getRestaurantSearchDetailSucceeded(response?.data));
 			yield put(restaurantAction.removeRestaurantReviewList());
@@ -277,9 +237,6 @@ function* getRestaurantDetail({ id }) {
 			yield call(getRestaurantReview, {
 				restaurantId: restaurantSearchDetail.detail.ResId,
 				count: 1,
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
 			});
 			yield delay(1000);
 			yield put(utilAction.loadedUI());
@@ -297,12 +254,10 @@ function* sendSurveyForm({ surveyForm }) {
 	} = yield select((state) => state);
 
 	try {
+		yield call(HTTPMethod.attachTokenToHeader, { token });
 		yield saveLocal.saveToLocal("statusSurvey", true);
 		yield call(restaurantService.sendSurveyForm, {
 			surveyForm,
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
 		});
 		yield history.push("/");
 		yield put(restaurantAction.sendSurveyFormSucceeded());
@@ -319,11 +274,9 @@ function* getAllSearchRestaurant({ listKeyword }) {
 	} = yield select((state) => state);
 
 	try {
+		yield call(HTTPMethod.attachTokenToHeader, { token });
 		const response = yield call(restaurantService.getAllSearchRestaurant, {
 			listKeyword,
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
 		});
 		yield put(restaurantAction.getAllSearchRestaurantSucceeded(response.data));
 		yield put(errorAction.clearError());
@@ -342,12 +295,10 @@ function* searchRestaurant({ listKeyWord, page }) {
 	if (!page) page = 1;
 
 	try {
+		yield call(HTTPMethod.attachTokenToHeader, { token });
 		const response = yield call(restaurantService.searchRestaurant, {
 			listKeyWord,
 			page,
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
 		});
 		yield put(restaurantAction.searchRestaurantSucceeded(response.data));
 		const {
@@ -356,9 +307,6 @@ function* searchRestaurant({ listKeyWord, page }) {
 		yield call(getRestaurantReview, {
 			restaurantId: restaurantSearchDetail.detail.ResId,
 			count: 1,
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
 		});
 		yield put(utilAction.loadedUI());
 		yield put(errorAction.clearError());
@@ -375,12 +323,10 @@ function* getSearchRestaurantPerPage({ listKeyWord, page }) {
 	} = yield select((state) => state);
 
 	try {
+		yield call(HTTPMethod.attachTokenToHeader, { token });
 		const response = yield call(restaurantService.getSearchRestaurantPePage, {
 			listKeyWord,
 			page,
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
 		});
 		yield put(restaurantAction.getSearchRestaurantPerPageSucceeded(response.data));
 		yield put(utilAction.loadedUI());
@@ -395,18 +341,14 @@ function* getSearchRestaurantPerPage({ listKeyWord, page }) {
 function* getRestaurantReview({ restaurantId, count }) {
 	const {
 		authReducer: { token },
+		restaurantReducer: { restaurantReviewList },
 	} = yield select((state) => state);
 
 	try {
-		const {
-			restaurantReducer: { restaurantReviewList },
-		} = yield select((state) => state);
+		yield call(HTTPMethod.attachTokenToHeader, { token });
 		const response = yield call(restaurantService.getRestaurantReview, {
 			restaurantId,
 			count,
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
 		});
 		console.log("review", response);
 		if (response.data.length !== 0) {
@@ -429,11 +371,9 @@ function* trackingUserIntersection({ restaurantId }) {
 	} = yield select((state) => state);
 
 	try {
+		yield call(HTTPMethod.attachTokenToHeader, { token });
 		yield call(restaurantService.trackingUserScrollReviewList, {
 			restaurantId,
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
 		});
 		yield put(errorAction.clearError());
 	} catch (error) {
@@ -448,11 +388,9 @@ function* sendInfoRecommendRestaurant({ listTypeRestaurant }) {
 	} = yield select((state) => state);
 
 	try {
+		yield call(HTTPMethod.attachTokenToHeader, { token });
 		yield call(restaurantService.sendInfoRecommendRestaurant, {
 			listTypeRestaurant,
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
 		});
 	} catch (error) {
 		console.log(error);
@@ -466,11 +404,8 @@ function* getListCollection() {
 	} = yield select((state) => state);
 
 	try {
-		const response = yield call(restaurantService.getListCollection, {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
+		yield call(HTTPMethod.attachTokenToHeader, { token });
+		const response = yield call(restaurantService.getListCollection);
 
 		yield put(restaurantAction.getListCollectionSucceeded(response.data));
 	} catch (error) {
