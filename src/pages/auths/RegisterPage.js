@@ -26,8 +26,12 @@ import InputField from "../../components/utils/inputField/InputField";
 
 const YupSchema = Yup.object({
 	name: Yup.string().required("Tên đăng nhập là bắt buộc"),
-	email: Yup.string().email("Địa chỉ email không hợp lệ").required("Địa chỉ email là bắt buộc"),
-	password: Yup.string().min(6, "Mật khẩu cần tối thiếu 6 ký tự").required("Mật khẩu là bắt buộc"),
+	email: Yup.string()
+		.email("Địa chỉ email không hợp lệ")
+		.required("Địa chỉ email là bắt buộc"),
+	password: Yup.string()
+		.min(6, "Mật khẩu cần tối thiếu 6 ký tự")
+		.required("Mật khẩu là bắt buộc"),
 });
 
 const RegisterPage = () => {
@@ -45,9 +49,14 @@ const RegisterPage = () => {
 
 	const responseFacebook = (response) => {
 		FB.setAccessToken(response.accessToken);
-		FB.api("/me", "GET", { fields: "id,birthday,age_range,email,gender,location,name,short_name" }, (userData) => {
-			dispatch(registerUserRequest({ loginFb: true, ...userData }));
-		});
+		FB.api(
+			"/me",
+			"GET",
+			{ fields: "id,birthday,age_range,email,gender,location,name,short_name" },
+			(userData) => {
+				dispatch(registerUserRequest({ loginFb: true, ...userData }));
+			}
+		);
 	};
 
 	if (authenticated === true) return <Redirect to="/survey" />;
@@ -59,7 +68,8 @@ const RegisterPage = () => {
 			onSubmit={(values, action) => {
 				dispatch(loadingUI());
 				dispatch(registerUserRequest(values));
-			}}>
+			}}
+		>
 			{(props) => {
 				return (
 					<>
@@ -74,12 +84,17 @@ const RegisterPage = () => {
 											if (e.key === "Enter") {
 												props.handleSubmit();
 											}
-										}}>
+										}}
+									>
 										<div className="auth-page" role="presentation">
 											<div className="auth-page-left">
 												<Link to="/">
 													<div className="auth-page__logoContainer">
-														<img src={logo} alt="" className="auth-page__logo" />
+														<img
+															src={logo}
+															alt=""
+															className="auth-page__logo"
+														/>
 													</div>
 												</Link>
 												<Link to="/">
@@ -105,14 +120,19 @@ const RegisterPage = () => {
 												<p className="auth-page-right__titleLine1">
 													trở thành người <strong>sành ăn</strong>
 												</p>
-												<p className="auth-page-right__titleLine2">cùng tekoda</p>
+												<p className="auth-page-right__titleLine2">
+													cùng tekoda
+												</p>
 												<FacebookLogin
 													// disableMobileRedirect={true}
 													appId={process.env.REACT_APP_FACEBOOK_ID}
 													autoLoad={false}
 													callback={responseFacebook}
 													render={(renderProps) => (
-														<button onClick={renderProps.onClick} className="facebook-form">
+														<button
+															onClick={renderProps.onClick}
+															className="facebook-form"
+														>
 															<img src={facebookLogo} alt="facebook" />
 															<p>Đăng ký bằng tài khoản facebook</p>
 														</button>
@@ -122,23 +142,30 @@ const RegisterPage = () => {
 												<InputField
 													{...props}
 													titleField="name"
+													typeInput="text"
 													titlePlaceholder="Tên đăng nhập"
 													fieldIcon={iconUser}
 												/>
 												<InputField
 													{...props}
 													titleField="email"
+													typeInput="email"
 													titlePlaceholder="Nhập email của bạn"
 													fieldIcon={iconEmail}
 												/>
 												<InputField
 													{...props}
 													titleField="password"
+													typeInput="password"
 													titlePlaceholder="Nhập mật khẩu"
 													fieldIcon={iconPassword}
 													showPassword={showPassword}
 													setShowPassword={setShowPassword}
-													style={{ display: "flex", alignItems: "center", color: "grey" }}
+													style={{
+														display: "flex",
+														alignItems: "center",
+														color: "grey",
+													}}
 												/>
 												{errorActive &&
 													errorMsg &&
@@ -153,7 +180,10 @@ const RegisterPage = () => {
 															<p className="error-field__text">{errorMsg}</p>
 														</div>
 													)}
-												<label className="auth-page__privacyContainer" htmlFor="privacy">
+												<label
+													className="auth-page__privacyContainer"
+													htmlFor="privacy"
+												>
 													<input
 														id="privacy"
 														type="checkbox"
@@ -161,11 +191,14 @@ const RegisterPage = () => {
 													/>
 													<span
 														className="input--checked"
-														onClick={() => setPrivacyStatus(!privacyStatus)}></span>
+														onClick={() => setPrivacyStatus(!privacyStatus)}
+													></span>
 													<span
 														className="auth-page__privacy"
-														onClick={() => setPrivacyStatus(!privacyStatus)}>
-														Tôi đồng ý với <strong>Chính Sách Bảo Mật</strong> và
+														onClick={() => setPrivacyStatus(!privacyStatus)}
+													>
+														Tôi đồng ý với <strong>Chính Sách Bảo Mật</strong>{" "}
+														và
 														<strong> Điều Khoản Hoạt Động</strong> của Tekoda.
 													</span>
 												</label>
@@ -187,7 +220,8 @@ const RegisterPage = () => {
 														!privacyStatus
 															? true
 															: false
-													}>
+													}
+												>
 													Đăng ký
 												</button>
 												<div className="auth-page__changePageContainer">
@@ -195,7 +229,10 @@ const RegisterPage = () => {
 														Bạn đã có tài khoản Tekoda ?
 													</span>
 													<span>
-														<Link to="/login" onClick={() => dispatch(clearError())}>
+														<Link
+															to="/login"
+															onClick={() => dispatch(clearError())}
+														>
 															{" "}
 															Đăng nhập
 														</Link>

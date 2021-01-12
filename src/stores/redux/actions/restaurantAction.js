@@ -278,6 +278,19 @@ class restaurantAction {
 			collectionList,
 		};
 	}
+
+	sendReviewRequest(reviewBody) {
+		return {
+			type: types.SEND_REVIEW_REQUEST,
+			reviewBody,
+		};
+	}
+	sendReviewSucceeded(reviewBody) {
+		return {
+			type: types.SEND_REVIEW_SUCCEEDED,
+			reviewBody,
+		};
+	}
 }
 
 export default new restaurantAction();

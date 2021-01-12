@@ -1,4 +1,4 @@
-import { takeEvery, takeLatest, call, put, select, delay } from "redux-saga/effects";
+import { takeLatest, call, put, delay } from "redux-saga/effects";
 
 import * as types from "../../constants/types";
 import authAction from "../redux/actions/authAction";
@@ -18,7 +18,10 @@ function* getUser({ token, userData, tokenInfo }) {
 		if (userData) {
 			if (tokenInfo) {
 				yield saveLocal.saveToLocal("token", tokenInfo.accessToken);
-				yield saveLocal.saveToLocal("expired-token", tokenInfo.data_access_expiration_time);
+				yield saveLocal.saveToLocal(
+					"expired-token",
+					tokenInfo.data_access_expiration_time
+				);
 			}
 			yield saveLocal.saveToLocal("user", userData);
 			yield put(authAction.getUserSucceeded(userData));
@@ -37,7 +40,7 @@ function* getUser({ token, userData, tokenInfo }) {
 		yield put(errorAction.clearError());
 	} catch (error) {
 		console.log(error);
-		return error.response.status;
+		return error.response?.status;
 	}
 }
 
@@ -92,7 +95,9 @@ function* registerUser({ userForm }) {
 					password: userForm.password,
 				},
 			});
-			yield call(loginUser, { userForm: { email: userForm.email, password: userForm.password } });
+			yield call(loginUser, {
+				userForm: { email: userForm.email, password: userForm.password },
+			});
 		}
 		yield put(authAction.registerUserSucceeded(response.data));
 		yield saveLocal.saveToLocal("user", response.data);

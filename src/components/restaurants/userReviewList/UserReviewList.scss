@@ -1,21 +1,77 @@
+@import "../../../App.scss";
+
 .user-review-list {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	column-gap: 10px;
 	row-gap: 40px;
-	margin-top: 50px;
+	margin-top: 20px;
+	align-items: center;
+
+	.user-review-list__moreReview {
+		height: 48px;
+		width: 246px;
+		background: #ffffff;
+		border: 1px solid #222222;
+		box-sizing: border-box;
+		border-radius: 8px;
+		font-size: 16px;
+		text-align: center;
+		color: #222222;
+		padding: 14px 24px;
+		margin-top: 30px;
+	}
+
+	.user-review-list__btnOpenModal {
+		height: 50px;
+		border: solid 1px #000;
+		border-radius: 60px;
+	}
 }
 
-.user-review-list__moreReview {
-	height: 48px;
-	width: 246px;
-	background: #ffffff;
-	border: 1px solid #222222;
-	box-sizing: border-box;
-	border-radius: 8px;
-	font-size: 16px;
-	text-align: center;
-	color: #222222;
-	padding: 14px 24px;
-	margin-top: 30px;
+.user-review-list__modalReview {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.user-review-list__modalReviewContainer {
+	width: 50%;
+	height: 50%;
+	background: #eee;
+	padding: 20px;
+	position: relative;
+	top: 25%;
+	left: 25%;
+
+	.user-review-list__modalReviewButton {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 140px;
+		height: 56px;
+		background: $main-color;
+		border-radius: 68px;
+		color: #fff;
+		padding: 10px;
+		font-size: 16px;
+		font-family: SVN-Circular-Normal;
+		border: none;
+		margin-left: auto;
+
+		&:hover {
+			cursor: pointer !important;
+		}
+
+		.MuiSvgIcon-root {
+			flex: 0.3;
+		}
+
+		span {
+			flex: 0.7;
+			display: flex;
+		}
+	}
 }

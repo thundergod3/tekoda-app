@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 import "./App.scss";
+import "react-toastify/dist/ReactToastify.css";
 
 import { useDispatch, useSelector } from "react-redux";
 import authAction from "./stores/redux/actions/authAction";
@@ -20,11 +22,16 @@ const App = ({
 	},
 }) => {
 	const {
-		authReducer: { authenticated },
-		errorReducer: { errorStatus },
+		errorReducer: { errorStatus, errorMsg },
 	} = useSelector((state) => state);
 	const dispatch = useDispatch();
 	const { checkAuthenticatedRequest } = authAction;
+
+	useEffect(() => {
+		if (errorMsg) {
+			toast.error(errorMsg);
+		}
+	}, [errorMsg]);
 
 	useEffect(() => {
 		dispatch(checkAuthenticatedRequest());
@@ -32,7 +39,11 @@ const App = ({
 
 	return (
 		<>
-			{pathname !== "/login" && pathname !== "/register" && pathname !== "/survey" ? <Navbar /> : null}
+			{pathname !== "/login" &&
+			pathname !== "/register" &&
+			pathname !== "/survey" ? (
+				<Navbar />
+			) : null}
 			<Switch>
 				{/* TEKODA PAGES */}
 				<Route exact path="/" component={Homepage} />
@@ -53,6 +64,7 @@ const App = ({
 				<Route exact path="/login" component={LoginPage} />
 				<Route exact path="/register" component={RegisterPage} />
 			</Switch>
+			<ToastContainer />
 		</>
 	);
 };

@@ -7,7 +7,13 @@ import collectionImage3 from "../../../assets/utils/collection_image3.png";
 import collectionImage4 from "../../../assets/utils/collection_image4.png";
 import collectionImage5 from "../../../assets/utils/collection_image5.png";
 
-const listCollectionImage = [collectionImage1, collectionImage2, collectionImage3, collectionImage4, collectionImage5];
+const listCollectionImage = [
+	collectionImage1,
+	collectionImage2,
+	collectionImage3,
+	collectionImage4,
+	collectionImage5,
+];
 
 const initialState = {
 	restaurantList: [],
@@ -35,7 +41,10 @@ const restaurantReducer = (state = initialState, action) =>
 
 			case types.FETCH_RECOMMEND_TRENDING_RESTAURANT_GUESS_SUCCEEDED:
 			case types.FETCH_RECOMMEND_TRENDING_RESTAURANT_SUCCEEDED: {
-				draft.trendingRestaurantList = [...action.trendingRestaurantList, ...action.trendingRestaurantList];
+				draft.trendingRestaurantList = [
+					...action.trendingRestaurantList,
+					...action.trendingRestaurantList,
+				];
 				break;
 			}
 
@@ -175,7 +184,9 @@ const restaurantReducer = (state = initialState, action) =>
 				break;
 			}
 			case types.DELETE_ITEM_STORE_LIST_KEYWORD: {
-				const index = draft.listKeyWord.findIndex((item) => item === action.keyword);
+				const index = draft.listKeyWord.findIndex(
+					(item) => item === action.keyword
+				);
 				draft.listKeyWord.splice(index, 1);
 				break;
 			}
@@ -191,6 +202,12 @@ const restaurantReducer = (state = initialState, action) =>
 				);
 				console.log(index);
 				draft.saveRestaurantList.splice(index, 1);
+				break;
+			}
+
+			case types.SEND_REVIEW_SUCCEEDED: {
+				console.log("action", action);
+				draft.restaurantReviewList.push(action.reviewBody);
 				break;
 			}
 

@@ -1,4 +1,4 @@
-import { takeEvery, takeLatest, call, put, select, delay } from "redux-saga/effects";
+import { takeLatest, call, put, select, delay } from "redux-saga/effects";
 
 import * as types from "../../constants/types";
 import restaurantAction from "../redux/actions/restaurantAction";
@@ -18,8 +18,10 @@ function* fetchListRestaurant() {
 
 	try {
 		yield call(HTTPMethod.attachTokenToHeader, { token });
-		const response = yield call(restaurantService.fetchAllRestaurant);
-		yield put(restaurantAction.fetchListRestaurantSucceeded(response.data));
+
+		const { data } = yield call(restaurantService.fetchAllRestaurant);
+
+		yield put(restaurantAction.fetchListRestaurantSucceeded(data));
 		yield put(utilAction.loadedUI());
 		yield put(errorAction.clearError());
 	} catch (error) {
@@ -38,10 +40,12 @@ function* fetchListRestaurantPerPage({ page }) {
 		if (!page) page = 1;
 		yield put(restaurantAction.removeRestaurantReviewList());
 		yield call(HTTPMethod.attachTokenToHeader, { token });
-		const response = yield call(restaurantService.fetchRestaurantPerPage, {
+
+		const { data } = yield call(restaurantService.fetchRestaurantPerPage, {
 			page,
 		});
-		yield put(restaurantAction.fetchListRestaurantPerPageSucceeded(response.data));
+
+		yield put(restaurantAction.fetchListRestaurantPerPageSucceeded(data));
 		yield put(utilAction.loadedUI());
 		yield put(errorAction.clearError());
 	} catch (error) {
@@ -58,9 +62,10 @@ function* fetchTrendingRestaurant() {
 
 	try {
 		yield call(HTTPMethod.attachTokenToHeader, { token });
-		const response = yield call(restaurantService.fetchTrendingRestaurant);
-		console.log(response);
-		yield put(restaurantAction.fetchRecommendRestaurantSucceeded(response.data));
+
+		const { data } = yield call(restaurantService.fetchTrendingRestaurant);
+
+		yield put(restaurantAction.fetchRecommendRestaurantSucceeded(data));
 		yield put(utilAction.loadedUI());
 		yield put(errorAction.clearError());
 	} catch (error) {
@@ -77,11 +82,15 @@ function* fetchLocationRestaurant({ location }) {
 
 	try {
 		yield call(HTTPMethod.attachTokenToHeader, { token });
-		const response = yield call(restaurantService.fetchLocationRestaurantRecommend, {
-			location,
-		});
-		console.log(response);
-		yield put(restaurantAction.fetchRecommendRestaurantLocationSucceeded(response.data));
+
+		const { data } = yield call(
+			restaurantService.fetchLocationRestaurantRecommend,
+			{
+				location,
+			}
+		);
+
+		yield put(restaurantAction.fetchRecommendRestaurantLocationSucceeded(data));
 		yield put(errorAction.clearError());
 	} catch (error) {
 		console.log(error);
@@ -96,9 +105,12 @@ function* fetchBehaviorRestaurant() {
 
 	try {
 		yield call(HTTPMethod.attachTokenToHeader, { token });
-		const response = yield call(restaurantService.fetchBehaviorRestaurantRecommend);
-		console.log(response);
-		yield put(restaurantAction.fetchRecommnedBehaviorRestaurantSucceeded(response.data));
+
+		const { data } = yield call(
+			restaurantService.fetchBehaviorRestaurantRecommend
+		);
+
+		yield put(restaurantAction.fetchRecommnedBehaviorRestaurantSucceeded(data));
 		yield put(errorAction.clearError());
 	} catch (error) {
 		console.log(error);
@@ -113,13 +125,17 @@ function* fetchListCollectionRestaurant({ collectionId }) {
 
 	try {
 		yield call(HTTPMethod.attachTokenToHeader, { token });
-		const response = yield call(restaurantService.fetchListCollectionRestaurant, {
-			collectionId,
-		});
-		console.log(response);
-		yield put(restaurantAction.fetchListRestaurantPerPageSucceeded(response.data));
-		yield put(restaurantAction.fetchListRestaurantSucceeded(response.data));
-		yield call(getRestaurantDetail, { id: response.data[0].detail.ResId });
+
+		const { data } = yield call(
+			restaurantService.fetchListCollectionRestaurant,
+			{
+				collectionId,
+			}
+		);
+
+		yield put(restaurantAction.fetchListRestaurantPerPageSucceeded(data));
+		yield put(restaurantAction.fetchListRestaurantSucceeded(data));
+		yield call(getRestaurantDetail, { id: data[0].detail.ResId });
 		yield put(errorAction.clearError());
 	} catch (error) {
 		console.log(error);
@@ -129,9 +145,9 @@ function* fetchListCollectionRestaurant({ collectionId }) {
 
 function* fetchTrendingGuessRestaurant() {
 	try {
-		const response = yield call(restaurantService.fetchTrendingRestaurantGuess);
-		console.log(response);
-		yield put(restaurantAction.fetchRecommendRestaurantGuessSucceeded(response.data));
+		const { data } = yield call(restaurantService.fetchTrendingRestaurantGuess);
+
+		yield put(restaurantAction.fetchRecommendRestaurantGuessSucceeded(data));
 		yield put(utilAction.loadedUI());
 		yield put(errorAction.clearError());
 	} catch (error) {
@@ -148,8 +164,10 @@ function* fetchSaveRestaurant() {
 
 	try {
 		yield call(HTTPMethod.attachTokenToHeader, { token });
-		const response = yield call(restaurantService.fetchSaveRestaurant);
-		yield put(restaurantAction.fetchSaveRestaurantSucceeded(response.data));
+
+		const { data } = yield call(restaurantService.fetchSaveRestaurant);
+
+		yield put(restaurantAction.fetchSaveRestaurantSucceeded(data));
 		yield delay(2000);
 		yield put(utilAction.loadedUI());
 		yield put(errorAction.clearError());
@@ -167,11 +185,12 @@ function* saveRestaurant({ restaurant }) {
 
 	try {
 		yield call(HTTPMethod.attachTokenToHeader, { token });
-		const response = yield call(restaurantService.likeRestaurant, {
+
+		const { data } = yield call(restaurantService.likeRestaurant, {
 			restaurantId: restaurant?.detail?.ResId,
 		});
-		console.log(response.data);
-		if (response.data.enjoy === 1) {
+
+		if (data.enjoy === 1) {
 			yield put(restaurantAction.saveRestaurantSucceeded(restaurant));
 		} else {
 			yield put(restaurantAction.removeSaveRestaurant(restaurant));
@@ -202,10 +221,10 @@ function* getRestaurantDetail({ id }) {
 
 		try {
 			yield call(HTTPMethod.attachTokenToHeader, { token });
-			const response = yield call(restaurantService.fetchDetailRestaurant, {
+			const { data } = yield call(restaurantService.fetchDetailRestaurant, {
 				id,
 			});
-			yield put(restaurantAction.getRestaurantSearchDetailSucceeded(response?.data));
+			yield put(restaurantAction.getRestaurantSearchDetailSucceeded(data));
 			const {
 				restaurantReducer: { restaurantSearchDetail },
 			} = yield select((state) => state);
@@ -226,10 +245,10 @@ function* getRestaurantDetail({ id }) {
 
 		try {
 			yield call(HTTPMethod.attachTokenToHeader, { token });
-			const response = yield call(restaurantService.fetchDetailRestaurant, {
+			const { data } = yield call(restaurantService.fetchDetailRestaurant, {
 				id,
 			});
-			yield put(restaurantAction.getRestaurantSearchDetailSucceeded(response?.data));
+			yield put(restaurantAction.getRestaurantSearchDetailSucceeded(data));
 			yield put(restaurantAction.removeRestaurantReviewList());
 			const {
 				restaurantReducer: { restaurantSearchDetail },
@@ -275,10 +294,10 @@ function* getAllSearchRestaurant({ listKeyword }) {
 
 	try {
 		yield call(HTTPMethod.attachTokenToHeader, { token });
-		const response = yield call(restaurantService.getAllSearchRestaurant, {
+		const { data } = yield call(restaurantService.getAllSearchRestaurant, {
 			listKeyword,
 		});
-		yield put(restaurantAction.getAllSearchRestaurantSucceeded(response.data));
+		yield put(restaurantAction.getAllSearchRestaurantSucceeded(data));
 		yield put(errorAction.clearError());
 	} catch (error) {
 		console.log(error);
@@ -296,11 +315,11 @@ function* searchRestaurant({ listKeyWord, page }) {
 
 	try {
 		yield call(HTTPMethod.attachTokenToHeader, { token });
-		const response = yield call(restaurantService.searchRestaurant, {
+		const { data } = yield call(restaurantService.searchRestaurant, {
 			listKeyWord,
 			page,
 		});
-		yield put(restaurantAction.searchRestaurantSucceeded(response.data));
+		yield put(restaurantAction.searchRestaurantSucceeded(data));
 		const {
 			restaurantReducer: { restaurantSearchDetail },
 		} = yield select((state) => state);
@@ -324,11 +343,11 @@ function* getSearchRestaurantPerPage({ listKeyWord, page }) {
 
 	try {
 		yield call(HTTPMethod.attachTokenToHeader, { token });
-		const response = yield call(restaurantService.getSearchRestaurantPePage, {
+		const { data } = yield call(restaurantService.getSearchRestaurantPePage, {
 			listKeyWord,
 			page,
 		});
-		yield put(restaurantAction.getSearchRestaurantPerPageSucceeded(response.data));
+		yield put(restaurantAction.getSearchRestaurantPerPageSucceeded(data.data));
 		yield put(utilAction.loadedUI());
 		yield put(errorAction.clearError());
 	} catch (error) {
@@ -346,16 +365,21 @@ function* getRestaurantReview({ restaurantId, count }) {
 
 	try {
 		yield call(HTTPMethod.attachTokenToHeader, { token });
-		const response = yield call(restaurantService.getRestaurantReview, {
+		const { data } = yield call(restaurantService.getRestaurantReview, {
 			restaurantId,
 			count,
 		});
-		console.log("review", response);
-		if (response.data.length !== 0) {
+		console.log("review", data);
+		if (data.data.length !== 0) {
 			if (restaurantReviewList.length === 0) {
-				yield put(restaurantAction.getRestaurantReviewListSucceeded(response.data));
+				yield put(restaurantAction.getRestaurantReviewListSucceeded(data.data));
 			} else {
-				yield put(restaurantAction.getRestaurantReviewListSucceeded([...restaurantReviewList, response.data]));
+				yield put(
+					restaurantAction.getRestaurantReviewListSucceeded([
+						...restaurantReviewList,
+						data.data,
+					])
+				);
 			}
 		}
 		yield put(errorAction.clearError());
@@ -405,9 +429,22 @@ function* getListCollection() {
 
 	try {
 		yield call(HTTPMethod.attachTokenToHeader, { token });
-		const response = yield call(restaurantService.getListCollection);
+		const { data } = yield call(restaurantService.getListCollection);
 
-		yield put(restaurantAction.getListCollectionSucceeded(response.data));
+		yield put(restaurantAction.getListCollectionSucceeded(data));
+	} catch (error) {
+		console.log(error);
+		yield put(errorAction.getError(error.response));
+	}
+}
+
+function* sendReview({ reviewBody }) {
+	try {
+		const { data } = yield call(restaurantService.sendReview, { reviewBody });
+
+		console.log(data);
+
+		yield put(restaurantAction.sendReviewSucceeded(reviewBody));
 	} catch (error) {
 		console.log(error);
 		yield put(errorAction.getError(error.response));
@@ -416,21 +453,61 @@ function* getListCollection() {
 
 export default function* restaurantSaga() {
 	yield takeLatest(types.FETCH_LIST_RESTAURANT_REQUEST, fetchListRestaurant);
-	yield takeLatest(types.FETCH_RECOMMEND_TRENDING_RESTAURANT_REQUEST, fetchTrendingRestaurant);
-	yield takeLatest(types.FETCH_RECOMMEND_LOCATION_RESTAURANT_REQUEST, fetchLocationRestaurant);
-	yield takeLatest(types.FETCH_RECOMMEND_BEHAVIOR_RESTAURANT_REQUEST, fetchBehaviorRestaurant);
-	yield takeLatest(types.FETCH_LIST_COLLECTION_RESTAURANT, fetchListCollectionRestaurant);
-	yield takeLatest(types.FETCH_RECOMMEND_TRENDING_RESTAURANT_GUESS_REQUEST, fetchTrendingGuessRestaurant);
-	yield takeLatest(types.FETCH_SAVE_LIST_RESTAURANT_REQUEST, fetchSaveRestaurant);
-	yield takeLatest(types.FETCH_LIST_RESTAURANT_PER_PAGE_REQUEST, fetchListRestaurantPerPage);
-	yield takeLatest(types.GET_RESTAURANT_SEARCH_DETAIL_REQUEST, getRestaurantDetail);
+	yield takeLatest(
+		types.FETCH_RECOMMEND_TRENDING_RESTAURANT_REQUEST,
+		fetchTrendingRestaurant
+	);
+	yield takeLatest(
+		types.FETCH_RECOMMEND_LOCATION_RESTAURANT_REQUEST,
+		fetchLocationRestaurant
+	);
+	yield takeLatest(
+		types.FETCH_RECOMMEND_BEHAVIOR_RESTAURANT_REQUEST,
+		fetchBehaviorRestaurant
+	);
+	yield takeLatest(
+		types.FETCH_LIST_COLLECTION_RESTAURANT,
+		fetchListCollectionRestaurant
+	);
+	yield takeLatest(
+		types.FETCH_RECOMMEND_TRENDING_RESTAURANT_GUESS_REQUEST,
+		fetchTrendingGuessRestaurant
+	);
+	yield takeLatest(
+		types.FETCH_SAVE_LIST_RESTAURANT_REQUEST,
+		fetchSaveRestaurant
+	);
+	yield takeLatest(
+		types.FETCH_LIST_RESTAURANT_PER_PAGE_REQUEST,
+		fetchListRestaurantPerPage
+	);
+	yield takeLatest(
+		types.GET_RESTAURANT_SEARCH_DETAIL_REQUEST,
+		getRestaurantDetail
+	);
 	yield takeLatest(types.SEND_SURVEY_FORM_REQUEST, sendSurveyForm);
-	yield takeLatest(types.GET_ALL_SEARCH_RESTAURANT_REQUEST, getAllSearchRestaurant);
+	yield takeLatest(
+		types.GET_ALL_SEARCH_RESTAURANT_REQUEST,
+		getAllSearchRestaurant
+	);
 	yield takeLatest(types.SEARCH_RESTAURANT_REQUEST, searchRestaurant);
-	yield takeLatest(types.GET_SEARCH_RESTAURANT_PER_PAGE_REQUEST, getSearchRestaurantPerPage);
-	yield takeLatest(types.TRACKING_USER_SCROLL_REVIEW_LIST, trackingUserIntersection);
-	yield takeLatest(types.GET_RESTAURANT_REVIEW_LIST_REQUEST, getRestaurantReview);
+	yield takeLatest(
+		types.GET_SEARCH_RESTAURANT_PER_PAGE_REQUEST,
+		getSearchRestaurantPerPage
+	);
+	yield takeLatest(
+		types.TRACKING_USER_SCROLL_REVIEW_LIST,
+		trackingUserIntersection
+	);
+	yield takeLatest(
+		types.GET_RESTAURANT_REVIEW_LIST_REQUEST,
+		getRestaurantReview
+	);
 	yield takeLatest(types.SAVE_RESTAURANT_REQUEST, saveRestaurant);
-	yield takeLatest(types.SEND_INFO_RECOMMNED_RESTAURANT, sendInfoRecommendRestaurant);
+	yield takeLatest(
+		types.SEND_INFO_RECOMMNED_RESTAURANT,
+		sendInfoRecommendRestaurant
+	);
 	yield takeLatest(types.GET_LIST_COLLECTION_REQUESt, getListCollection);
+	yield takeLatest(types.SEND_REVIEW_REQUEST, sendReview);
 }

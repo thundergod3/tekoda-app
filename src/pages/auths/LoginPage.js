@@ -24,7 +24,9 @@ import Loading from "../../components/utils/loading/Loading";
 import InputField from "../../components/utils/inputField/InputField";
 
 const YupSchema = Yup.object({
-	email: Yup.string().email("Địa chỉ email không hợp lệ").required("Địa chỉ email là bắt buộc"),
+	email: Yup.string()
+		.email("Địa chỉ email không hợp lệ")
+		.required("Địa chỉ email là bắt buộc"),
 	password: Yup.string().required("Mật khẩu là bắt buộc"),
 });
 
@@ -58,7 +60,8 @@ const LoginPage = () => {
 			onSubmit={(values, actions) => {
 				dispatch(loadingUI());
 				dispatch(loginUserRequest(values));
-			}}>
+			}}
+		>
 			{(props) => (
 				<>
 					{loading ? (
@@ -72,7 +75,8 @@ const LoginPage = () => {
 										if (e.key === "Enter") {
 											props.handleSubmit();
 										}
-									}}>
+									}}
+								>
 									<div className="auth-page" role="presentation">
 										<div className="auth-page-left">
 											<Link to="/">
@@ -83,7 +87,11 @@ const LoginPage = () => {
 											<Link to="/">
 												<div className="auth-page__info">
 													<div className="auth-page__infoIconMapWrapper">
-														<img src={iconMap} alt="" className="auth-page__infoIconMap" />
+														<img
+															src={iconMap}
+															alt=""
+															className="auth-page__infoIconMap"
+														/>
 													</div>
 													<div className="auth-page__infoFoodImgWrapper">
 														<img
@@ -96,7 +104,9 @@ const LoginPage = () => {
 											</Link>
 										</div>
 										<div className="auth-page-right">
-											<p className="auth-page-right__titleLine1">khám phá ẩm thực</p>
+											<p className="auth-page-right__titleLine1">
+												khám phá ẩm thực
+											</p>
 											<p className="auth-page-right__titleLine2">cùng tekoda</p>
 											<FacebookLogin
 												disableMobileRedirect={true}
@@ -104,7 +114,10 @@ const LoginPage = () => {
 												autoLoad={false}
 												callback={responseFacebook}
 												render={(renderProps) => (
-													<button onClick={renderProps.onClick} className="facebook-form">
+													<button
+														onClick={renderProps.onClick}
+														className="facebook-form"
+													>
 														<img src={facebookLogo} alt="facebook" />
 														<p>Đăng nhập bằng facebook</p>
 													</button>
@@ -114,28 +127,44 @@ const LoginPage = () => {
 											<InputField
 												{...props}
 												titleField="email"
+												typeInput="email"
 												titlePlaceholder="Tên đăng nhập"
 												fieldIcon={iconUser}
 											/>
 											<InputField
 												{...props}
 												titleField="password"
+												typeInput="password"
 												titlePlaceholder="Mật khẩu"
 												fieldIcon={iconPassword}
 											/>
-											{errorActive && errorMsg && errorMsg !== "" && errorMsg !== "Unauthorized" && (
-												<div className="error-field__container">
-													<img src={iconErrorRed} alt="" className="error-field__fieldIcon" />
-													<p className="error-field__text">{errorMsg}</p>
-												</div>
-											)}
+											{errorActive &&
+												errorMsg &&
+												errorMsg !== "" &&
+												errorMsg !== "Unauthorized" && (
+													<div className="error-field__container">
+														<img
+															src={iconErrorRed}
+															alt=""
+															className="error-field__fieldIcon"
+														/>
+														<p className="error-field__text">{errorMsg}</p>
+													</div>
+												)}
 											<button
 												type="submit"
 												className={`auth-page__login ${
-													props.errors.email && props.errors.password ? "button--disable" : ""
+													props.errors.email && props.errors.password
+														? "button--disable"
+														: ""
 												}`}
 												onClick={props.handleSubmit}
-												disabled={props.errors.email && props.errors.password ? true : false}>
+												disabled={
+													props.errors.email && props.errors.password
+														? true
+														: false
+												}
+											>
 												Đăng nhập
 											</button>
 											<div className="auth-page__changePageContainer">
@@ -143,7 +172,10 @@ const LoginPage = () => {
 													Bạn chưa có tài khoản Tekoda ?
 												</span>
 												<span>
-													<Link to="/register" onClick={() => dispatch(clearError())}>
+													<Link
+														to="/register"
+														onClick={() => dispatch(clearError())}
+													>
 														Đăng ký
 													</Link>
 												</span>

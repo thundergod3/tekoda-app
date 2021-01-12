@@ -11,8 +11,6 @@ import "./Navbar.scss";
 import NavbarOption from "../navbarOption/NavbarOption";
 import SearchBar from "../searchBar/SearchBar";
 
-import LanguageIcon from "@material-ui/icons/Language";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import SearchIcon from "@material-ui/icons/Search";
@@ -54,7 +52,8 @@ const Navbar = ({
 					dispatch(loadingUI());
 					dispatch(logoutUserRequest());
 					setShowOption(false);
-				}}>
+				}}
+			>
 				<p>Đăng xuất</p>
 			</div>
 			<Link to="/save-restaurant">
@@ -63,7 +62,8 @@ const Navbar = ({
 					onClick={() => {
 						dispatch(loadingUI());
 						setShowOption(false);
-					}}>
+					}}
+				>
 					<p>Nhà hàng yêu thích</p>
 				</div>
 			</Link>
@@ -74,7 +74,8 @@ const Navbar = ({
 		if (
 			(searchBarRef.current && searchBarRef.current.contains(e.target)) ||
 			(showOptionRef.current && showOptionRef.current.contains(e.target)) ||
-			(showOptionContainerRef.current && showOptionContainerRef.current.contains(e.target))
+			(showOptionContainerRef.current &&
+				showOptionContainerRef.current.contains(e.target))
 		)
 			return;
 		else {
@@ -104,7 +105,10 @@ const Navbar = ({
 			{authenticated !== undefined && (
 				<div className="navbar">
 					<div className="navbar__container">
-						<div className="navbar__right" style={authenticated ? { flex: 0.9 } : { flex: 0.85 }}>
+						<div
+							className="navbar__right"
+							style={authenticated ? { flex: 0.9 } : { flex: 0.85 }}
+						>
 							<Link to="/">
 								<div className="navbar__logo">
 									<img src={logo} alt="Logo" />
@@ -121,8 +125,12 @@ const Navbar = ({
 												? { maxWidth: 150 }
 												: { maxWidth: 120 }
 											: {}
-									}>
-									<div className="search-bar__compact" onClick={(e) => setShowSearchBar(true)}>
+									}
+								>
+									<div
+										className="search-bar__compact"
+										onClick={(e) => setShowSearchBar(true)}
+									>
 										<SearchIcon />
 										<input
 											disabled={true}
@@ -131,7 +139,10 @@ const Navbar = ({
 											placeholder="Tìm kiếm nhà hàng theo sở thích"
 										/>
 										{showSearchBar && (
-											<div className="search-bar__compactContainer" ref={searchBarRef}>
+											<div
+												className="search-bar__compactContainer"
+												ref={searchBarRef}
+											>
 												<SearchBar
 													style={{
 														position: "absolute",
@@ -155,7 +166,10 @@ const Navbar = ({
 								</div>
 							)}
 						</div>
-						<div className="navbar__left" style={authenticated ? { flex: 0.1 } : { flex: 0.15 }}>
+						<div
+							className="navbar__left"
+							style={authenticated ? { flex: 0.1 } : { flex: 0.15 }}
+						>
 							{!authenticated ? (
 								<>
 									<Link to="/login">
@@ -174,7 +188,8 @@ const Navbar = ({
 									<div
 										className="navbar__button"
 										ref={showOptionContainerRef}
-										onClick={() => setShowOption(!showOption)}>
+										onClick={() => setShowOption(!showOption)}
+									>
 										<div className="navbar__buttonDrawerContainer">
 											<MenuIcon />
 											<AccountCircleIcon />
