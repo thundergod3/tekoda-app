@@ -67,47 +67,61 @@ const UserReviewList = () => {
 				{restaurantReviewList.length !== 0 ? (
 					restaurantReviewList.map((userReview) => (
 						<>
-							{userReview.Description && (
-								<UserReviewItem userReview={userReview} />
-							)}
+							{userReview.Description && <UserReviewItem userReview={userReview} />}
 							<p>Hãy để lại 1 bình luận nha ^^</p>
 							<button
 								className="user-review-list__btnOpenModal"
 								type="button"
-								onClick={handleOpen}
-							></button>
+								onClick={handleOpen}></button>
 						</>
 					))
 				) : (
 					<>
 						<p>Nhà hàng này hiện không có đánh giá nào.</p>
-						<button
-							className="user-review-list__btnOpenModal"
-							type="button"
-							onClick={handleOpen}
-						>
+						<button className="user-review-list__btnOpenModal" type="button" onClick={handleOpen}>
 							Hãy là người đầu tiên viết đánh giá nào ^^
 						</button>
 						<Modal
 							open={open}
 							onClose={handleClose}
 							aria-labelledby="simple-modal-title"
-							aria-describedby="simple-modal-description"
-						>
+							aria-describedby="simple-modal-description">
 							<Formik
 								initialValues={{
+									title: "",
 									description: "",
 									rating: "",
 								}}
 								validationSchema={YupSchema}
 								onSubmit={(values, actions) => {
-									dispatch(sendReviewRequest(values));
+									dispatch(
+										sendReviewRequest({
+											Title: values.title,
+											Description: values.description,
+											AvgRating: values.rating,
+											ResId: _id,
+										})
+									);
 									actions.resetForm();
-									// handleClose();
-								}}
-							>
+									handleClose();
+								}}>
 								{(props) => (
 									<div className="user-review-list__modalReviewContainer">
+										<label>Tiêu đề</label>
+										<InputField
+											{...props}
+											titleField="title"
+											typeInput="text"
+											titlePlaceholder="Tiêu đề"
+											style={{
+												background: "#fff",
+												width: "100%",
+												border: "solid 1px #000",
+												padding: "10px 20px",
+												marginTop: 10,
+											}}
+											useCustomErrorIcon={true}
+										/>
 										<label>Bình luận</label>
 										<TextAreaField
 											{...props}
@@ -135,14 +149,11 @@ const UserReviewList = () => {
 										/>
 										<button
 											className={`user-review-list__modalReviewButton ${
-												props.errors.description || props.errors.rating
-													? "button--disable"
-													: ""
+												props.errors.description || props.errors.rating ? "button--disable" : ""
 											}`}
 											type="submit"
 											disabled={props.errors.description || props.errors.rating}
-											onClick={props.handleSubmit}
-										>
+											onClick={props.handleSubmit}>
 											Gửi
 										</button>
 									</div>
@@ -153,9 +164,7 @@ const UserReviewList = () => {
 				)}
 			</div>
 			{restaurantReviewList.length > 8 && (
-				<button className="user-review-list__moreReview">
-					Hiển thị tất cả 153 đánh giá
-				</button>
+				<button className="user-review-list__moreReview">Hiển thị tất cả 153 đánh giá</button>
 			)}
 		</>
 	);

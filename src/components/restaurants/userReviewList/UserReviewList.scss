@@ -38,13 +38,13 @@
 }
 
 .user-review-list__modalReviewContainer {
-	width: 50%;
-	height: 50%;
+	width: 80%;
+	height: 80%;
 	background: #eee;
 	padding: 20px;
 	position: relative;
-	top: 25%;
-	left: 25%;
+	top: 10%;
+	left: 10%;
 
 	.user-review-list__modalReviewButton {
 		display: flex;
@@ -60,6 +60,7 @@
 		font-family: SVN-Circular-Normal;
 		border: none;
 		margin-left: auto;
+		margin-top: 50px;
 
 		&:hover {
 			cursor: pointer !important;
